@@ -12,7 +12,6 @@ import { InsuranceService } from "src/app/services/insurance.service";
 import { DatePipe } from "@angular/common";
 
 import Swal from "sweetalert2";
-import { log } from "console";
 
 @Component({
   selector: "app-manage",
@@ -80,7 +79,7 @@ export class ManageComponent implements OnInit {
     const fechafin = this.theFormGroup.get("end_date")?.value;
     const fechainicioDate = new Date(fechaInicio);
     const fechafinDate = new Date(fechafin);
-    
+
     if(fechainicioDate > fechafinDate){
       alert( "La fecha de inicio no puede ser mayor a la fecha de fin");
       return;

@@ -1,0 +1,117 @@
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8"></div>
+<!-- Contenido de la página -->
+<div class="container-fluid mt--7">
+  <!-- Tarjeta principal -->
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <!-- Encabezado de la tarjeta -->
+        <div class="card-header border-0">
+          <h1 *ngIf="mode == 1" class="mb-0">Visualizar</h1>
+          <h1 *ngIf="mode == 2" class="mb-0">Crear</h1>
+          <h1 *ngIf="mode == 3" class="mb-0">Actualizar</h1>
+        </div>
+        <!-- Cuerpo de la tarjeta -->
+        <div class="card-body">
+          <!-- Campo ID -->
+          <div class="row">
+            <div class="col-4">
+              <label>Id:</label>
+            </div>
+            <div class="col-8">
+              <input type="text" class="form-control" disabled [(ngModel)]="products.id">
+            </div>
+          </div>
+          <br />
+
+          <!-- Campo Nombre -->
+          <div class="row">
+            <div class="col-4">
+              <label>Nombre</label>
+            </div>
+            <div class="col-8">
+              <input type="text" class="form-control" [(ngModel)]="products.name" [disabled]="mode == 1">
+            </div>
+          </div>
+          <br />
+
+          <!-- Campo Descripción -->
+          <div class="row">
+            <div class="col-4">
+              <label>Descripción</label>
+            </div>
+            <div class="col-8">
+              <input type="text" class="form-control" [(ngModel)]="products.description" [disabled]="mode == 1">
+            </div>
+          </div>
+          <br />
+
+          <!-- Campo Fecha de vencimiento -->
+          <div class="row">
+            <div class="col-4">
+              <label>Fecha de vencimiento</label>
+            </div>
+            <div class="col-8">
+              <!-- Usar solo formControlName para vincular el campo con el formulario reactivo -->
+              <input type="date" class="form-control" formControlName="expiration_date" />
+
+              <!-- Validaciones de fecha -->
+              <div *ngIf="
+                theFormGroup.get('expiration_date').errors &&
+                (theFormGroup.get('expiration_date').dirty || theFormGroup.get('expiration_date').touched || trySend)
+              ">
+                <!-- Error: Campo requerido -->
+                <strong *ngIf="theFormGroup.get('expiration_date').errors?.required" class="msnError text-danger">
+                  Requerido
+                </strong>
+                <!-- Error: Fecha no válida -->
+                <strong *ngIf="theFormGroup.get('expiration_date').errors?.startDateInvalid"
+                  class="msnError text-danger">
+                  La fecha debe ser igual o mayor a la fecha actual
+                </strong>
+              </div>
+            </div>
+          </div>
+          <br />
+
+          <!-- Campo Cliente -->
+          <div class="row">
+            <div class="col-4">
+              <label>Cliente</label>
+            </div>
+            <div class="col-8">
+              <input type="text" class="form-control" [(ngModel)]="products.client_id" [disabled]="mode == 1">
+            </div>
+          </div>
+          <br />
+
+          <!-- Campo Lote -->
+          <div class="row">
+            <div class="col-4">
+              <label>Lote</label>
+            </div>
+            <div class="col-8">
+              <input type="text" class="form-control" [(ngModel)]="products.batch_id" [disabled]="mode == 1">
+            </div>
+          </div>
+          <br />
+
+          <!-- Botones de acción -->
+          <div class="row">
+            <div class="col-4"></div>
+            <div class="col-8">
+              <button *ngIf="mode == 2" class="btn btn-success btn-block" (click)="create()">
+                Crear
+              </button>
+              <button *ngIf="mode == 3" class="btn btn-success btn-block" (click)="update()">
+                Actualizar
+              </button>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>

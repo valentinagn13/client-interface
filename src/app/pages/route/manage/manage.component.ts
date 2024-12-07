@@ -24,7 +24,7 @@ export class ManageComponent implements OnInit {
     private theFormBuilder: FormBuilder //* PARA ESTABLECER LAS REGLAS
   ) {
     this.route = { id: 0, startingPlace: "", endingPlace: "", distance: 0, deliveryDate: new Date() };
-    this.mode = 0;
+    this.mode = 1;
     this.trySend = false;
     this.configFormGroup(); //* CREAR AL POLICIA
   }
@@ -42,7 +42,7 @@ export class ManageComponent implements OnInit {
     if (this.activateRoute.snapshot.params.id) {
       //SI LA RUTA VIENE UN ID, SI VIENE ES EL ID DE UN TEATRO
       this.route.id = this.activateRoute.snapshot.params.id;
-      this.getTheater(this.route.id); //PARA QUE TRIGA LA FUNCION DE LISTAR SOLO UN TEATRO CON ESE ID
+      this.getRoute(this.route.id); //PARA QUE TRIGA LA FUNCION DE LISTAR SOLO UN TEATRO CON ESE ID
     }
   } //! lo del correo -importar validators
   configFormGroup() {
@@ -62,7 +62,7 @@ export class ManageComponent implements OnInit {
     //* para que devulva una variable
     return this.theFormGroup.controls; //DEVUELVE LOS CONTROLES
   }
-  getTheater(id: number) {
+  getRoute(id: number) {
     this.routeService.view(id).subscribe((data) => {
       this.route = data;
     });
