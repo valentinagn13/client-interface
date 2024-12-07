@@ -157,9 +157,19 @@ export const AdminLayoutRoutes: Routes = [
         //aqui conectamos con los componentes de Direccion
 
         loadChildren: () =>
-          import("src/app/pages/batch/batch.module").then(
-            (m) => m.BatchModule
-          ),
+          import("src/app/pages/batch/batch.module").then((m) => m.BatchModule),
+      },
+    ],
+  },
+  {
+    path: "contracts",
+    children: [
+      {
+        path: "",
+        //aqui conectamos con los componentes de Direccion
+
+        loadChildren: () =>
+          import("src/app/pages/contract/contract.module").then((m) => m.ContractModule),
       },
     ],
   },

@@ -1,0 +1,109 @@
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8"></div>
+<!-- Page content -->
+<div class="container-fluid mt--7">
+  <!-- Table -->
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header border-0">
+          <h1 *ngIf="mode == 1" class="mb-0">Visualizar</h1>
+          <h1 *ngIf="mode == 2" class="mb-0">Crear</h1>
+          <h1 *ngIf="mode == 3" class="mb-0">Actualizar</h1>
+        </div>
+        <form class="form" [formGroup]="theFormGroup">
+          <div class="card-body">
+
+            <!-- Campo id -->
+            <div class="row">
+              <div class="col-4">
+                <label>id:</label>
+              </div>
+              <div class="col-8">
+                <input type="text" class="form-control" disabled [(ngModel)]="contracts.id" formControlName="id">
+              </div>
+            </div>
+            <br />
+
+            <!-- Campo fecha inicio -->
+            <div class="row">
+              <div class="col-4">
+                <label>Fecha Inicio</label>
+              </div>
+              <div class="col-8">
+                <input type="date" class="form-control" [(ngModel)]="contracts.start_date" formControlName="start_date">
+                <div *ngIf="
+                  getTheFormGroup.start_date.errors &&
+                  (getTheFormGroup.start_date.dirty ||
+                    getTheFormGroup.start_date.touched ||
+                    trySend)
+                ">
+                  <strong *ngIf="getTheFormGroup.start_date.errors.required"
+                    class="msnError text-danger">Requerido</strong>
+                  <strong *ngIf="getTheFormGroup.start_date.errors.startDateInvalid" class="msnError text-success">La
+                    fecha de inicio debe ser igual o mayor a la fecha actual</strong>
+                </div>
+              </div>
+            </div>
+            <br />
+
+            <!-- Campo fecha fin -->
+            <div class="row">
+              <div class="col-4">
+                <label>Fecha Fin</label>
+              </div>
+              <div class="col-8">
+                <input type="date" class="form-control" [(ngModel)]="contracts.end_date" formControlName="end_date">
+                <div *ngIf="
+                  getTheFormGroup.end_date.errors &&
+                  (getTheFormGroup.end_date.dirty ||
+                    getTheFormGroup.end_date.touched ||
+                    trySend)
+                ">
+                  <strong *ngIf="getTheFormGroup.end_date.errors.required"
+                    class="msnError text-danger">Requerido</strong>
+                  <strong *ngIf="getTheFormGroup.end_date.errors.endDateInvalid" class="msnError text-success">La fecha
+                    de fin debe ser igual o mayor a la fecha de inicio</strong>
+                </div>
+              </div>
+            </div>
+            <br />
+
+            <!-- Campo cliente -->
+            <div class="row">
+              <div class="col-4">
+                <label>Cliente</label>
+              </div>
+              <div class="col-8">
+                <input type="text" class="form-control" [(ngModel)]="contracts.client_id" formControlName="client_id">
+                <div *ngIf="
+                              getTheFormGroup.client_id.errors &&
+                              (getTheFormGroup.client_id.dirty ||
+                                getTheFormGroup.client_id.touched ||
+                                trySend)
+                            ">
+                  <!-- si el form group location tine un error de requerido colocamos un mensaje de requerido -->
+                  <strong *ngIf="getTheFormGroup.client_id.errors.required"
+                    class="msnError text-danger">Requerido</strong>
+                </div>
+              </div>
+            </div>
+            <br>
+
+            <!-- Botones -->
+            <div class="row">
+              <div class="col-4"></div>
+              <div class="col-8">
+                <button *ngIf="mode == 2" class="btn btn-success btn-block" (click)="create()">
+                  Crear
+                </button>
+                <button *ngIf="mode == 3" class="btn btn-success btn-block" (click)="update()">
+                  Actualizar
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -47,29 +47,21 @@
           <br />
 
           <!-- Campo Fecha de vencimiento -->
-          <div class="row">
-            <div class="col-4">
-              <label>Fecha de vencimiento</label>
-            </div>
+          <div class="row mb-1">
+            <div class="col-4">Fecha:</div>
             <div class="col-8">
-              <!-- Usar solo formControlName para vincular el campo con el formulario reactivo -->
-              <input type="date" class="form-control" formControlName="expiration_date" />
-
-              <!-- Validaciones de fecha -->
-              <div *ngIf="
-                theFormGroup.get('expiration_date').errors &&
-                (theFormGroup.get('expiration_date').dirty || theFormGroup.get('expiration_date').touched || trySend)
-              ">
-                <!-- Error: Campo requerido -->
-                <strong *ngIf="theFormGroup.get('expiration_date').errors?.required" class="msnError text-danger">
-                  Requerido
-                </strong>
-                <!-- Error: Fecha no válida -->
-                <strong *ngIf="theFormGroup.get('expiration_date').errors?.startDateInvalid"
-                  class="msnError text-danger">
-                  La fecha debe ser igual o mayor a la fecha actual
-                </strong>
+              <input *ngIf="mode!=1" type="text" class="form-control" [(ngModel)]="products.expiration_date"
+                formControlName="date" />
+              <div>
+                <div
+                  *ngIf="getTheFormGroup.date.errors && (getTheFormGroup.date.dirty || getTheFormGroup.date.touched ||trySend)">
+                  <strong *ngIf="getTheFormGroup.date.errors.required" class="msnError">
+                    La fecha es requerida</strong>
+                  <strong *ngIf="getTheFormGroup.date.errors.minlength" class="msnError">Al menos 3 caracteres</strong>
+                  <strong *ngIf="getTheFormGroup.date.errors.maxlength" class="msnError">Máximo 50 caracteres</strong>
+                </div>
               </div>
+              <span *ngIf="mode == 1">{{products.expiration_date |date: 'dd/MM/yyyy'}}</span>
             </div>
           </div>
           <br />
