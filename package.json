@@ -34,8 +34,9 @@
     "ngx-toastr": "14.2.2",
     "nouislider": "15.5.1",
     "rxjs": "~7.5.0",
-    "zone.js": "~0.11.4",
-    "web-animations-js": "2.3.2"
+    "sweetalert2": "^11.14.5",
+    "web-animations-js": "2.3.2",
+    "zone.js": "~0.11.4"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^14.2.7",

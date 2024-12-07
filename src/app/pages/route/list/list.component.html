@@ -1,0 +1,51 @@
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8"></div>
+<!-- Page content -->
+<div class="container-fluid mt--7">
+    <!-- Table -->
+    <div class="row">
+        <div class="col">
+            <div class="card shadow">
+                <div class="card-header border-0">
+                    <h3 class="mb-0">Teatros</h3>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Id</th>
+                                <th scope="col">Inicio</th>
+                                <th scope="col">Final</th>
+                                <th scope="col">Distancia</th>
+                                <th scope="col">Fecha</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let actual of routes">
+                                <td>{{ actual.id }}</td>
+                                <td>{{ actual.startingPlace }}</td>
+                                <td>{{ actual.endingPlace }}</td>
+                                <td>{{ actual.distance }}</td>
+                                <td>{{ actual.deliveryDate | date: 'dd/MM/yyyy' }}</td>
+
+
+                                <td>
+                                    <button type="button" class="btn btn-success" (click)="view(actual.id)">
+                                        Ver
+                                    </button>
+
+                                    <button type="button" class="btn btn-warning" (click)="update(actual.id)">
+                                        Editar
+                                    </button>
+                                    <!-- llama al metodo de list component ts -->
+                                    <button type="button" class="btn btn-danger" (click)="delete(actual.id)">
+                                        Eliminar
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
