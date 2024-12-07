@@ -1,0 +1,64 @@
+import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
+import Swal from "sweetalert2";
+
+//Importaciones de la clase
+import { Batch } from "src/app/models/batch.model";
+import { BatchService } from "src/app/services/batch.service";
+
+@Component({
+  selector: "app-manage",
+  templateUrl: "./manage.component.html",
+  styleUrls: ["./manage.component.css"],
+})
+export class ManageComponent implements OnInit {
+  mode: number; //1->View, 2->Create, 3->Update
+  batch: Batch;
+
+  constructor(
+    private activateRoute: ActivatedRoute,
+    private router: Router,
+    private batchService: BatchService
+  ) {
+    this.mode = 1;
+    this.batch = { id: 0, weight: "", route_id: 0, addre_route_orders: 0 };
+  }
+
+  ngOnInit(): void {
+    const currentUrl = this.activateRoute.snapshot.url.join("/");
+    if (currentUrl.includes("view")) {
+      this.mode = 1;
+    } else if (currentUrl.includes("create")) {
+      this.mode = 2;
+    } else if (currentUrl.includes("update")) {
+      this.mode = 3;
+    }
+    if (this.activateRoute.snapshot.params.id) {
+      this.batch.id = this.activateRoute.snapshot.params.id;
+      this.getBatch(this.batch.id);
+    }
+  }
+
+  create() {
+    console.log(JSON.stringify(this.batch));
+    this.batchService.create(this.batch).subscribe((data) => {
+      Swal.fire("Creado", " se ha creado exitosa mente", "success"); //tirulo a la alerta
+      this.router.navigate(["batches/list"]);
+    });
+  }
+
+  update() {
+    console.log(JSON.stringify(this.batch));
+    this.batchService.update(this.batch).subscribe((data) => {
+      Swal.fire("Actualizado", " se ha actualizado exitosa mente", "success"); //titulo a la alerta
+      this.router.navigate(["batches/list"]);
+    });
+  }
+
+  getBatch(id: number) {
+    this.batchService.view(id).subscribe((data) => {
+      this.batch = data;
+      console.log(JSON.stringify(this.batch));
+    });
+  }
+}
