@@ -18,7 +18,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   imports: [
     CommonModule,
     RouterModule.forChild(AdminLayoutRoutes),
-    FormsModule,
+    FormsModule,//importante ese para que funcione la conexion con el html
     HttpClientModule,
     NgbModule,
     ClipboardModule

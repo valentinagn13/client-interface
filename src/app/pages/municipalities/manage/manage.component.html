@@ -1,0 +1,98 @@
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8"></div>
+<!-- Page content -->
+<div class="container-fluid mt--7">
+    <!-- Table -->
+    <div class="row">
+        <div class="col">
+            <div class="card shadow">
+                <div class="card-header border-0">
+                    <h1 *ngIf="mode == 1" class="mb-0">Visualizar</h1>
+                    <h1 *ngIf="mode == 2" class="mb-0">Crear</h1>
+                    <h1 *ngIf="mode == 3" class="mb-0">Actualizar</h1>
+                </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-4">
+                                <label>id:</label>
+                            </div>
+                            <div class="col-8">
+                                <input type="text" class="form-control" disabled [(ngModel)]="municipality.id"  > 
+                            </div>
+                        </div>
+
+                        <br />
+                        <div class="row">
+                            <div class="col-4">
+                                <label>Nombre</label>
+                            </div>
+                            <div class="col-8">
+                                <input type="text" class="form-control" [(ngModel)]="municipality.name" [disabled] = "mode == 1"> 
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-4">
+                                <label>Descripcion</label>
+                            </div>
+                            <div class="col-8">
+                                <input type="text" class="form-control" [(ngModel)]="municipality.description" [disabled] = "mode == 1"> 
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-4">
+                                <label>Superficie:</label>
+                            </div>
+                            <div class="col-8">
+                                <input type="text" class="form-control" [(ngModel)]="municipality.surface" [disabled] = "mode == 1">  
+                            </div>
+                        </div>
+
+                        <br />
+                        <div class="row">
+                            <div class="col-4">
+                                <label>Población</label>
+                            </div>
+                            <div class="col-8">
+                                <input type="text" class="form-control" [(ngModel)]="municipality.population" [disabled] = "mode == 1">
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-4">
+                                <label>Código Postal</label>
+                            </div>
+                            <div class="col-8">
+                                <input type="text" class="form-control" [(ngModel)]="municipality.postalCode" [disabled] = "mode == 1"> 
+
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-4">
+                                <label>Departamento_id</label>
+                            </div>
+                            <div class="col-8">
+                                <input type="text" class="form-control" [(ngModel)]="municipality.department_id" [disabled] = "mode == 1">                      
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-4"></div>
+                            <div class="col-8">
+                                <!-- <button *ngIf="mode == 1" class="btn btn-success btn-block" (click)="view()">
+                                    Visualizar
+                                </button> -->
+                                <button *ngIf="mode == 2" class="btn btn-success btn-block" (click)="create()">
+                                    Crear
+                                </button>
+                                <button *ngIf="mode == 3" class="btn btn-success btn-block" (click)="update()">
+                                    Actualizar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>

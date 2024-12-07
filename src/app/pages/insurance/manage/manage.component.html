@@ -1,0 +1,149 @@
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8"></div>
+<!-- Page content -->
+<div class="container-fluid mt--7">
+    <!-- Table -->
+    <div class="row">
+        <div class="col">
+            <div class="card shadow">
+                <div class="card-header border-0">
+                    <h1 *ngIf="mode == 1" class="mb-0">Visualizar</h1>
+                    <h1 *ngIf="mode == 2" class="mb-0">Crear</h1>
+                    <h1 *ngIf="mode == 3" class="mb-0">Actualizar</h1>
+                </div>
+                <form class="form" [formGroup]="theFormGroup">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-4">
+                                <label>id:</label>
+                            </div>
+                            <div class="col-8">
+                                <input type="text" class="form-control" disabled [(ngModel)]="insurances.id"
+                                formControlName="id"  > 
+                            </div>
+                        </div>
+
+                        <br />
+                        <div class="row">
+                            <div class="col-4">
+                                <label>Fecha Inicio</label>
+                            </div>
+                            <div class="col-8">
+                                <input type="date" class="form-control" [(ngModel)]="insurances.start_date" formControlName="start_date"> 
+                                <div *ngIf="
+                                getTheFormGroup.start_date.errors &&
+                                (getTheFormGroup.start_date.dirty ||
+                                  getTheFormGroup.start_date.touched ||
+                                  trySend)
+                              ">
+                              <!-- si el form group location tine un error de requerido colocamos un mensaje de requerido -->
+                                                <strong *ngIf="getTheFormGroup.start_date.errors.required"
+                                                    class="msnError text-danger">Requerido</strong>
+                                                    <!-- si tiene un erro de longitud minima entonces colocamos el error -->
+                                                    <strong *ngIf="getTheFormGroup.start_date.errors.startDateInvalid" class="msnError text-success">La fecha de inicio debe ser igual o mayor a la fecha actual</strong>
+                                            </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-4">
+                                <label>Fecha Fin</label>
+                            </div>
+                            <div class="col-8">
+                                <input type="date" class="form-control" [(ngModel)]="insurances.end_date"
+                                formControlName="end_date" > 
+                            </div>
+                            <div *ngIf="
+                              getTheFormGroup.end_date.errors &&
+                              (getTheFormGroup.end_date.dirty ||
+                                getTheFormGroup.end_date.touched ||
+                                trySend)
+                            ">
+                            <!-- validar si la capacidad es menor que el minimo -->
+                                            <strong *ngIf="getTheFormGroup.end_date.errors.required" class="msnError text-danger">Requerido</strong>
+                                            <strong *ngIf="getTheFormGroup.end_date.errors.endDateInvalid" class="msnError text-succes">La fecha de fin debe ser igual o mayor a la fecha actual</strong>
+                                            <strong *ngIf="getTheFormGroup.end_date.errors.startDateAfterEndDate" class="msnError text-succes">La fecha de inicio debe ser menor que la fecha de fin</strong>
+                                        </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-4">
+                                <label>Tipo Seguro</label>
+                            </div>
+                            <div class="col-8">
+                                <input type="text" class="form-control" [(ngModel)]="insurances.insurance_type" 
+                                formControlName="insurance_type"> 
+                                <div *ngIf="
+                                getTheFormGroup.insurance_type.errors &&
+                                (getTheFormGroup.insurance_type.dirty ||
+                                  getTheFormGroup.insurance_type.touched ||
+                                  trySend)
+                              ">
+                              <!-- si el form group location tine un error de requerido colocamos un mensaje de requerido -->
+                                                <strong *ngIf="getTheFormGroup.insurance_type.errors.required"
+                                                    class="msnError text-danger">Requerido</strong>
+                                                    <!-- si tiene un erro de longitud minima entonces colocamos el error -->
+                                                    <strong *ngIf="getTheFormGroup.insurance_type.errors.pattern" class="msnError text-primary">Solo se permiten letras y números</strong>
+                                            </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-4">
+                                <label>Compania de Seguros</label>
+                            </div>
+                            <div class="col-8">
+                                <input type="text" class="form-control" [(ngModel)]="insurances.insurance_company" formControlName="insurance_company">
+                                <div *ngIf="
+                            getTheFormGroup.insurance_company.errors &&
+                            (getTheFormGroup.insurance_company.dirty ||
+                              getTheFormGroup.insurance_company.touched ||
+                              trySend)
+                          ">
+                          <!-- si el form group location tine un error de requerido colocamos un mensaje de requerido -->
+                                            <strong *ngIf="getTheFormGroup.insurance_company.errors.required"
+                                                class="msnError text-danger">Requerido</strong>
+                                                <!-- si tiene un erro de longitud minima entonces colocamos el error -->
+                                                <strong *ngIf="getTheFormGroup.insurance_company.errors.pattern" class="msnError text-primary">Solo se permiten letras y números</strong>
+                                        </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-4">
+                                <label>Vehículo_id</label>
+                            </div>
+                            <div class="col-8">
+                                <input type="text" class="form-control" [(ngModel)]="insurances.vehicle_id" formControlName="vehicle_id">
+                                <div *ngIf="
+                            getTheFormGroup.vehicle_id.errors &&
+                            (getTheFormGroup.vehicle_id.dirty ||
+                              getTheFormGroup.vehicle_id.touched ||
+                              trySend)
+                          ">
+                          <!-- si el form group location tine un error de requerido colocamos un mensaje de requerido -->
+                                            <strong *ngIf="getTheFormGroup.vehicle_id.errors.required"
+                                                class="msnError text-danger">Requerido</strong>
+                                        </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-4"></div>
+                            <div class="col-8">
+                                <!-- <button *ngIf="mode == 1" class="btn btn-success btn-block" (click)="view()">
+                                    Visualizar
+                                </button> -->
+                                <button *ngIf="mode == 2" class="btn btn-success btn-block" (click)="create()">
+                                    Crear
+                                </button>
+                                <button *ngIf="mode == 3" class="btn btn-success btn-block" (click)="update()">
+                                    Actualizar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
