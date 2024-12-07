@@ -1,0 +1,68 @@
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8"></div>
+<!-- page content -->
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header bg-transparent">
+          <div class="row">
+            <div class="col-3"></div>
+          </div>
+          <h3 class="mb=0">Conductorees</h3>
+        </div>
+        <div class="col-6"></div>
+        <div class="col-3">
+          <button type="button" class="btn btn-success" (click)="create()">
+            Crear
+          </button>
+        </div>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col-1">ID</th>
+                <th scope="col-2">Numero de licencia</th>
+                <th scope="col-3">Fecha de expiración</th>
+                <th scope="col-2">numero de celular</th>
+                <th scope="col-2">id de usuario</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let dri of driver">
+                <td>{{ dri.id }}</td>
+                <td>{{ dri.license_number }}</td>
+                <td>{{ dri.expiration_date }}</td>
+                <td>{{ dri.phone_number }}</td>
+                <td>{{ dri.user_id }}</td>
+                <td>
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    (click)="view(dri.id)"
+                  >
+                    Ver
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-warning"
+                    (click)="update(dri.id)"
+                  >
+                    Actualizar
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-danger"
+                    (click)="delete(dri.id)"
+                  >
+                    Eliminar
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

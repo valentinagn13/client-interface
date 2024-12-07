@@ -1,0 +1,72 @@
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8"></div>
+<!-- page content -->
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header bg-transparent">
+          <div class="row">
+            <div class="col-3"></div>
+          </div>
+          <h3 class="mb=0">Facturas</h3>
+        </div>
+        <div class="col-6"></div>
+        <div class="col-3">
+          <button type="button" class="btn btn-success" (click)="create()">
+            Crear
+          </button>
+        </div>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col-1">ID</th>
+                <th scope="col-2">Fecha</th>
+                <th scope="col-3">Total</th>
+                <th scope="col-2">Estado</th>
+                <th scope="col-2">Numero de cuota</th>
+                                <th scope="col-2">Numero de gasto</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let dri of invoice">
+                <td>{{ dri.id }}</td>
+                <td>{{ dri.date }}</td>
+                <td>{{ dri.total }}</td>
+                <td>{{ dri.status }}</td>
+                <td>{{ dri.quota_id }}</td>
+                <td>{{ dri.expense_id }}</td>
+
+                <td>
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    (click)="view(dri.id)"
+                  >
+                    Ver
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-warning"
+                    (click)="update(dri.id)"
+                  >
+                    Actualizar
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-danger"
+                    (click)="delete(dri.id)"
+                  >
+                    Eliminar
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
