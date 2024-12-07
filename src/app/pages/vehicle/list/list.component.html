@@ -1,0 +1,52 @@
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
+</div>
+  <!-- page content -->
+<div class="container-fluid mt--7">
+<div class="row">
+    <div class="col">
+        <div class="card shadow">
+            <div class="card-header bg-transparent">
+                <div class="row">
+                    <div class="col-3">
+                    </div>
+                </div>
+                <h3 class="mb=0">Vehículos</h3>
+            </div>
+            <div class="col-6">
+            </div>
+            <div class="col-3">
+                <button type="button" class="btn btn-success" (click) ="create()">Crear</button>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col-1">ID</th>
+                            <th scope="col-2">Placa vehiculo</th>
+                            <th scope="col-3">Modelo</th>
+                            <th scope="col-2">Capacidad</th>
+                            <th scope="col-2">Tipo carga</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let veh of vehicles">
+                            <td>{{ veh.id }}</td>
+                            <td>{{ veh.license_plate }}</td>
+                            <td>{{ veh.model }}</td>
+                            <td>{{ veh.capacity }}</td>
+                            <td>{{ veh.cargo_type }}</td>
+                            <td>
+                                <button type="button" class="btn btn-primary" (click)="view(veh.id)">Ver</button>
+                                <button type="button" class="btn btn-warning" (click)="update(veh.id)">Actualizar</button>
+                                <button type="button" class="btn btn-danger" (click)="delete(veh.id)">Eliminar</button>
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>  
+</div>
