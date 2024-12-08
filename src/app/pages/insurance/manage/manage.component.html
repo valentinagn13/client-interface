@@ -38,7 +38,6 @@
                                                 <strong *ngIf="getTheFormGroup.start_date.errors.required"
                                                     class="msnError text-danger">Requerido</strong>
                                                     <!-- si tiene un erro de longitud minima entonces colocamos el error -->
-                                                    <strong *ngIf="getTheFormGroup.start_date.errors.startDateInvalid" class="msnError text-success">La fecha de inicio debe ser igual o mayor a la fecha actual</strong>
                                             </div>
                             </div>
                         </div>
@@ -59,8 +58,6 @@
                             ">
                             <!-- validar si la capacidad es menor que el minimo -->
                                             <strong *ngIf="getTheFormGroup.end_date.errors.required" class="msnError text-danger">Requerido</strong>
-                                            <strong *ngIf="getTheFormGroup.end_date.errors.endDateInvalid" class="msnError text-succes">La fecha de fin debe ser igual o mayor a la fecha actual</strong>
-                                            <strong *ngIf="getTheFormGroup.end_date.errors.startDateAfterEndDate" class="msnError text-succes">La fecha de inicio debe ser menor que la fecha de fin</strong>
                                         </div>
                         </div>
                         <br />

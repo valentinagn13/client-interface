@@ -10,13 +10,15 @@
                     <h1 *ngIf="mode == 2" class="mb-0">Crear</h1>
                     <h1 *ngIf="mode == 3" class="mb-0">Actualizar</h1>
                 </div>
+                <form class="form" [formGroup]="theFormGroup">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-4">
                                 <label>id:</label>
                             </div>
                             <div class="col-8">
-                                <input type="number" class="form-control" disabled [(ngModel)]="owners.id"  > 
+                                <input type="number" class="form-control" [(ngModel)]="owners.id"  
+                                formControlName="id"> 
                             </div>
                         </div>
 
@@ -26,7 +28,18 @@
                                 <label>Usuario_Id</label>
                             </div>
                             <div class="col-8">
-                                <input type="text" class="form-control" [(ngModel)]="owners.user_id" [disabled] = "mode == 1"> 
+                                <input type="text" class="form-control" [(ngModel)]="owners.user_id" formControlName="user_id">
+                                
+                                <div *ngIf="
+                                getTheFormGroup.user_id.errors &&
+                                (getTheFormGroup.user_id.dirty ||
+                                  getTheFormGroup.user_id.touched ||
+                                  trySend)
+                              ">
+                              <!-- si el form group location tine un error de requerido colocamos un mensaje de requerido -->
+                                                <strong *ngIf="getTheFormGroup.user_id.errors.required"
+                                                    class="msnError text-danger">Requerido</strong>
+                                            </div>
                             </div>
                         </div>
                         <br />
@@ -35,7 +48,20 @@
                                 <label>Telefono</label>
                             </div>
                             <div class="col-8">
-                                <input type="number" class="form-control" [(ngModel)]="owners.phone_number" [disabled] = "mode == 1"> 
+                                <input type="number" class="form-control" [(ngModel)]="owners.phone_number" 
+                                formControlName="phone_number"> 
+                                <div *ngIf="
+                                getTheFormGroup.phone_number.errors &&
+                                (getTheFormGroup.phone_number.dirty ||
+                                  getTheFormGroup.phone_number.touched ||
+                                  trySend)
+                              ">
+    
+                                                <strong *ngIf="getTheFormGroup.phone_number.errors.required"
+                                                    class="msnError text-danger">Requerido</strong>
+                                                    <!-- si tiene un erro de longitud minima entonces colocamos el error -->
+                                                    <strong *ngIf="getTheFormGroup.phone_number.errors.max" class="msnError text-success">El numero de telefono debe tener maximo 10 números</strong>
+                                            </div>
                             </div>
                         </div>
                         <br />
@@ -44,7 +70,20 @@
                                 <label>Conductor_Id:</label>
                             </div>
                             <div class="col-8">
-                                <input type="number" class="form-control" [(ngModel)]="owners.driver_id" [disabled] = "mode == 1">  
+                                <input type="number" class="form-control" [(ngModel)]="owners.driver_id" 
+                                formControlName="driver_id">
+                                <div *ngIf="
+                                getTheFormGroup.driver_id.errors &&
+                                (getTheFormGroup.driver_id.dirty ||
+                                  getTheFormGroup.driver_id.touched ||
+                                  trySend)
+                              ">
+                              <!-- si el form group location tine un error de requerido colocamos un mensaje de requerido -->
+                                                <strong *ngIf="getTheFormGroup.driver_id.errors.required"
+                                                    class="msnError text-danger">Requerido</strong>
+                                                    <!-- si tiene un erro de longitud minima entonces colocamos el error -->
+                                                    <strong *ngIf="getTheFormGroup.driver_id.errors.pattern" class="msnError text-success">Solo se aceptan caracteres numericos</strong>
+                                            </div>  
                             </div>
                         </div>
                         <br>
@@ -63,6 +102,7 @@
                             </div>
                         </div>
                     </div>
+                    </form>
             </div>
         </div>
     </div>

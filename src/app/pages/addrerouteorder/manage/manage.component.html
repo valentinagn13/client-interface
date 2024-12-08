@@ -24,15 +24,15 @@
                         <br />
                         <div class="row">
                             <div class="col-4">
-                                <label>Fecha de adquisicion</label>
+                                <label>Dirección Id</label>
                             </div>
                             <div class="col-8">
                                 <input type="number" class="form-control" [(ngModel)]="AddreRouteOrder.address_id" formControlName="address_id"> 
 
                                 <div *ngIf="
-                                getTheFormGroup.acquisition_date.errors &&
-                                (getTheFormGroup.acquisition_date.dirty ||
-                                  getTheFormGroup.acquisition_date.touched ||
+                                getTheFormGroup.address_id.errors &&
+                                (getTheFormGroup.address_id.dirty ||
+                                  getTheFormGroup.address_id.touched ||
                                   trySend)
                               ">
                               <!-- si el form group location tine un error de requerido colocamos un mensaje de requerido --><strong *ngIf="getTheFormGroup.address_id.errors.required"
@@ -47,7 +47,7 @@
                 
                         <div class="row">
                             <div class="col-4">
-                                <label>Dueño_id:</label>
+                                <label>Ruta Id</label>
                             </div>
                             <div class="col-8">
                                 <input type="number" class="form-control" [(ngModel)]="AddreRouteOrder.route_id" formControlName="route_id">
@@ -58,9 +58,9 @@
                                   trySend)
                               ">
                               <!-- si el form group location tine un error de requerido colocamos un mensaje de requerido -->
-                                                <strong *ngIf="getTheFormGroup.owner_id.errors.required"
+                                                <strong *ngIf="getTheFormGroup.route_id.errors.required"
                                                     class="msnError text-danger">Requerido</strong>
-                                                    <strong *ngIf="getTheFormGroup.owner_id.errors.pattern" class="msnError text-success">El valor debe ser un valor numérico</strong>
+                                                    <strong *ngIf="getTheFormGroup.route_id.errors.pattern" class="msnError text-success">El valor debe ser un valor numérico</strong>
                                             </div>  
                             </div>
                         </div>                        

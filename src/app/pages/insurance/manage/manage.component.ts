@@ -74,7 +74,6 @@ export class ManageComponent implements OnInit {
     const fechainicioDate = new Date(fechaInicio);
     const fechafinDate = new Date(fechafin);
     const fechaActual = new Date();
-    fechaActual.setHours(0, 0, 0, 0);
 
     console.log("fecha inicio", fechaInicio);
     console.log("fecha final", fechafin);
@@ -109,11 +108,11 @@ export class ManageComponent implements OnInit {
 
       // Formatear las fechas antes de asignarlas
       const formattedStartDate = datePipe.transform(
-        this.insurances.start_date,
+        data.start_date,
         "yyyy-MM-dd"
       );
       const formattedEndDate = datePipe.transform(
-        this.insurances.end_date,
+        data.end_date,
         "yyyy-MM-dd"
       );
       this.insurances = data;
