@@ -26,10 +26,11 @@ export class ManageComponent implements OnInit {
     this.route = { id: 0, startingPlace: "", endingPlace: "", distance: 0, deliveryDate: new Date() };
     this.mode = 1;
     this.trySend = false;
-    this.configFormGroup(); //* CREAR AL POLICIA
+   
   }
   // TOMAR LA FOTO DE LA URL PARTIRLA POR CADA / UNA LISTA CON TODA LA RUTA
   ngOnInit(): void {
+    this.configFormGroup(); //* CREAR AL POLICIA
     const currentUrl = this.activateRoute.snapshot.url.join("/");
     if (currentUrl.includes("view")) {
       //LA LISTA INCLUYE LA PALABRA VIW. sI? ES POR QUE QUIERE VISUALIZAR . no? ENTONCES...
@@ -50,6 +51,8 @@ export class ManageComponent implements OnInit {
     this.theFormGroup = this.theFormBuilder.group({
       // primer elemento del vector, valor por defecto
       // lista, serán las reglas
+      id:[this.route.id || 0],
+      startingPlace: ["", [Validators.required, Validators.minLength(2)]],
       capacity: [
         0,
         [Validators.required, Validators.min(1), Validators.max(100)], //* 0 PRIMER ELEMENTO EN EL VECTOR VALOR POR DEFECTO QUE PUEDE TENER LA CAPACIDAD
