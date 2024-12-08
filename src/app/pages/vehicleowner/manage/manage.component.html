@@ -1,0 +1,149 @@
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8"></div>
+<!-- Page content -->
+<div class="container-fluid mt--7">
+    <!-- Table -->
+    <div class="row">
+        <div class="col">
+            <div class="card shadow">
+                <div class="card-header border-0">
+                    <h1 *ngIf="mode == 1" class="mb-0">Visualizar</h1>
+                    <h1 *ngIf="mode == 2" class="mb-0">Crear</h1>
+                    <h1 *ngIf="mode == 3" class="mb-0">Actualizar</h1>
+                </div>
+                <form class="form" [formGroup]="theFormGroup">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-4">
+                                <label>id:</label>
+                            </div>
+                            <div class="col-8">
+                                <input type="number" class="form-control" disabled [(ngModel)]="vehicleOwners.id" formControlName="id"> 
+                            </div>
+                        </div>
+
+                        <br />
+                        <div class="row">
+                            <div class="col-4">
+                                <label>Fecha de adquisicion</label>
+                            </div>
+                            <div class="col-8">
+                                <input type="date" class="form-control" [(ngModel)]="vehicleOwners.acquisition_date" formControlName="acquisition_date"> 
+
+                                <div *ngIf="
+                                getTheFormGroup.acquisition_date.errors &&
+                                (getTheFormGroup.acquisition_date.dirty ||
+                                  getTheFormGroup.acquisition_date.touched ||
+                                  trySend)
+                              ">
+                              <!-- si el form group location tine un error de requerido colocamos un mensaje de requerido -->
+                                                <strong *ngIf="getTheFormGroup.acquisition_date.errors.required"
+                                                    class="msnError text-danger">Requerido</strong>
+                                                   
+                                            </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-4">
+                              <label>Porcentaje de Comisión</label>
+                            </div>
+                            <div class="col-8">
+                                <div class="input-group">
+                                  <!-- Campo de entrada alineado a la izquierda -->
+                                  <input type="number" 
+                                         class="form-control text-left" 
+                                         [(ngModel)]="vehicleOwners.ownership_percentage"
+                                         formControlName="ownership_percentage"
+                                         [min]="0" 
+                                         [max]="100">
+                                  
+                                  <!-- Botones en forma de flecha -->
+                                  <div class="input-group-append d-flex flex-column">
+                                    <button class="btn btn-outline-secondary py-0" type="button" (click)="incrementPercentage()" title="Incrementar">
+                                      &#x25B2; <!-- Flecha hacia arriba -->
+                                    </button>
+                                    <button class="btn btn-outline-secondary py-0 mt-1" type="button" (click)="decrementPercentage()" title="Decrementar">
+                                      &#x25BC; <!-- Flecha hacia abajo -->
+                                    </button>
+                                  </div>
+                                </div>
+                            
+                             
+                                
+                                <div *ngIf="
+                                getTheFormGroup.ownership_percentage.errors &&
+                                (getTheFormGroup.ownership_percentage.dirty ||
+                                  getTheFormGroup.ownership_percentage.touched ||
+                                  trySend)
+                              ">
+                              <!-- si el form group location tine un error de requerido colocamos un mensaje de requerido -->
+                                                <strong *ngIf="getTheFormGroup.ownership_percentage.errors.required"
+                                                    class="msnError text-danger">Requerido</strong>
+                                                    <!-- si tiene un erro de longitud minima entonces colocamos el error -->
+                                                    <strong *ngIf="getTheFormGroup.ownership_percentage.errors.min" class="msnError text-success">El valor debe ser un valor igual o mayor a 0 </strong>
+                                                    <strong *ngIf="getTheFormGroup.ownership_percentage.errors.max" class="msnError text-success">El valor debe ser un valor menor o igual a 100 </strong>
+                                                    <strong *ngIf="getTheFormGroup.ownership_percentage.errors.pattern" class="msnError text-success">El valor debe ser un valor numérico</strong>
+                                            </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-4">
+                                <label>Dueño_id:</label>
+                            </div>
+                            <div class="col-8">
+                                <input type="number" class="form-control" [(ngModel)]="vehicleOwners.owner_id" formControlName="owner_id">
+                                <div *ngIf="
+                                getTheFormGroup.owner_id.errors &&
+                                (getTheFormGroup.owner_id.dirty ||
+                                  getTheFormGroup.owner_id.touched ||
+                                  trySend)
+                              ">
+                              <!-- si el form group location tine un error de requerido colocamos un mensaje de requerido -->
+                                                <strong *ngIf="getTheFormGroup.owner_id.errors.required"
+                                                    class="msnError text-danger">Requerido</strong>
+                                                    <strong *ngIf="getTheFormGroup.owner_id.errors.pattern" class="msnError text-success">El valor debe ser un valor numérico</strong>
+                                            </div>  
+                            </div>
+                        </div>
+
+                        <br />
+                        <div class="row">
+                            <div class="col-4">
+                                <label>Vehiculo Id</label>
+                            </div>
+                            <div class="col-8">
+                                <input type="number" class="form-control" [(ngModel)]="vehicleOwners.vehicle_id"formControlName="vehicle_id">
+                                <div *ngIf="
+                                getTheFormGroup.vehicle_id.errors &&
+                                (getTheFormGroup.vehicle_id.dirty ||
+                                  getTheFormGroup.vehicle_id.touched ||
+                                  trySend)
+                              ">
+                              <!-- si el form group location tine un error de requerido colocamos un mensaje de requerido -->
+                                                <strong *ngIf="getTheFormGroup.vehicle_id.errors.required"
+                                                    class="msnError text-danger">Requerido</strong>
+                                                    <!-- si tiene un erro de longitud minima entonces colocamos el error -->
+                                                    <strong *ngIf="getTheFormGroup.vehicle_id.errors.pattern" class="msnError text-success">El valor debe ser un valor numérico</strong>
+                                            </div>
+                            </div>
+                        </div>
+                        <br>
+                       
+                        <div class="row">
+                            <div class="col-4"></div>
+                            <div class="col-8">
+                                <button *ngIf="mode == 2" class="btn btn-success btn-block" (click)="create()">
+                                    Crear
+                                </button>
+                                <button *ngIf="mode == 3" class="btn btn-success btn-block" (click)="update()">
+                                    Actualizar
+                                </button>
+                            </div>
+                        </div>
+                    </div>     
+                </form>    
+            </div>
+        </div>
+    </div>
+</div>

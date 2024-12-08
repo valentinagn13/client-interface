@@ -6,6 +6,7 @@ import { MapsComponent } from '../../pages/maps/maps.component';
 import { UserProfileComponent } from '../../pages/user-profile/user-profile.component';
 import { TablesComponent } from '../../pages/tables/tables.component';
 
+//./generate-crud.sh administrator comando para crear todas las carpetas
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
     { path: 'user-profile',   component: UserProfileComponent },
@@ -99,5 +100,39 @@ export const AdminLayoutRoutes: Routes = [
         loadChildren: () => import('src/app/pages/owner/owner.module').then(m => m.OwnerModule)
       }
     ]
+},
+{
+  path:"quotas",
+  children: [
+      {
+        path: '',
+        //aqui conectamos con los componentes de Direccion
+        
+        loadChildren: () => import('src/app/pages/quota/quota.module').then(m => m.QuotaModule)
+      }
+    ]
+},
+{
+  path:"vehicleOwners",
+  children: [
+      {
+        path: '',
+        //aqui conectamos con los componentes de Direccion
+        
+        loadChildren: () => import('src/app/pages/vehicleowner/vehicleowner.module').then(m => m.VehicleownerModule)
+      }
+    ]
+},
+{
+  path:"addreRouteOrders",
+  children: [
+      {
+        path: '',
+        //aqui conectamos con los componentes de Direccion
+        
+        loadChildren: () => import('src/app/pages/addrerouteorder/addrerouteorder.module').then(m => m.AddrerouteorderModule)
+      }
+    ]
 }
+
 ];

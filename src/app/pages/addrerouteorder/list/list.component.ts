@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Insurance } from 'src/app/models/insurance.model';
-import { InsuranceService } from 'src/app/services/insurance.service';
+import { Addrerouteorder } from 'src/app/models/addrerouteorder.model';
+import { AddrerouteorderService } from 'src/app/services/addrerouteorder.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -10,12 +10,11 @@ import Swal from 'sweetalert2';
   styleUrls: ['./list.component.css']
 })
 export class ListComponent implements OnInit {
-
-
-  insurances: Insurance[];
   
-  constructor(private service: InsuranceService, private router: Router) { 
-     this.insurances = [];
+  AddreRouteOrder: Addrerouteorder[];
+  
+  constructor(private service:  AddrerouteorderService, private router: Router) { 
+     this.AddreRouteOrder = [];
   }
 
   //este es el primero que se llama igual que contructor pero cuando hay cambios en los componentes 
@@ -28,29 +27,30 @@ export class ListComponent implements OnInit {
   view(id: number) {
     console.log("aqui estoy en view");
     
-    this.router.navigate(["insurances/view/" + id]);
+    this.router.navigate(["addreRouteOrders/view/" + id]);
   }
 
   update(id: number) {
-    this.router.navigate(["insurances/update/" + id]);
+    this.router.navigate(["addreRouteOrders/update/" + id]);
   }
 
   list(): void {
     this.service.list().subscribe((data) => {
-      this.insurances = data
-      console.log(JSON.stringify(data));
+      
+      this.AddreRouteOrder = data
 
+      //console.log(JSON.stringify(data["data"]));
     });
   }
 
   create(){
-    this.router.navigate(["insurances/create"]);
+    this.router.navigate(["addreRouteOrders/create"]);
   }
 
   delete(id: number) {
     Swal.fire({
-      title: "Eliminar Seguro",
-      text: "¿Estas seguro de eliminar EL Seguro?",
+      title: "Eliminar Orden-Direccion-Ruta",
+      text: "¿Estas seguro de eliminar la Orden-Direccion-Ruta?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -62,7 +62,7 @@ export class ListComponent implements OnInit {
         this.service.delete(id).subscribe((data) => {
           Swal.fire(
             "Eliminado!",
-            "El Seguro ha sido eliminado.",
+            "La Orden-Direccion-Ruta ha sido eliminada.",
             "success"
           );
           
@@ -71,6 +71,5 @@ export class ListComponent implements OnInit {
       }
     });
   }
-
 
 }

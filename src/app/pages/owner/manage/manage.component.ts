@@ -35,7 +35,7 @@ export class ManageComponent implements OnInit {
     }
     if(this.activateRoute.snapshot.params.id){
       this.owners.id = this.activateRoute.snapshot.params.id;
-      this.getVehicle(this.owners.id);
+      this.getOwner(this.owners.id);
     }
 
   }
@@ -60,7 +60,7 @@ export class ManageComponent implements OnInit {
 
 
     //aqui se arma la data
-    getVehicle(id:number){
+    getOwner(id:number){
       this.vehiclesService.view(id).subscribe(data=>{
         this.owners = data;   
         //console.log(data['cliente']+ "machio aqui estoy");
