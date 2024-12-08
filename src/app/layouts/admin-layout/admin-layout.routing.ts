@@ -169,7 +169,21 @@ export const AdminLayoutRoutes: Routes = [
         //aqui conectamos con los componentes de Direccion
 
         loadChildren: () =>
-          import("src/app/pages/contract/contract.module").then((m) => m.ContractModule),
+          import("src/app/pages/contract/contract.module").then(
+            (m) => m.ContractModule
+          ),
+      },
+    ],
+  },
+  {
+    path: "people",
+    children: [
+      {
+        path: "",
+        loadChildren: () =>
+          import("src/app/pages/naturalperson/naturalperson.module").then(
+            (m) => m.NaturalpersonModule
+          ),
       },
     ],
   },
