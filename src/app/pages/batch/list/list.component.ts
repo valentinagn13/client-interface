@@ -6,7 +6,6 @@ import Swal from "sweetalert2";
 import { Batch } from 'src/app/models/batch.model';
 import { BatchService } from 'src/app/services/batch.service';
 
-
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
