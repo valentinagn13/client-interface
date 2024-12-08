@@ -1,7 +1,7 @@
-import { Insurace } from './insurance.model';
+import { Insurance } from './insurance.model';
 
 describe('Insurace', () => {
   it('should create an instance', () => {
-    expect(new Insurace()).toBeTruthy();
+    expect(new Insurance()).toBeTruthy();
   });
 });

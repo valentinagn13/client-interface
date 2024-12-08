@@ -1,0 +1,123 @@
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8"></div>
+<!-- Page content -->
+<div class="container-fluid mt--7">
+    <!-- Table -->
+    <div class="row">
+        <div class="col">
+            <div class="card shadow">
+                <div class="card-header border-0">
+                    <h1 *ngIf="mode == 1" class="mb-0">Visualizar</h1>
+                    <h1 *ngIf="mode == 2" class="mb-0">Crear</h1>
+                    <h1 *ngIf="mode == 3" class="mb-0">Actualizar</h1>
+                </div>
+                <!-- CONFIGURAR EL FORMGROUP -->
+
+                <form class="form" [formGroup]="theFormGroup">
+                    <div class="card-body">
+                        <div class="row">
+            <div class="col-4">
+              <label>id:</label>
+            </div>
+            <div class="col-8">
+<!-- <input type="text" class="form-control" disabled [(ngModel)]="administrator.id" >  -->
+                                             <p>{{ administrator.id }}</p>
+
+            </div>
+          </div>
+
+          <br />
+          <div class="row">
+            <div class="col-4">
+              <label>Id de usuario</label>
+            </div>
+            <div class="col-8">
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="administrator.user_id"
+                [disabled]="mode == 1" formControlName="user_id"
+              />
+                <div
+                  *ngIf="
+                    getTheFormGroup.user_id.errors &&
+                    (getTheFormGroup.user_id.dirty ||
+                      getTheFormGroup.user_id.touched ||
+                      trySend)
+                  "
+                >
+                  <strong
+                    *ngIf="getTheFormGroup.user_id.errors.required"
+                    class="msnError"
+                    >Requerido</strong
+                  > <strong
+                    *ngIf="getTheFormGroup.user_id.errors.minLength"
+                    class="msnError"
+                    >Debe tener mas de 5 carácteres</strong
+                  >
+                </div>
+              </div>
+            </div>
+            <br />
+          <div class="row">
+            <div class="col-4">
+              <label>Id de servicio</label>
+            </div>
+            <div class="col-8">
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="administrator.service_id"
+                [disabled]="mode == 1" formControlName="service_id"
+              />
+                <div
+                  *ngIf="
+                    getTheFormGroup.service_id.errors &&
+                    (getTheFormGroup.service_id.dirty ||
+                      getTheFormGroup.service_id.touched ||
+                      trySend)
+                  "
+                >
+                  <strong
+                    *ngIf="getTheFormGroup.service_id.errors.required"
+                    class="msnError"
+                    >Requerido</strong
+                  >
+                </div>
+              </div>
+            </div>
+            <br />
+
+
+          <div class="row">
+            <div class="col-4"></div>
+            <div class="col-8">
+              <!-- <button
+                *ngIf="mode == 1"
+                class="btn btn-success btn-block"
+                (click)="view()"
+              >
+                Visualizar
+              </button> -->
+              <button
+                *ngIf="mode == 2"
+                class="btn btn-success btn-block"
+                (click)="create()"
+              >
+                Crear
+              </button>
+              <button
+                *ngIf="mode == 3"
+                class="btn btn-success btn-block"
+                (click)="update()"
+              >
+                Actualizar
+              </button>
+            </div>
+          </div>
+      
+        </div>
+         </form>
+      </div>
+    </div>
+  </div>
+</div>

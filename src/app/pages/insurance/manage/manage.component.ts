@@ -74,6 +74,10 @@ export class ManageComponent implements OnInit {
       this.router.navigate(["insurances/list"]);
     });
   }
+/* console.log("fecha inicio" ,fechaInicio);
+console.log("fecha fin" ,fechafinDate);
+console.log("fecha inicio Date" ,fechainicioDate);
+console.log("fecha fin Date" ,fechafinDate); */
 
   update() {
     const fechaInicio = this.theFormGroup.get("start_date")?.value;
@@ -85,18 +89,13 @@ export class ManageComponent implements OnInit {
       alert( "La fecha de inicio no puede ser mayor a la fecha de fin");
       return;
     }
-/* console.log("fecha inicio" ,fechaInicio);
-console.log("fecha fin" ,fechafinDate);
-console.log("fecha inicio Date" ,fechainicioDate);
-console.log("fecha fin Date" ,fechafinDate); */
-
-
     //console.log(JSON.stringify(this.insurances));
     this.insurancesService.update(this.insurances).subscribe((data) => {
       Swal.fire("Actualizado", " se ha actualizado exitosa mente", "success"); //titulo a la alerta
       this.router.navigate(["insurances/list"]);
     });
   }
+  
   /*  private formatDate(date: Date): string {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0'); // Mes en dos dígitos
