@@ -17,10 +17,10 @@
             </div>
             <div class="col-8">
               <input
-                type="text"
+                type="number"
                 class="form-control"
                 disabled
-                [(ngModel)]="invoice.id"
+                [(ngModel)]="vehicledriver.id"
               />
             </div>
           </div>
@@ -28,13 +28,13 @@
           <br />
           <div class="row">
             <div class="col-4">
-              <label>Fecha</label>
+              <label>Id del vehiculo</label>
             </div>
             <div class="col-8">
               <input
                 type="text"
                 class="form-control"
-                [(ngModel)]="invoice.date"
+                [(ngModel)]="vehicledriver.vehicle_id"
                 [disabled]="mode == 1"
               />
             </div>
@@ -42,70 +42,25 @@
           <br />
           <div class="row">
             <div class="col-4">
-              <label>Total</label>
+              <label>Id del conductor</label>
             </div>
             <div class="col-8">
               <input
                 type="number"
                 class="form-control"
-                [(ngModel)]="invoice.total"
+                [(ngModel)]="vehicledriver.driver_id"
                 [disabled]="mode == 1"
               />
             </div>
           </div>
           <br />
-          <div class="row">
-            <div class="col-4">
-              <label>Estado</label>
-            </div>
-            <div class="col-8">
-              <input
-                type="boolean"
-                class="form-control"
-                [(ngModel)]="invoice.status"
-                [disabled]="mode == 1"
-              />
-            </div>
-          </div>
-          <br />
-          <div class="row">
-            <div class="col-4">
-              <label>Id de la cuota</label>
-            </div>
-            <div class="col-8">
-              <input
-                type="number"
-                class="form-control"
-                [(ngModel)]="invoice.quota_id"
-                [disabled]="mode == 1"
-              />
-            </div>
-          </div>
-          <br />
-          <div class="row">
-            <div class="col-4">
-              <label>Id del gasto</label>
-            </div>
-            <div class="col-8">
-              <input
-                type="number"
-                class="form-control"
-                [(ngModel)]="invoice.expense_id"
-                [disabled]="mode == 1"
-              />
-            </div>
-          </div>
-          <br />
+
           <div class="row">
             <div class="col-4"></div>
             <div class="col-8">
-              <!-- <button
-                *ngIf="mode == 1"
-                class="btn btn-success btn-block"
-                (click)="view()"
-              >
-                Visualizar
-              </button> -->
+              <!-- <button *ngIf="mode == 1" class="btn btn-success btn-block" (click)="view()">
+                                    Visualizar
+                                </button> -->
               <button
                 *ngIf="mode == 2"
                 class="btn btn-success btn-block"

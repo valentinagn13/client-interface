@@ -32,10 +32,11 @@ export class DriverService {
   }
 
   create(Driver: Driver): Observable<Driver> {
-    return this.http.post<Driver>(
-      `${environment.url_ms_business}/drivers`,
-      Driver
-    );
+    return this.http
+      .post<Driver>(`${environment.url_ms_business}/drivers`, Driver)
+      .pipe(
+        tap((data) => console.log("Datos recibidooooos:", data)) // Imprimir los datos recibidos
+      );
   }
 
   update(Driver: Driver): Observable<Driver> {

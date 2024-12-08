@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
+import { log } from "console";
 import { Invoice } from "src/app/models/invoice.model";
 import { InvoiceService } from "src/app/services/invoice.service";
 import Swal from "sweetalert2";
@@ -27,7 +28,7 @@ export class ManageComponent implements OnInit {
       total: 0,
       status: false,
       quota_id: 0,
-      expense_id: 0,
+      expense_id:0
     };
   }
 

@@ -1,16 +1,17 @@
 import { Injectable } from "@angular/core";
-import { User } from "../models/user.model";
 import { BehaviorSubject, Observable } from "rxjs";
+import { User } from "../models/user.model";
 import { HttpClient } from "@angular/common/http";
+import { Router } from "@angular/router";
 import { environment } from "src/environments/environment";
 
 @Injectable({
   providedIn: "root",
 })
 export class SecurityService {
-  theUser = new BehaviorSubject<User>(new User()); //cuando se crea esa clase se crea este parametro y tiene un comportamineto
+  theUser = new BehaviorSubject<User>(new User()); //* CUANDO LA PAGINA SE CARGA  ARRANCA VACIA
   constructor(private http: HttpClient) {
-    this.verifyActualSession();
+    this.verifyActualSession(); //* CAUDNO SE INICIALIZA EL SERVICIO SE VERIFICA LA SESSION ACTUAL
   }
 
   /**
@@ -20,9 +21,10 @@ export class SecurityService {
    * @returns Respuesta HTTP la cual indica si el usuario tiene permiso de acceso
    */
   login(user: User): Observable<any> {
+    // *LLAMADO AL MICROSERVICIO DE SEGURIDAD, SE LE MANDA EL USER = EL BODY DE ESA PETICIÓN
     return this.http.post<any>(
       `${environment.url_ms_security}/security/login1`,
-      user 
+      user
     );
   }
   /*
@@ -30,17 +32,17 @@ export class SecurityService {
   */
   saveSession(dataSesion: any) {
     let data: User = {
-      //aqui guarda la informacion del usuario logeado
-      _id: dataSesion["user"]["_id"],
+      //* REARMAR EL USER
+      _id: dataSesion["user"]["_id"], //* COJE EL USUARIO Y TOMA EL ID DE ESE USER EN EL DICCIONARIO
       name: dataSesion["user"]["name"],
       email: dataSesion["user"]["email"],
       password: "",
-      //role:dataSesion["user"]["role"],
+      //  role: dataSesion["user"]["role"],
       token: dataSesion["token"],
     };
-    //importante, localstorage es una base de datos en el navegator osea una cache
-    localStorage.setItem("sesion", JSON.stringify(data));
-    this.setUser(data);
+    //* GUARDA EN EL LOCAL STORAGE EL DATA - SE RESTAURA EL TOKEN SI SE APAGA EL PC SI EL TOKEN DURA
+    localStorage.setItem("sesion", JSON.stringify(data)); //* SE GUARDA EN EL LOCAL STORAGE LA INFO
+    this.setUser(data); //como un observador
   }
   /**
    * Permite actualizar la información del usuario
@@ -48,8 +50,7 @@ export class SecurityService {
    * @param user información del usuario logueado
    */
   setUser(user: User) {
-    //nesecita que le llegue un usuario
-    this.theUser.next(user); //variable famosa notifique al todo el munndo que llego un nuevo usuario, asi se guaardo la sesion y notificamos a los componentes que hay un nuevo usuario
+    this.theUser.next(user); //* COGE LA VARIABLE Y NOTIFICA QUE HAT UN USER  NOTIFICA A TODO EL MUNDO QUE HAY UN USER LOGUEADO
   }
   /**
    * Permite obtener la información del usuario
@@ -57,7 +58,7 @@ export class SecurityService {
    * @returns
    */
   getUser() {
-    //usuario y se lo tiene como un observavol por si el cambia todos loc componentes miren ese cambio
+    //* si hay un cambio notifica a todos
     return this.theUser.asObservable();
   }
   /**
@@ -66,7 +67,6 @@ export class SecurityService {
    * para acceder a la información del token
    */
   public get activeUserSession(): User {
-    //nos devuelve o captura el usuario, obtenemos los datos del usuario
     return this.theUser.value;
   }
 
@@ -83,7 +83,7 @@ export class SecurityService {
    * existe información de un usuario previamente logueado
    */
   verifyActualSession() {
-    let actualSesion = this.getSessionData();
+    let actualSesion = this.getSessionData(); //* MIRA EN EL LOCAR STORAGE SI HAY UNA SESSION
     if (actualSesion) {
       this.setUser(JSON.parse(actualSesion));
     }
@@ -92,6 +92,7 @@ export class SecurityService {
    * Verifica si hay una sesion activa
    * @returns
    */
+  // PARA SABER WSI HAY ALGUIEN LOGUEADO
   existSession(): boolean {
     let sesionActual = this.getSessionData();
     return sesionActual ? true : false;
@@ -102,7 +103,7 @@ export class SecurityService {
    * @returns
    */
   getSessionData() {
-    let sesionActual = localStorage.getItem("sesion");
+    let sesionActual = localStorage.getItem("sesion"); //* VERIDICA SI HAY ALGO EN EL LOCAL STOREGE
     return sesionActual;
   }
 }

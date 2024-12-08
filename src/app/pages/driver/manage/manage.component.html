@@ -68,6 +68,20 @@
             </div>
           </div>
           <br />
+          <div class="row">
+            <div class="col-4">
+              <label>Id de usuario</label>
+            </div>
+            <div class="col-8">
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="driver.user_id"
+                [disabled]="mode == 1"
+              />
+            </div>
+          </div>
+          <br />
 
           <div class="row">
             <div class="col-4"></div>

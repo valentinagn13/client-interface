@@ -35,6 +35,7 @@
     "ngx-toastr": "14.2.2",
     "nouislider": "15.5.1",
     "rxjs": "~7.5.0",
+    "socket.io": "^4.8.1",
     "sweetalert2": "^11.14.5",
     "web-animations-js": "2.3.2",
     "zone.js": "~0.11.4"

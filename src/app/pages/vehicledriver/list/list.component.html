@@ -10,7 +10,7 @@
                     <div class="col-3">
                     </div>
                 </div>
-                <h3 class="mb=0">Dueños</h3>
+                <h3 class="mb=0">Vehiculo Conductor</h3>
             </div>
             <div class="col-6">
             </div>
@@ -22,17 +22,14 @@
                     <thead>
                         <tr>
                             <th scope="col-1">ID</th>
-                            <th scope="col-2">Usuario_Id</th>
-                            <th scope="col-3">Numero de Telefono</th>
-                            <th scope="col-2">Vehiculo_Id</th>
-                            
+                            <th scope="col-2">Id de vehiculo</th>
+                            <th scope="col-3">Id de conductor</th>                            
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let due of owner">
+                        <tr *ngFor="let due of vehicledriver">
                             <td>{{ due.id }}</td>
-                            <td>{{ due.user_id }}</td>
-                            <td>{{ due.phone_number }}</td>
+                            <td>{{ due.vehicle_id }}</td>
                             <td>{{ due.driver_id }}</td>
                             <td>
                                 <button type="button" class="btn btn-primary" (click)="view(due.id )">Ver</button>

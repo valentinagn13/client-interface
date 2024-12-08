@@ -192,4 +192,18 @@ export const AdminLayoutRoutes: Routes = [
       },
     ],
   },
+  {
+    path: "vehicleDriver",
+    children: [
+      {
+        path: "",
+        //aqui conectamos con los componentes de departments
+
+        loadChildren: () =>
+          import("src/app/pages/vehicledriver/vehicledriver.module").then(
+            (m) => m.VehicledriverModule
+          ),
+      },
+    ],
+  },
 ];
