@@ -1,22 +1,18 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
 
-import { VehicledriverRoutingModule } from './vehicledriver-routing.module';
-import { ListComponent } from './list/list.component';
-import { ManageComponent } from './manage/manage.component';
-import { FormsModule } from '@angular/forms';
-
+import { VehicledriverRoutingModule } from "./vehicledriver-routing.module";
+import { ListComponent } from "./list/list.component";
+import { ManageComponent } from "./manage/manage.component";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
-  declarations: [
-    ListComponent,
-    ManageComponent
-  ],
+  declarations: [ListComponent, ManageComponent],
   imports: [
     CommonModule,
     VehicledriverRoutingModule,
-        FormsModule //importante importarlo para que funcione el ngModel en el html
-
-  ]
+    FormsModule, //importante importarlo para que funcione el ngModel en el html
+    ReactiveFormsModule, //importamos el modulo de formularios reactivos paso 8
+  ],
 })
-export class VehicledriverModule { }
+export class VehicledriverModule {}

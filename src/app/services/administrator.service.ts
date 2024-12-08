@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 import { Observable, tap } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "src/environments/environment";
-import { Administrator } from '../models/administrator.model';
+import { Administrator } from "../models/administrator.model";
+import { Service } from "../models/service.model";
 
 @Injectable({
   providedIn: "root",
@@ -13,7 +14,9 @@ export class AdministratorService {
 
   // Observable es una clase que permite manejar eventos asincronos
   list(): Observable<Administrator[]> {
-    return this.http.get<Administrator[]>(`${environment.url_ms_business}/administrators`);
+    return this.http.get<Administrator[]>(
+      `${environment.url_ms_business}/administrators`
+    );
   }
 
   view(id: number): Observable<Administrator> {
@@ -22,6 +25,14 @@ export class AdministratorService {
       .get<Administrator>(`${environment.url_ms_business}/administrators/${id}`)
       .pipe(
         tap((data) => console.log("Datos recibidooooos:", data)) // Imprimir los datos recibidos
+      );
+  }
+  exist(id: number): Observable<Service> {
+    // Listar un solo teatro
+    return this.http
+      .get<Service>(`${environment.url_ms_business}/services/${id}`)
+      .pipe(
+        tap((data) => console.log("Datos serviciooos:", data)) // Imprimir los datos recibidos
       );
   }
 
@@ -45,4 +56,3 @@ export class AdministratorService {
     );
   }
 }
-

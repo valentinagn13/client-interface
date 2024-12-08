@@ -54,7 +54,7 @@ export class ListComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.invoiceservice.delete(id).subscribe((data) => {
-          Swal.fire("Eliminada!", "El factura ha sido eliminada.", "success");
+          Swal.fire("Eliminada!", "La factura ha sido eliminada.", "success");
 
           this.ngOnInit();
         });

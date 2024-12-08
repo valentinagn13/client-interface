@@ -10,105 +10,182 @@
           <h1 *ngIf="mode == 2" class="mb-0">Crear</h1>
           <h1 *ngIf="mode == 3" class="mb-0">Actualizar</h1>
         </div>
-        <div class="card-body">
-          <div class="row">
-            <div class="col-4">
-              <label>id:</label>
+        <form class="form" [formGroup]="theFormGroup">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-4">
+                <label>id:</label>
+              </div>
+              <div class="col-8">
+                <p>{{ expense.id }}</p>
+              </div>
             </div>
-            <div class="col-8">
-              <input
-                type="text"
-                class="form-control"
-                disabled
-                [(ngModel)]="expense.id"
-              />
-            </div>
-          </div>
 
-          <br />
-          <div class="row">
-            <div class="col-4">
-              <label>Monto del gasto</label>
+            <br />
+            <div class="row">
+              <div class="col-4">
+                <label>Monto del gasto</label>
+              </div>
+              <div class="col-8">
+                <input
+                  type="number"
+                  class="form-control"
+                  [(ngModel)]="expense.amount"
+                  [disabled]="mode == 1"
+                  formControlName="amount"
+                />
+                <div
+                  *ngIf="
+                    getTheFormGroup.amount.errors &&
+                    (getTheFormGroup.amount.dirty ||
+                      getTheFormGroup.amount.touched ||
+                      trySend)
+                  "
+                >
+                  <strong
+                    *ngIf="getTheFormGroup.amount.errors.required"
+                    class="msnError"
+                    >Requerido</strong
+                  >
+                  <strong
+                    *ngIf="getTheFormGroup.amount.errors.pattern"
+                    class="msnError"
+                    >Solo se permiten valores numericos</strong
+                  >
+                </div>
+              </div>
             </div>
-            <div class="col-8">
-              <input
-                type="number"
-                class="form-control"
-                [(ngModel)]="expense.amount"
-                [disabled]="mode == 1"
-              />
+            <br />
+            <div class="row">
+              <div class="col-4">
+                <label>Id del conductor</label>
+              </div>
+              <div class="col-8">
+                <input
+                  type="number"
+                  class="form-control"
+                  [(ngModel)]="expense.driver_id"
+                  [disabled]="mode == 1"
+                  formControlName="driver_id"
+                />
+                <div
+                  *ngIf="
+                    getTheFormGroup.driver_id.errors &&
+                    (getTheFormGroup.driver_id.dirty ||
+                      getTheFormGroup.driver_id.touched ||
+                      trySend)
+                  "
+                >
+                  <strong
+                    *ngIf="getTheFormGroup.driver_id.errors.required"
+                    class="msnError"
+                    >Requerido</strong
+                  >
+                  <strong
+                    *ngIf="getTheFormGroup.driver_id.errors.pattern"
+                    class="msnError"
+                    >Solo se permiten valores numericos</strong
+                  >
+                </div>
+              </div>
             </div>
-          </div>
-          <br />
-          <div class="row">
-            <div class="col-4">
-              <label>Id del conductor</label>
+            <br />
+            <div class="row">
+              <div class="col-4">
+                <label>Id del dueño</label>
+              </div>
+              <div class="col-8">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="expense.owner_id"
+                  [disabled]="mode == 1"
+                  formControlName="owner_id"
+                />
+                <div
+                  *ngIf="
+                    getTheFormGroup.owner_id.errors &&
+                    (getTheFormGroup.owner_id.dirty ||
+                      getTheFormGroup.owner_id.touched ||
+                      trySend)
+                  "
+                >
+                  <strong
+                    *ngIf="getTheFormGroup.owner_id.errors.required"
+                    class="msnError"
+                    >Requerido</strong
+                  >
+                  <strong
+                    *ngIf="getTheFormGroup.owner_id.errors.pattern"
+                    class="msnError"
+                    >Solo se permiten valores numericos</strong
+                  >
+                </div>
+              </div>
             </div>
-            <div class="col-8">
-              <input
-                type="text"
-                class="form-control"
-                [(ngModel)]="expense.driver_id"
-                [disabled]="mode == 1"
-              />
+            <br />
+            <div class="row">
+              <div class="col-4">
+                <label>Id del servicio</label>
+              </div>
+              <div class="col-8">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="expense.service_id"
+                  [disabled]="mode == 1"
+                  formControlName="service_id"
+                />
+                <div
+                  *ngIf="
+                    getTheFormGroup.service_id.errors &&
+                    (getTheFormGroup.service_id.dirty ||
+                      getTheFormGroup.service_id.touched ||
+                      trySend)
+                  "
+                >
+                  <strong
+                    *ngIf="getTheFormGroup.service_id.errors.required"
+                    class="msnError"
+                    >Requerido</strong
+                  >
+                  <strong
+                    *ngIf="getTheFormGroup.service_id.errors.pattern"
+                    class="msnError"
+                    >Solo se permiten valores numericos</strong
+                  >
+                </div>
+              </div>
             </div>
-          </div>
-          <br />
-          <div class="row">
-            <div class="col-4">
-              <label>Id del dueño</label>
-            </div>
-            <div class="col-8">
-              <input
-                type="text"
-                class="form-control"
-                [(ngModel)]="expense.owner_id"
-                [disabled]="mode == 1"
-              />
-            </div>
-          </div>
-          <br />
-          <div class="row">
-            <div class="col-4">
-              <label>Id del servicio</label>
-            </div>
-            <div class="col-8">
-              <input
-                type="text"
-                class="form-control"
-                [(ngModel)]="expense.service_id"
-                [disabled]="mode == 1"
-              />
-            </div>
-          </div>
-          <br />
-          <div class="row">
-            <div class="col-4"></div>
-            <div class="col-8">
-              <!-- <button
+            <br />
+            <div class="row">
+              <div class="col-4"></div>
+              <div class="col-8">
+                <!-- <button
                 *ngIf="mode == 1"
                 class="btn btn-success btn-block"
                 (click)="view()"
               >
                 Visualizar
               </button> -->
-              <button
-                *ngIf="mode == 2"
-                class="btn btn-success btn-block"
-                (click)="create()"
-              >
-                Crear
-              </button>
-              <button
-                *ngIf="mode == 3"
-                class="btn btn-success btn-block"
-                (click)="update()"
-              >
-                Actualizar
-              </button>
+                <button
+                  *ngIf="mode == 2"
+                  class="btn btn-success btn-block"
+                  (click)="create()"
+                >
+                  Crear
+                </button>
+                <button
+                  *ngIf="mode == 3"
+                  class="btn btn-success btn-block"
+                  (click)="update()"
+                >
+                  Actualizar
+                </button>
+              </div>
             </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   </div>

@@ -10,106 +10,176 @@
           <h1 *ngIf="mode == 2" class="mb-0">Crear</h1>
           <h1 *ngIf="mode == 3" class="mb-0">Actualizar</h1>
         </div>
-        <div class="card-body">
-          <div class="row">
-            <div class="col-4">
-              <label>id:</label>
+        <!-- CONFIGURAR EL FORMGROUP -->
+        <form class="form" [formGroup]="theFormGroup">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-4">
+                <label>id:</label>
+              </div>
+              <div class="col-8">
+                <p>{{ driver.id }}</p>
+              </div>
             </div>
-            <div class="col-8">
-              <input
-                type="text"
-                class="form-control"
-                disabled
-                [(ngModel)]="driver.id"
-              />
-            </div>
-          </div>
 
-          <br />
-          <div class="row">
-            <div class="col-4">
-              <label>Fecha expiración</label>
-            </div>
-            <div class="col-8">
-              <input
-                type="text"
-                class="form-control"
-                [(ngModel)]="driver.expiration_date"
-                [disabled]="mode == 1"
-              />
-            </div>
-          </div>
-          <br />
-          <div class="row">
-            <div class="col-4">
-              <label>Numero de licencia</label>
-            </div>
-            <div class="col-8">
-              <input
-                type="text"
-                class="form-control"
-                [(ngModel)]="driver.license_number"
-                [disabled]="mode == 1"
-              />
-            </div>
-          </div>
-          <br />
-          <div class="row">
-            <div class="col-4">
-              <label>Numero de Telefono</label>
-            </div>
-            <div class="col-8">
-              <input
-                type="text"
-                class="form-control"
-                [(ngModel)]="driver.phone_number"
-                [disabled]="mode == 1"
-              />
-            </div>
-          </div>
-          <br />
-          <div class="row">
-            <div class="col-4">
-              <label>Id de usuario</label>
-            </div>
-            <div class="col-8">
-              <input
-                type="text"
-                class="form-control"
-                [(ngModel)]="driver.user_id"
-                [disabled]="mode == 1"
-              />
-            </div>
-          </div>
-          <br />
+            <br />
 
-          <div class="row">
-            <div class="col-4"></div>
-            <div class="col-8">
-              <!-- <button
+            <div class="row">
+              <div class="col-4">
+                <label>Numero de licencia</label>
+              </div>
+              <div class="col-8">
+                <input
+                  type="number"
+                  class="form-control"
+                  [(ngModel)]="driver.license_number"
+                  [disabled]="mode == 1"
+                  formControlName="license_number"
+                />
+                <div
+                  *ngIf="
+                    getTheFormGroup.license_number.errors &&
+                    (getTheFormGroup.license_number.dirty ||
+                      getTheFormGroup.license_number.touched ||
+                      trySend)
+                  "
+                >
+                  <strong
+                    *ngIf="getTheFormGroup.license_number.errors.required"
+                    class="msnError"
+                    >Requerido</strong
+                  >
+                  <strong
+                    *ngIf="getTheFormGroup.license_number.errors.min"
+                    class="msnError"
+                    >Valor minimo de 5</strong
+                  >
+                </div>
+              </div>
+            </div>
+            <br />
+            <div class="row">
+              <div class="col-4">
+                <label>Fecha expiración</label>
+              </div>
+              <div class="col-8">
+                <input
+                  type="date"
+                  class="form-control"
+                  [(ngModel)]="driver.expiration_date"
+                  [disabled]="mode == 1"
+                  formControlName="expiration_date"
+                />
+                <div
+                  *ngIf="
+                    getTheFormGroup.expiration_date.errors &&
+                    (getTheFormGroup.expiration_date.dirty ||
+                      getTheFormGroup.expiration_date.touched ||
+                      trySend)
+                  "
+                >
+                  <!-- si el form group location tine un error de requerido colocamos un mensaje de requerido -->
+                  <strong
+                    *ngIf="getTheFormGroup.expiration_date.errors.required"
+                    class="msnError text-danger"
+                    >Requerido</strong
+                  >
+                </div>
+              </div>
+            </div>
+            <br />
+            <div class="row">
+              <div class="col-4">
+                <label>Numero de Telefono</label>
+              </div>
+              <div class="col-8">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="driver.phone_number"
+                  [disabled]="mode == 1"
+                  formControlName="phone_number"
+                />
+                <div
+                  *ngIf="
+                    getTheFormGroup.phone_number.errors &&
+                    (getTheFormGroup.phone_number.dirty ||
+                      getTheFormGroup.phone_number.touched ||
+                      trySend)
+                  "
+                >
+                  <strong
+                    *ngIf="getTheFormGroup.phone_number.errors.required"
+                    class="msnError"
+                    >Requerido</strong
+                  >
+                  <strong
+                    *ngIf="getTheFormGroup.phone_number.errors.min"
+                    class="msnError"
+                    >Inválido</strong
+                  >
+                </div>
+              </div>
+            </div>
+            <br />
+            <div class="row">
+              <div class="col-4">
+                <label>Id de usuario</label>
+              </div>
+              <div class="col-8">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="driver.user_id"
+                  [disabled]="mode == 1"
+                  formControlName="user_id"
+                />
+                <div
+                  *ngIf="
+                    getTheFormGroup.user_id.errors &&
+                    (getTheFormGroup.user_id.dirty ||
+                      getTheFormGroup.user_id.touched ||
+                      trySend)
+                  "
+                >
+                  <strong
+                    *ngIf="getTheFormGroup.user_id.errors.required"
+                    class="msnError"
+                    >Requerido</strong
+                  >
+                </div>
+              </div>
+            </div>
+            <br />
+
+            <div class="row">
+              <div class="col-4"></div>
+              <div class="col-8">
+                <!-- <button
                 *ngIf="mode == 1"
                 class="btn btn-success btn-block"
                 (click)="view()"
               >
                 Visualizar
               </button> -->
-              <button
-                *ngIf="mode == 2"
-                class="btn btn-success btn-block"
-                (click)="create()"
-              >
-                Crear
-              </button>
-              <button
-                *ngIf="mode == 3"
-                class="btn btn-success btn-block"
-                (click)="update()"
-              >
-                Actualizar
-              </button>
+                <button
+                  *ngIf="mode == 2"
+                  class="btn btn-success btn-block"
+                  (click)="create()"
+                >
+                  Crear
+                </button>
+                <button
+                  *ngIf="mode == 3"
+                  class="btn btn-success btn-block"
+                  (click)="update()"
+                >
+                  Actualizar
+                </button>
+              </div>
             </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   </div>

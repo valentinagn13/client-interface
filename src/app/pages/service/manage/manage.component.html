@@ -10,105 +10,162 @@
           <h1 *ngIf="mode == 2" class="mb-0">Crear</h1>
           <h1 *ngIf="mode == 3" class="mb-0">Actualizar</h1>
         </div>
-        <div class="card-body">
-          <div class="row">
-            <div class="col-4">
-              <label>id:</label>
+        <form class="form" [formGroup]="theFormGroup">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-4">
+                <label>id:</label>
+              </div>
+              <div class="col-8">
+                <p>{{ service.id }}</p>
+              </div>
             </div>
-            <div class="col-8">
-              <input
-                type="text"
-                class="form-control"
-                disabled
-                [(ngModel)]="service.id"
-              />
-            </div>
-          </div>
 
-          <br />
-          <div class="row">
-            <div class="col-4">
-              <label>Nombre del servicio</label>
+            <br />
+            <div class="row">
+              <div class="col-4">
+                <label>Nombre del servicio</label>
+              </div>
+              <div class="col-8">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="service.name"
+                  [disabled]="mode == 1"
+                  formControlName="name"
+                />
+                <div
+                  *ngIf="
+                    getTheFormGroup.name.errors &&
+                    (getTheFormGroup.name.dirty ||
+                      getTheFormGroup.name.touched ||
+                      trySend)
+                  "
+                >
+                  <strong
+                    *ngIf="getTheFormGroup.name.errors.required"
+                    class="msnError"
+                    >Requerido</strong
+                  >
+                </div>
+              </div>
             </div>
-            <div class="col-8">
-              <input
-                type="text"
-                class="form-control"
-                [(ngModel)]="service.name"
-                [disabled]="mode == 1"
-              />
+            <br />
+            <div class="row">
+              <div class="col-4">
+                <label>Dirección del servicio</label>
+              </div>
+              <div class="col-8">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="service.address"
+                  [disabled]="mode == 1"
+                  formControlName="address"
+                />
+                <div
+                  *ngIf="
+                    getTheFormGroup.address.errors &&
+                    (getTheFormGroup.address.dirty ||
+                      getTheFormGroup.address.touched ||
+                      trySend)
+                  "
+                >
+                  <strong
+                    *ngIf="getTheFormGroup.address.errors.required"
+                    class="msnError"
+                    >Requerido</strong
+                  >
+                </div>
+              </div>
             </div>
-          </div>
-          <br />
-          <div class="row">
-            <div class="col-4">
-              <label>Dirección del servicio</label>
+            <br />
+            <div class="row">
+              <div class="col-4">
+                <label>Descripción</label>
+              </div>
+              <div class="col-8">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="service.description"
+                  [disabled]="mode == 1"
+                  formControlName="description"
+                />
+                <div
+                  *ngIf="
+                    getTheFormGroup.description.errors &&
+                    (getTheFormGroup.description.dirty ||
+                      getTheFormGroup.description.touched ||
+                      trySend)
+                  "
+                >
+                  <strong
+                    *ngIf="getTheFormGroup.description.errors.required"
+                    class="msnError"
+                    >Requerido</strong
+                  >
+                </div>
+              </div>
             </div>
-            <div class="col-8">
-              <input
-                type="text"
-                class="form-control"
-                [(ngModel)]="service.address"
-                [disabled]="mode == 1"
-              />
+            <br />
+            <div class="row">
+              <div class="col-4">
+                <label>Fecha</label>
+              </div>
+              <div class="col-8">
+                <input
+                  type="date"
+                  class="form-control"
+                  [(ngModel)]="service.date"
+                  [disabled]="mode == 1"
+                  formControlName="date"
+                />
+                <div
+                  *ngIf="
+                    getTheFormGroup.date.errors &&
+                    (getTheFormGroup.date.dirty ||
+                      getTheFormGroup.date.touched ||
+                      trySend)
+                  "
+                >
+                  <strong
+                    *ngIf="getTheFormGroup.date.errors.required"
+                    class="msnError"
+                    >Requerido</strong
+                  >
+                </div>
+              </div>
             </div>
-          </div>
-          <br />
-          <div class="row">
-            <div class="col-4">
-              <label>Descripción</label>
-            </div>
-            <div class="col-8">
-              <input
-                type="text"
-                class="form-control"
-                [(ngModel)]="service.description"
-                [disabled]="mode == 1"
-              />
-            </div>
-          </div>
-          <br />
-          <div class="row">
-            <div class="col-4">
-              <label>Fecha</label>
-            </div>
-            <div class="col-8">
-              <input
-                type="text"
-                class="form-control"
-                [(ngModel)]="service.date"
-                [disabled]="mode == 1"
-              />
-            </div>
-          </div>
-          <br />
-          <div class="row">
-            <div class="col-4"></div>
-            <div class="col-8">
-              <!-- <button
+            <br />
+            <div class="row">
+              <div class="col-4"></div>
+              <div class="col-8">
+                <!-- <button
                 *ngIf="mode == 1"
                 class="btn btn-success btn-block"
                 (click)="view()"
               >
                 Visualizar
               </button> -->
-              <button
-                *ngIf="mode == 2"
-                class="btn btn-success btn-block"
-                (click)="create()"
-              >
-                Crear
-              </button>
-              <button
-                *ngIf="mode == 3"
-                class="btn btn-success btn-block"
-                (click)="update()"
-              >
-                Actualizar
-              </button>
+                <button
+                  *ngIf="mode == 2"
+                  class="btn btn-success btn-block"
+                  (click)="create()"
+                >
+                  Crear
+                </button>
+                <button
+                  *ngIf="mode == 3"
+                  class="btn btn-success btn-block"
+                  (click)="update()"
+                >
+                  Actualizar
+                </button>
+              </div>
             </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   </div>

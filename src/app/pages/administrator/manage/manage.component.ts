@@ -46,15 +46,15 @@ export class ManageComponent implements OnInit {
     if (currentUrl.includes("view")) {
       this.mode = 1;
 
-      this.theFormGroup.get("id").disable();
+      // this.theFormGroup.get("id").disable();
       this.theFormGroup.get("user_id").disable();
       this.theFormGroup.get("service_id").disable();
     } else if (currentUrl.includes("create")) {
       this.mode = 2;
-      this.theFormGroup.get("id").disable();
+      // this.theFormGroup.get("id").disable();
     } else if (currentUrl.includes("update")) {
       this.mode = 3;
-      this.theFormGroup.get("id").disable();
+      // this.theFormGroup.get("id").disable();
     }
     if (this.activateRoute.snapshot.params.id) {
       this.administrator.id = this.activateRoute.snapshot.params.id;
@@ -63,18 +63,18 @@ export class ManageComponent implements OnInit {
   }
 
   create() {
-        if (this.theFormGroup.invalid) {
-          if (this.theFormGroup.invalid) {
-            Swal.fire("malo ", "error");
-            return;
-          }
-          this.trySend = true;
-          Swal.fire(
-            "Error en el formulario",
-            "Ingrese correctamente los datos solicitados"
-          );
-          return;
-        }
+    if (this.theFormGroup.invalid) {
+      // if (this.theFormGroup.invalid) {
+      //   Swal.fire("malo ", "error");
+      //   return;
+      // }
+      this.trySend = true;
+      Swal.fire(
+        "Error en el formulario",
+        "Ingrese correctamente los datos solicitados"
+      );
+      return;
+    }
     console.log(JSON.stringify(this.administrator));
     this.administratorService.create(this.administrator).subscribe((data) => {
       Swal.fire("Creado", " se ha creado exitosa mente", "success"); //tirulo a la alerta
@@ -83,14 +83,14 @@ export class ManageComponent implements OnInit {
   }
 
   update() {
-      if (this.theFormGroup.invalid) {
-        this.trySend = true;
-        Swal.fire(
-          "Error en el formulario",
-          "Ingrese correctamente los datos solicitados"
-        );
-        return;
-      }
+    if (this.theFormGroup.invalid) {
+      this.trySend = true;
+      Swal.fire(
+        "Error en el formulario",
+        "Ingrese correctamente los datos solicitados"
+      );
+      return;
+    }
     console.log(JSON.stringify(this.administrator));
     this.administratorService.update(this.administrator).subscribe((data) => {
       Swal.fire("Actualizado", " se ha actualizado exitosa mente", "success"); //titulo a la alerta
@@ -119,8 +119,7 @@ export class ManageComponent implements OnInit {
       id: [this.administrator.id || ""],
       // VALIDAR EL USUARIO
       user_id: ["", [Validators.required, Validators.minLength(5)]],
-
-      service_id: [0, [Validators.required]],
+      service_id: [0, [Validators.required, Validators.pattern("^[0-9]+$")]],
 
       // idProjector:[null,[Validators.required]],
     });
