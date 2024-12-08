@@ -117,7 +117,7 @@ export class ManageComponent implements OnInit {
       id: [this.contracts.id || ""],
       start_date: ["", [Validators.required]],
       end_date: ["", [Validators.required]],
-      client_id: [0, [Validators.required]],
+      client_id: [0, [Validators.required, Validators.pattern("^[0-9]*$")]],
     });
   }
 

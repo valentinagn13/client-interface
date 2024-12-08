@@ -39,8 +39,6 @@
                 ">
                   <strong *ngIf="getTheFormGroup.start_date.errors.required"
                     class="msnError text-danger">Requerido</strong>
-                  <strong *ngIf="getTheFormGroup.start_date.errors.startDateInvalid" class="msnError text-success">La
-                    fecha de inicio debe ser igual o mayor a la fecha actual</strong>
                 </div>
               </div>
             </div>
@@ -61,8 +59,6 @@
                 ">
                   <strong *ngIf="getTheFormGroup.end_date.errors.required"
                     class="msnError text-danger">Requerido</strong>
-                  <strong *ngIf="getTheFormGroup.end_date.errors.endDateInvalid" class="msnError text-success">La fecha
-                    de fin debe ser igual o mayor a la fecha de inicio</strong>
                 </div>
               </div>
             </div>
@@ -71,7 +67,7 @@
             <!-- Campo cliente -->
             <div class="row">
               <div class="col-4">
-                <label>Cliente</label>
+                <label>Cliente_Id</label>
               </div>
               <div class="col-8">
                 <input type="text" class="form-control" [(ngModel)]="contracts.client_id" formControlName="client_id">
@@ -83,7 +79,9 @@
                             ">
                   <!-- si el form group location tine un error de requerido colocamos un mensaje de requerido -->
                   <strong *ngIf="getTheFormGroup.client_id.errors.required"
-                    class="msnError text-danger">Requerido</strong>
+                    class="msnError text-danger">Requerido y solo valores numericos</strong>
+                    <strong *ngIf="getTheFormGroup.client_id.errors.pattern"
+                    class="msnError text-danger">Se debe ingresar un valor de tipo numerico</strong>
                 </div>
               </div>
             </div>

@@ -1,6 +1,6 @@
 export class Batch {
   id?: number;
-  weight: string;
+  weight: number;
   route_id: number;
   addre_route_orders:number;
 }
