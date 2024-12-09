@@ -31,7 +31,7 @@
               <tr *ngFor="let dri of driver">
                 <td>{{ dri.id }}</td>
                 <td>{{ dri.license_number }}</td>
-                <td>{{ dri.expiration_date }}</td>
+                <td>{{ dri.expiration_date | date }}</td>
                 <td>{{ dri.phone_number }}</td>
                 <td>{{ dri.user_id }}</td>
                 <td>
@@ -65,4 +65,3 @@
     </div>
   </div>
 </div>
-
