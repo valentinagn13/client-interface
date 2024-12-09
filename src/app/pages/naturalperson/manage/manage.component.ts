@@ -5,12 +5,11 @@ import Swal from "sweetalert2";
 //Importaciones de la clase
 import { Naturalperson } from "src/app/models/naturalperson.model";
 import { NaturalpersonService } from "src/app/services/naturalperson.service";
-<<<<<<< HEAD
-=======
+
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Operation } from "src/app/models/operation.model";
 import { DatePipe } from "@angular/common";
->>>>>>> 9959ddf5d6235a1e6033cd22535988a4c28be67e
+
 
 @Component({
   selector: "app-manage",
@@ -20,17 +19,16 @@ import { DatePipe } from "@angular/common";
 export class ManageComponent implements OnInit {
   mode: number; //1->View, 2->Create, 3->Update
   naturalperson: Naturalperson;
-<<<<<<< HEAD
-
-=======
   operations: Operation;
   theFormGroup: FormGroup;
   trySend: boolean;
->>>>>>> 9959ddf5d6235a1e6033cd22535988a4c28be67e
+
   constructor(
     private activateRoute: ActivatedRoute,
     private router: Router,
-    private naturalpersonService: NaturalpersonService
+    private naturalpersonService: NaturalpersonService,
+    private theFormBuilder: FormBuilder
+
   ) {
     this.mode = 1;
     this.naturalperson = {
