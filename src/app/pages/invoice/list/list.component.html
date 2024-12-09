@@ -25,14 +25,13 @@
                 <th scope="col-3">Total</th>
                 <th scope="col-2">Estado</th>
                 <th scope="col-2">Numero de cuota</th>
-                                <th scope="col-2">Numero de gasto</th>
-
+                <th scope="col-2">Numero de gasto</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let dri of invoice">
                 <td>{{ dri.id }}</td>
-                <td>{{ dri.date }}</td>
+                <td>{{ dri.date | date }}</td>
                 <td>{{ dri.total }}</td>
                 <td>{{ dri.status }}</td>
                 <td>{{ dri.quota_id }}</td>
@@ -69,4 +68,3 @@
     </div>
   </div>
 </div>
-
