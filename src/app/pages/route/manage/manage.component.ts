@@ -30,7 +30,7 @@ export class ManageComponent implements OnInit {
   }
   // TOMAR LA FOTO DE LA URL PARTIRLA POR CADA / UNA LISTA CON TODA LA RUTA
   ngOnInit(): void {
-    this.configFormGroup(); //* CREAR AL POLICIA
+    this.configFormGroup();; //* CREAR AL POLICIA
     const currentUrl = this.activateRoute.snapshot.url.join("/");
     if (currentUrl.includes("view")) {
       //LA LISTA INCLUYE LA PALABRA VIW. sI? ES POR QUE QUIERE VISUALIZAR . no? ENTONCES...

@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { NaturalpersonRoutingModule } from './naturalperson-routing.module';
 import { ListComponent } from './list/list.component';
 import { ManageComponent } from './manage/manage.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -15,8 +15,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     NaturalpersonRoutingModule,
-    FormsModule,
-    ReactiveFormsModule//importamos el modulo de formularios reactivos paso 8
+    FormsModule
   ]
 })
 export class NaturalpersonModule { }

@@ -67,7 +67,7 @@ export class ManageComponent implements OnInit {
     console.log(JSON.stringify(this.contracts));
     this.contractService.create(this.contracts).subscribe((data) => {
       Swal.fire("Creado", "El contrato ha sido creado", "success");
-      this.router.navigate(["/contracts/list"]);
+      this.router.navigate(["contracts/list"]);
     });
   }
 
@@ -84,7 +84,7 @@ export class ManageComponent implements OnInit {
 
     this.contractService.update(this.contracts).subscribe((data) => {
       Swal.fire("Actualizado", "El contrato ha sido actualizado", "success");
-      this.router.navigate(["/contracts/list"]);
+      this.router.navigate(["contracts/list"]);
     });
   }
 
@@ -124,6 +124,7 @@ export class ManageComponent implements OnInit {
   get getTheFormGroup() {
     return this.theFormGroup.controls;
   }
+  
   validateStartDate(control: AbstractControl): ValidationErrors | null {
     const startDate = control.value;
 

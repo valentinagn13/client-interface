@@ -5,8 +5,6 @@ import Swal from "sweetalert2";
 //Importaciones de la clase
 import { Naturalperson } from "src/app/models/naturalperson.model";
 import { NaturalpersonService } from "src/app/services/naturalperson.service";
-import { FormBuilder, FormGroup } from "@angular/forms";
-import { Operation } from "src/app/models/operation.model";
 
 @Component({
   selector: "app-manage",
@@ -17,14 +15,11 @@ export class ManageComponent implements OnInit {
 
   mode: number; //1->View, 2->Create, 3->Update
   naturalperson: Naturalperson;
-  operations: Operation;
-  theFormGroup: FormGroup;
 
   constructor(
     private activateRoute: ActivatedRoute,
     private router: Router,
-    private naturalpersonService: NaturalpersonService,
-    private theFormBuilder: FormBuilder
+    private naturalpersonService: NaturalpersonService
   ) {
     this.mode = 1;
     this.naturalperson = { id: 0, user_id: "", document_type: "", document_number: 0, birth_date: new Date(), company_id: null, client_id: 0 };
