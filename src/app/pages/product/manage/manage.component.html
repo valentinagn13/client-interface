@@ -1,0 +1,212 @@
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8"></div>
+<!-- Contenido de la página -->
+<div class="container-fluid mt--7">
+  <!-- Tarjeta principal -->
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <!-- Encabezado de la tarjeta -->
+        <div class="card-header border-0">
+          <h1 *ngIf="mode == 1" class="mb-0">Visualizar</h1>
+          <h1 *ngIf="mode == 2" class="mb-0">Crear</h1>
+          <h1 *ngIf="mode == 3" class="mb-0">Actualizar</h1>
+        </div>
+        
+        <form class="form" [formGroup]="theFormGroup">
+          <!-- Cuerpo de la tarjeta -->
+          <div class="card-body">
+            <!-- Campo ID -->
+            <div class="row">
+              <div class="col-4">
+                <label>Id:</label>
+              </div>
+              <div class="col-8">
+                <input type="number" class="form-control" 
+                       formControlName="id" 
+                       [(ngModel)]="products.id">
+              </div>
+            </div>
+            <br />
+
+            <!-- Campo Nombre -->
+            <div class="row">
+              <div class="col-4">
+                <label>Nombre</label>
+              </div>
+              <div class="col-8">
+                <input type="text" class="form-control" 
+                       formControlName="name" 
+                       [(ngModel)]="products.name">
+                <div
+                  *ngIf="
+                    getTheFormGroup.name.errors &&
+                    (getTheFormGroup.name.dirty ||
+                      getTheFormGroup.name.touched ||
+                      trySend)
+                  "
+                >
+                  <strong
+                    *ngIf="getTheFormGroup.name.errors['required']"
+                    class="msnError text-danger"
+                  >
+                    Requerido
+                  </strong>
+                  <strong
+                    *ngIf="getTheFormGroup.name.errors['pattern']"
+                    class="msnError text-danger"
+                  >
+                    Solo se permiten letras, números, espacios y tildes
+                  </strong>
+                </div>
+              </div>
+            </div>
+            <br />
+
+            <!-- Campo Descripción -->
+            <div class="row">
+              <div class="col-4">
+                <label>Descripción</label>
+              </div>
+              <div class="col-8">
+                <input type="text" class="form-control" 
+                       formControlName="description" 
+                       [(ngModel)]="products.description">
+                <div
+                  *ngIf="
+                    getTheFormGroup.description.errors &&
+                    (getTheFormGroup.description.dirty ||
+                      getTheFormGroup.description.touched ||
+                      trySend)
+                  "
+                >
+                  <strong
+                    *ngIf="getTheFormGroup.description.errors['required']"
+                    class="msnError text-danger"
+                  >
+                    Requerido
+                  </strong>
+                </div>
+              </div>
+            </div>
+            <br />
+
+            <!-- Campo Fecha de vencimiento -->
+            <div class="row">
+              <div class="col-4">
+                <label>Fecha Expiración</label>
+              </div>
+              <div class="col-8">
+                <input type="date" class="form-control" 
+                       formControlName="expiration_date"
+                       [(ngModel)]="products.expiration_date">
+                <div
+                  *ngIf="
+                    getTheFormGroup.expiration_date.errors &&
+                    (getTheFormGroup.expiration_date.dirty ||
+                      getTheFormGroup.expiration_date.touched ||
+                      trySend)
+                  "
+                >
+                  <strong
+                    *ngIf="getTheFormGroup.expiration_date.errors['required']"
+                    class="msnError"
+                  >
+                    La fecha es requerida
+                  </strong>
+                </div>
+              </div>
+            </div>
+            <br />
+
+            <!-- Campo Cliente -->
+            <div class="row">
+              <div class="col-4">
+                <label>Cliente Id</label>
+              </div>
+              <div class="col-8">
+                <input type="text" class="form-control" 
+                       formControlName="client_id"
+                       [(ngModel)]="products.client_id">
+                <div
+                  *ngIf="
+                    getTheFormGroup.client_id.errors &&
+                    (getTheFormGroup.client_id.dirty ||
+                      getTheFormGroup.client_id.touched ||
+                      trySend)
+                  "
+                >
+                  <strong
+                    *ngIf="getTheFormGroup.client_id.errors['required']"
+                    class="msnError text-danger"
+                  >
+                    Requerido
+                  </strong>
+                  <strong
+                    *ngIf="getTheFormGroup.client_id.errors['pattern']"
+                    class="msnError text-danger"
+                  >
+                    Solo se permiten valores numéricos
+                  </strong>
+                </div>
+              </div>
+            </div>
+            <br />
+
+            <!-- Campo Lote -->
+            <div class="row">
+              <div class="col-4">
+                <label>Lote Id</label>
+              </div>
+              <div class="col-8">
+                <input type="text" class="form-control" 
+                       formControlName="batch_id"
+                       [(ngModel)]="products.batch_id">
+                <div
+                  *ngIf="
+                    getTheFormGroup.batch_id.errors &&
+                    (getTheFormGroup.batch_id.dirty ||
+                      getTheFormGroup.batch_id.touched ||
+                      trySend)
+                  "
+                >
+                  <strong
+                    *ngIf="getTheFormGroup.batch_id.errors['required']"
+                    class="msnError text-danger"
+                  >
+                    Requerido
+                  </strong>
+                  <strong
+                    *ngIf="getTheFormGroup.batch_id.errors['pattern']"
+                    class="msnError text-danger"
+                  >
+                    Solo se permiten valores numéricos
+                  </strong>
+                </div>
+              </div>
+            </div>
+            <br />
+
+            <!-- Botones de acción -->
+            <div class="row">
+              <div class="col-4"></div>
+              <div class="col-8">
+                <button 
+                  *ngIf="mode == 2" 
+                  class="btn btn-success btn-block" 
+                  (click)="create()">
+                  Crear
+                </button>
+                <button 
+                  *ngIf="mode == 3" 
+                  class="btn btn-success btn-block" 
+                  (click)="update()">
+                  Actualizar
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

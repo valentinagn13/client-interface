@@ -1,0 +1,52 @@
+<div class="header bg-gradient-danger pd-8 pt-5 pt-md-8"></div>
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header bg-transparent">
+          <div class="row">
+            <div class="col-3">
+            </div>
+          </div>
+          <h3 class="mb=0">Persona Natural</h3>
+        </div>
+        <div class="col-6">
+        </div>
+        <div class="col-3">
+          <button type="button" class="btn btn-success" (click)="create()">Crear</button>
+        </div>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col-1">Id</th>
+                <th scope="col-2">Tipo documento</th>
+                <th scope="col-3">Numero documento</th>
+                <th scope="col-4">Compañia</th>
+                <th scope="col-5">Usuario</th>
+                <th scope="col-6">Cliente</th>
+                <th scope="col-7">Cumpleaños</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let naturalperson of naturalpeople">
+                <td>{{ naturalperson.id }}</td>
+                <td>{{ naturalperson.document_type }}</td>
+                <td>{{ naturalperson.document_number }}</td>
+                <td>{{ naturalperson.company_id }}</td>
+                <td>{{ naturalperson.user_id }}</td>
+                <td>{{ naturalperson.client_id }}</td>
+                <td>{{ naturalperson.birth_date | date}}</td>
+                <td>
+                  <button type="button" class="btn btn-primary" (click)="view(naturalperson.id)">Ver</button>
+                  <button type="button" class="btn btn-warning" (click)="update(naturalperson.id)">Actualizar</button>
+                  <button type="button" class="btn btn-danger" (click)="delete(naturalperson.id)">Eliminar</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

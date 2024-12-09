@@ -1,0 +1,48 @@
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8"></div>
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header bg-transparent">
+          <div class="row align-items-center">
+            <div class="col-9">
+              <h3 class="mb-0">Clientes</h3>
+            </div>
+            <div class="col-3 text-right">
+              <button type="button" class="btn btn-success" (click)="create()">Crear</button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Tipo Identificación</th>
+                <th scope="col">Identificación</th>
+                <th scope="col">Teléfono</th>
+                <th scope="col">Orden</th>
+                <th scope="col">Usuario</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let client of clients">
+                <td>{{ client.id }}</td>
+                <td>{{ client.id_type }}</td>
+                <td>{{ client.id_number }}</td>
+                <td>{{ client.phone_number }}</td>
+                <td>{{ client.order_count }}</td>
+                <td>{{ client.user_id }}</td>
+                <td>
+                  <button type="button" class="btn btn-primary btn-sm" (click)="view(client.id)">Ver</button>
+                  <button type="button" class="btn btn-warning btn-sm" (click)="update(client.id)">Actualizar</button>
+                  <button type="button" class="btn btn-danger btn-sm" (click)="delete(client.id)">Eliminar</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
