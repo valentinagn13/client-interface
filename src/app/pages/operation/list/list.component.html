@@ -32,8 +32,8 @@
                     <tbody>
                         <tr *ngFor="let ope of operations">
                             <td>{{ ope.id }}</td>
-                            <td>{{ ope.start_date }}</td>
-                            <td>{{ ope.end_date }}</td>
+                            <td>{{ ope.start_date | date}}</td>
+                            <td>{{ ope.end_date | date}}</td>
                             <td>{{ ope.municipality_id }}</td>
                             <td>{{ ope.vehicle_id }}</td>
                             <td>

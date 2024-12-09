@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { OperationRoutingModule } from './operation-routing.module';
 import { ListComponent } from './list/list.component';
 import { ManageComponent } from './manage/manage.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -15,8 +15,10 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     OperationRoutingModule,
-    FormsModule //importante importarlo para que funcione el ngModel en el html
+    FormsModule,//importante importarlo para que funcione el ngModel en el html
     // NgxPaginationModule
+    ReactiveFormsModule//importamos el modulo de formularios reactivos paso 8
+    //DatePipe
   ]
 })
 export class OperationModule { }

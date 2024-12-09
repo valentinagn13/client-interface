@@ -96,10 +96,10 @@ export class ManageComponent implements OnInit {
       // primer elemento del vector, valor por defecto
       // lista, serán las reglas
       id: [this.address.id || ''],
-       street: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9]+$')]],
-      number:['',[Validators.required, Validators.pattern('^[a-zA-Z0-9]+$')]],
-      neighborhood: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9]+$')]],
-      reference:['', [Validators.required, Validators.pattern('^[a-zA-Z0-9]+$')]],
+       street: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9\s]+$')]],
+      number:['',[Validators.required, Validators.pattern('^[a-zA-Z0-9\s]+$')]],
+      neighborhood: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9\s]+$')]],
+      reference:['', [Validators.required, Validators.pattern('^[a-zA-Z0-9\s]+$')]],
       municipality_id: [0, [Validators.required]]
   
      // idProjector:[null,[Validators.required]],

@@ -16,8 +16,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     InsuraceRoutingModule,
     FormsModule,//importante importarlo para que funcione el ngModel en el html
-    ReactiveFormsModule,//importamos el modulo de formularios reactivos paso 8
-
+    // NgxPaginationModule
+    ReactiveFormsModule//importamos el modulo de formularios reactivos paso 8
+    //DatePipe
   ]
 })
 export class InsuranceModule { }

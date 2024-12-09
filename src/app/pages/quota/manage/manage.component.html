@@ -1,0 +1,150 @@
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8"></div>
+<!-- Page content -->
+<div class="container-fluid mt--7">
+    <!-- Table -->
+    <div class="row">
+        <div class="col">
+            <div class="card shadow">
+                <div class="card-header border-0">
+                    <h1 *ngIf="mode == 1" class="mb-0">Visualizar</h1>
+                    <h1 *ngIf="mode == 2" class="mb-0">Crear</h1>
+                    <h1 *ngIf="mode == 3" class="mb-0">Actualizar</h1>
+                </div>
+                <form class="form" [formGroup]="theFormGroup">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-4">
+                                <label>id:</label>
+                            </div>
+                            <div class="col-8">
+                                <input type="number" class="form-control" disabled [(ngModel)]="quotas.id" formControlName="id"> 
+                            </div>
+                        </div>
+
+                        <br />
+                        <div class="row">
+                            <div class="col-4">
+                                <label>Monto</label>
+                            </div>
+                            <div class="col-8">
+                                <input type="number" class="form-control" [(ngModel)]="quotas.amount" formControlName="amount"> 
+
+                                <div *ngIf="
+                                getTheFormGroup.amount.errors &&
+                                (getTheFormGroup.amount.dirty ||
+                                  getTheFormGroup.amount.touched ||
+                                  trySend)
+                              ">
+                              <!-- si el form group location tine un error de requerido colocamos un mensaje de requerido -->
+                                                <strong *ngIf="getTheFormGroup.amount.errors.required"
+                                                    class="msnError text-danger">Requerido</strong>
+                                                    <!-- si tiene un erro de longitud minima entonces colocamos el error -->
+                                                    <strong *ngIf="getTheFormGroup.amount.errors.min" class="msnError text-success">El valor debe ser un valor mayor a 0</strong>
+                                                    <strong *ngIf="getTheFormGroup.amount.errors.max" class="msnError text-success">El valor debe ser un valor menor a 100000000</strong>
+                                                    <strong *ngIf="getTheFormGroup.amount.errors.pattern" class="msnError text-success">El valor debe ser un valor numérico</strong>
+                                            </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-4">
+                                <label>Interes</label>
+                            </div>
+                            <div class="col-8">
+                                <input type="number" class="form-control" [(ngModel)]="quotas.interest_rate"
+                                formControlName="interest_rate"> 
+                                <div *ngIf="
+                                getTheFormGroup.interest_rate.errors &&
+                                (getTheFormGroup.interest_rate.dirty ||
+                                  getTheFormGroup.interest_rate.touched ||
+                                  trySend)
+                              ">
+                              <!-- si el form group location tine un error de requerido colocamos un mensaje de requerido -->
+                                                <strong *ngIf="getTheFormGroup.interest_rate.errors.required"
+                                                    class="msnError text-danger">Requerido</strong>
+                                                    <!-- si tiene un erro de longitud minima entonces colocamos el error -->
+                                                    <strong *ngIf="getTheFormGroup.interest_rate.errors.min" class="msnError text-success">El valor debe ser un valor igual o mayor a 0</strong>
+                                                    <strong *ngIf="getTheFormGroup.interest_rate.errors.max" class="msnError text-success">El valor debe ser un valor menor o igual a 100</strong>
+                                                    <strong *ngIf="getTheFormGroup.interest_rate.errors.pattern" class="msnError text-success">El valor debe ser un valor numérico</strong>
+                                            </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-4">
+                                <label>Fecha de Vencimiento:</label>
+                            </div>
+                            <div class="col-8">
+                                <input type="date" class="form-control" [(ngModel)]="quotas.due_date" formControlName="due_date">
+                                <div *ngIf="
+                                getTheFormGroup.due_date.errors &&
+                                (getTheFormGroup.due_date.dirty ||
+                                  getTheFormGroup.due_date.touched ||
+                                  trySend)
+                              ">
+                              <!-- si el form group location tine un error de requerido colocamos un mensaje de requerido -->
+                                                <strong *ngIf="getTheFormGroup.due_date.errors.required"
+                                                    class="msnError text-danger">Requerido</strong>
+                                                    
+                                            </div>  
+                            </div>
+                        </div>
+
+                        <br />
+                        <div class="row">
+                            <div class="col-4">
+                                <label>Contrato id</label>
+                            </div>
+                            <div class="col-8">
+                                <input type="number" class="form-control" [(ngModel)]="quotas.contract_id"formControlName="contract_id">
+                                <div *ngIf="
+                                getTheFormGroup.contract_id.errors &&
+                                (getTheFormGroup.contract_id.dirty ||
+                                  getTheFormGroup.contract_id.touched ||
+                                  trySend)
+                              ">
+                              <!-- si el form group location tine un error de requerido colocamos un mensaje de requerido -->
+                                                <strong *ngIf="getTheFormGroup.contract_id.errors.required"
+                                                    class="msnError text-danger">Requerido</strong>
+                                                    <!-- si tiene un erro de longitud minima entonces colocamos el error -->
+                                                    <strong *ngIf="getTheFormGroup.contract_id.errors.pattern" class="msnError text-success">El valor debe ser un valor numérico</strong>
+                                            </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-4">
+                                <label>Estatus</label>
+                            </div>
+                            <div class="col-8">
+                                <input type="checkbox" class="form-control" [(ngModel)]="quotas.status" formControlName="status">
+                                <!-- Cambia esta línea -->
+                                <div *ngIf="
+                                    getTheFormGroup.status.errors && 
+                                    (getTheFormGroup.status.dirty || 
+                                     getTheFormGroup.status.touched || 
+                                     trySend)
+                                ">
+                                    <strong *ngIf="getTheFormGroup.status.errors?.['required']"
+                                        class="msnError text-danger">Requerido</strong>
+                                </div>
+                            </div>  
+                        </div>
+
+                        <div class="row">
+                            <div class="col-4"></div>
+                            <div class="col-8">
+                                <button *ngIf="mode == 2" class="btn btn-success btn-block" (click)="create()">
+                                    Crear
+                                </button>
+                                <button *ngIf="mode == 3" class="btn btn-success btn-block" (click)="update()">
+                                    Actualizar
+                                </button>
+                            </div>
+                        </div>
+                    </div>     
+                </form>    
+            </div>
+        </div>
+    </div>
+</div>

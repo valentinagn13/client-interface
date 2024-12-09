@@ -1,0 +1,69 @@
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8"></div>
+<!-- Page Content -->
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <!-- Encabezado -->
+        <div class="card-header bg-transparent">
+          <div class="row align-items-center">
+            <div class="col">
+              <h3 class="mb-0">Orden-Direccion-Ruta</h3>
+            </div>
+            <div class="col-auto">
+              <button type="button" class="btn btn-success" (click)="create()">
+                Crear
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Tabla -->
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table align-items-center table-flush">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">Dirección Id</th>
+                  <th scope="col">ruta Id</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let adRoOr of AddreRouteOrder">
+                  <td>{{ adRoOr.id }}</td>
+                  <td>{{ adRoOr.address_id }}</td>
+                  <td>{{ adRoOr.route_id }}</td>
+                  <td>
+                    <div class="d-flex gap-2">
+                      <button
+                        type="button"
+                        class="btn btn-primary btn-sm"
+                        (click)="view(adRoOr.id)"
+                      >
+                        Ver
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-warning btn-sm"
+                        (click)="update(adRoOr.id)"
+                      >
+                        Actualizar
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-danger btn-sm"
+                        (click)="delete(adRoOr.id)"
+                      >
+                        Eliminar
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Insurance } from 'src/app/models/insurance.model';
-import { InsuranceService } from 'src/app/services/insurance.service';
+import { Vehicleowner } from 'src/app/models/vehicleowner.model';
+import { VehicleownerService } from 'src/app/services/vehicleowner.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -11,11 +11,11 @@ import Swal from 'sweetalert2';
 })
 export class ListComponent implements OnInit {
 
-
-  insurances: Insurance[];
   
-  constructor(private service: InsuranceService, private router: Router) { 
-     this.insurances = [];
+  vehicleOwners: Vehicleowner[];
+  
+  constructor(private service: VehicleownerService, private router: Router) { 
+     this.vehicleOwners = [];
   }
 
   //este es el primero que se llama igual que contructor pero cuando hay cambios en los componentes 
@@ -28,29 +28,30 @@ export class ListComponent implements OnInit {
   view(id: number) {
     console.log("aqui estoy en view");
     
-    this.router.navigate(["insurances/view/" + id]);
+    this.router.navigate(["vehicleOwners/view/" + id]);
   }
 
   update(id: number) {
-    this.router.navigate(["insurances/update/" + id]);
+    this.router.navigate(["vehicleOwners/update/" + id]);
   }
 
   list(): void {
     this.service.list().subscribe((data) => {
-      this.insurances = data
-      console.log(JSON.stringify(data));
+      
+      this.vehicleOwners = data
 
+      //console.log(JSON.stringify(data["data"]));
     });
   }
 
   create(){
-    this.router.navigate(["insurances/create"]);
+    this.router.navigate(["vehicleOwners/create"]);
   }
 
   delete(id: number) {
     Swal.fire({
-      title: "Eliminar Seguro",
-      text: "¿Estas seguro de eliminar EL Seguro?",
+      title: "Eliminar Dueño del Vehiculo",
+      text: "¿Estas seguro de eliminar el Dueño del Vehiculo?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -62,7 +63,7 @@ export class ListComponent implements OnInit {
         this.service.delete(id).subscribe((data) => {
           Swal.fire(
             "Eliminado!",
-            "El Seguro ha sido eliminado.",
+            "El Dueño del Vehiculo ha sido eliminada.",
             "success"
           );
           
@@ -71,6 +72,5 @@ export class ListComponent implements OnInit {
       }
     });
   }
-
 
 }

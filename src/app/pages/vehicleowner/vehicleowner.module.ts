@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { VehicleRoutingModule } from './vehicle-routing.module';
+import { VehicleownerRoutingModule } from './vehicleowner-routing.module';
 import { ListComponent } from './list/list.component';
 import { ManageComponent } from './manage/manage.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -14,10 +14,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   ],
   imports: [
     CommonModule,
-    VehicleRoutingModule,
-    FormsModule, //importante importarlo para que funcione el ngModel en el html
+    VehicleownerRoutingModule,
+    FormsModule,
     ReactiveFormsModule//importamos el modulo de formularios reactivos paso 8
     //DatePipe
   ]
 })
-export class VehicleModule { }
+export class VehicleownerModule { }

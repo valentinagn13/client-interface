@@ -1,79 +1,211 @@
 <div class="header bg-gradient-danger pb-8 pt-5 pt-md-8"></div>
 <!-- Page content -->
 <div class="container-fluid mt--7">
-    <!-- Table -->
-    <div class="row">
-        <div class="col">
-            <div class="card shadow">
-                <div class="card-header border-0">
-                    <h1 *ngIf="mode == 1" class="mb-0">Visualizar</h1>
-                    <h1 *ngIf="mode == 2" class="mb-0">Crear</h1>
-                    <h1 *ngIf="mode == 3" class="mb-0">Actualizar</h1>
+  <!-- Table -->
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header border-0">
+          <h1 *ngIf="mode == 1" class="mb-0">Visualizar</h1>
+          <h1 *ngIf="mode == 2" class="mb-0">Crear</h1>
+          <h1 *ngIf="mode == 3" class="mb-0">Actualizar</h1>
+        </div>
+        <form class="form" [formGroup]="theFormGroup">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-4">
+                <label>id:</label>
+              </div>
+              <div class="col-8">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="vehicles.id"
+                  formControlName="id"
+                />
+              </div>
+            </div>
+
+            <br />
+            <div class="row">
+              <div class="col-4">
+                <label>Placa</label>
+              </div>
+              <div class="col-8">
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="license_plate"
+                  [(ngModel)]="vehicles.license_plate"
+                />
+                <div
+                  *ngIf="
+                    getTheFormGroup.license_plate.errors &&
+                    (getTheFormGroup.license_plate.dirty ||
+                      getTheFormGroup.license_plate.touched ||
+                      trySend)
+                  "
+                >
+                  <!-- si el form group location tine un error de requerido colocamos un mensaje de requerido -->
+                  <strong
+                    *ngIf="getTheFormGroup.license_plate.errors.required"
+                    class="msnError text-danger"
+                    >Requerido</strong
+                  >
+                  <strong
+                    *ngIf="getTheFormGroup.license_plate.errors.pattern"
+                    class="msnError text-danger"
+                  >
+                    Solo se permiten letras, números, espacios, guiones bajos y
+                    guiones
+                  </strong>
                 </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-4">
-                                <label>id:</label>
-                            </div>
-                            <div class="col-8">
-                                <input type="text" class="form-control" disabled [(ngModel)]="vehicles.id"  > 
-                            </div>
-                        </div>
+              </div>
+            </div>
+            <br />
+            <div class="row">
+              <div class="col-4">
+                <label>Modelo</label>
+              </div>
+              <div class="col-8">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="vehicles.model"
+                  formControlName="model"
+                />
+                <div
+                  *ngIf="
+                    getTheFormGroup.model.errors &&
+                    (getTheFormGroup.model.dirty ||
+                      getTheFormGroup.model.touched ||
+                      trySend)
+                  "
+                >
+                  <!-- si el form group location tine un error de requerido colocamos un mensaje de requerido -->
+                  <strong
+                    *ngIf="getTheFormGroup.model.errors.required"
+                    class="msnError text-danger"
+                    >Requerido</strong
+                  >
+                  <strong
+                    *ngIf="getTheFormGroup.model.errors.pattern"
+                    class="msnError text-danger"
+                  >
+                    Solo se permiten letras, números, espacios y guiones
+                  </strong>
+                </div>
+              </div>
+            </div>
+            <br />
+            <div class="row">
+              <div class="col-4">
+                <label>Capacidad:</label>
+              </div>
+              <div class="col-8">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="vehicles.capacity"
+                  formControlName="capacity"
+                />
+                <div
+                  *ngIf="
+                    getTheFormGroup.capacity.errors &&
+                    (getTheFormGroup.capacity.dirty ||
+                      getTheFormGroup.capacity.touched ||
+                      trySend)
+                  "
+                >
+                  <!-- si el form group location tine un error de requerido colocamos un mensaje de requerido -->
+                  <strong
+                    *ngIf="getTheFormGroup.capacity.errors.required"
+                    class="msnError text-danger"
+                    >Requerido</strong
+                  >
+                  <strong
+                    *ngIf="getTheFormGroup.capacity.errors.pattern"
+                    class="msnError text-danger"
+                  >
+                    Solo se permiten números
+                  </strong>
+                  <strong
+                    *ngIf="getTheFormGroup.capacity.errors.min"
+                    class="msnError text-danger"
+                  >
+                    El valor debe ser mayor a 0
+                  </strong>
+                  <strong
+                    *ngIf="getTheFormGroup.capacity.errors.max"
+                    class="msnError text-danger"
+                  >
+                    El valor debe ser menor a 35001
+                  </strong>
+                </div>
+              </div>
+            </div>
 
-                        <br />
-                        <div class="row">
-                            <div class="col-4">
-                                <label>Placa</label>
-                            </div>
-                            <div class="col-8">
-                                <input type="text" class="form-control" [(ngModel)]="vehicles.license_plate" [disabled] = "mode == 1"> 
-                            </div>
-                        </div>
-                        <br />
-                        <div class="row">
-                            <div class="col-4">
-                                <label>Modelo</label>
-                            </div>
-                            <div class="col-8">
-                                <input type="text" class="form-control" [(ngModel)]="vehicles.model" [disabled] = "mode == 1"> 
-                            </div>
-                        </div>
-                        <br />
-                        <div class="row">
-                            <div class="col-4">
-                                <label>Capacidad:</label>
-                            </div>
-                            <div class="col-8">
-                                <input type="text" class="form-control" [(ngModel)]="vehicles.capacity" [disabled] = "mode == 1">  
-                            </div>
-                        </div>
-
-                        <br />
-                        <div class="row">
-                            <div class="col-4">
-                                <label>Tipo de Carga</label>
-                            </div>
-                            <div class="col-8">
-                                <input type="text" class="form-control" [(ngModel)]="vehicles.cargo_type" [disabled] = "mode == 1">
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row">
-                            <div class="col-4"></div>
-                            <div class="col-8">
-                                <!-- <button *ngIf="mode == 1" class="btn btn-success btn-block" (click)="view()">
+            <br />
+            <div class="row">
+              <div class="col-4">
+                <label>Tipo de Carga</label>
+              </div>
+              <div class="col-8">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="vehicles.cargo_type"
+                  formControlName="cargo_type"
+                />
+                <div
+                  *ngIf="
+                    getTheFormGroup.cargo_type.errors &&
+                    (getTheFormGroup.cargo_type.dirty ||
+                      getTheFormGroup.cargo_type.touched ||
+                      trySend)
+                  "
+                >
+                  <!-- si el form group location tine un error de requerido colocamos un mensaje de requerido -->
+                  <strong
+                    *ngIf="getTheFormGroup.cargo_type.errors.required"
+                    class="msnError text-danger"
+                    >Requerido</strong
+                  >
+                  <strong
+                    *ngIf="getTheFormGroup.cargo_type.errors.pattern"
+                    class="msnError text-danger"
+                  >
+                    Solo se permiten letras, números, espacios
+                  </strong>
+                </div>
+              </div>
+            </div>
+            <br />
+            <div class="row">
+              <div class="col-4"></div>
+              <div class="col-8">
+                <!-- <button *ngIf="mode == 1" class="btn btn-success btn-block" (click)="view()">
                                     Visualizar
                                 </button> -->
-                                <button *ngIf="mode == 2" class="btn btn-success btn-block" (click)="create()">
-                                    Crear
-                                </button>
-                                <button *ngIf="mode == 3" class="btn btn-success btn-block" (click)="update()">
-                                    Actualizar
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                <button
+                  *ngIf="mode == 2"
+                  class="btn btn-success btn-block"
+                  (click)="create()"
+                >
+                  Crear
+                </button>
+                <button
+                  *ngIf="mode == 3"
+                  class="btn btn-success btn-block"
+                  (click)="update()"
+                >
+                  Actualizar
+                </button>
+              </div>
             </div>
-        </div>
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
 </div>
