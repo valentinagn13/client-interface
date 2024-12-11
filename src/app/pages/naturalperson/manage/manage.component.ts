@@ -10,7 +10,6 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Operation } from "src/app/models/operation.model";
 import { DatePipe } from "@angular/common";
 
-
 @Component({
   selector: "app-manage",
   templateUrl: "./manage.component.html",
@@ -28,14 +27,13 @@ export class ManageComponent implements OnInit {
     private router: Router,
     private naturalpersonService: NaturalpersonService,
     private theFormBuilder: FormBuilder
-
   ) {
     this.mode = 1;
     this.naturalperson = {
       id: 0,
       user_id: "",
       document_type: "",
-      document_number: 0,
+      document_number: "",
       birth_date: new Date(),
       company_id: null,
       client_id: 0,
@@ -125,7 +123,7 @@ export class ManageComponent implements OnInit {
         [Validators.required, Validators.pattern("^[a-zA-Z0-9]+$")],
       ],
       document_type: ["", [Validators.required]],
-      document_number: [0, [Validators.required]],
+      document_number: ["", [Validators.required]],
       birth_date: ["", [Validators.required]],
       company_id: [null, [Validators.required]],
       client_id: [0, [Validators.required]],
