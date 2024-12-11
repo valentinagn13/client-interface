@@ -1,29 +1,28 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Routes } from 'src/app/models/routes.model';
-import { RouteService } from 'src/app/services/route.service';
-import Swal from 'sweetalert2';
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { Routes } from "src/app/models/routes.model";
+import { RouteService } from "src/app/services/route.service";
+import Swal from "sweetalert2";
 
 @Component({
-  selector: 'app-list',
-  templateUrl: './list.component.html',
-  styleUrls: ['./list.component.css']
+  selector: "app-list",
+  templateUrl: "./list.component.html",
+  styleUrls: ["./list.component.css"],
 })
 export class ListComponent implements OnInit {
   public routes: Routes[] = [];
 
   constructor(private routesService: RouteService, private router: Router) {
-    console.log("Saludos desde el constructor");
+    this.routes = [];
   }
 
   ngOnInit(): void {
-    console.log("Saludos desde ngOnInit");
     this.list();
   }
 
   list() {
     this.routesService.list().subscribe((data: any[]) => {
-      this.routes = data.map(route => ({
+      this.routes = data.map((route) => ({
         id: route.id,
         startingPlace: route.starting_place,
         endingPlace: route.ending_place,
