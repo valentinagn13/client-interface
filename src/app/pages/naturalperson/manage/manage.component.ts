@@ -35,7 +35,7 @@ export class ManageComponent implements OnInit {
       id: 0,
       user_id: "",
       document_type: "",
-      document_number: 0,
+      document_number: "",
       birth_date: new Date(),
       company_id: null,
       client_id: 0,
@@ -64,16 +64,7 @@ export class ManageComponent implements OnInit {
       this.getPerson(this.naturalperson.id);
     }
   }
-
   create() {
-    if (this.theFormGroup.invalid) {
-      Swal.fire(
-        "Error",
-        "Formulario inválido. Por favor, verifica los campos.",
-        "error"
-      );
-      return;
-    }
     console.log(JSON.stringify(this.naturalperson));
     this.naturalpersonService.create(this.naturalperson).subscribe((data) => {
       Swal.fire("Creado", " se ha creado exitosa mente", "success"); //tirulo a la alerta
@@ -125,7 +116,7 @@ export class ManageComponent implements OnInit {
         [Validators.required, Validators.pattern("^[a-zA-Z0-9]+$")],
       ],
       document_type: ["", [Validators.required]],
-      document_number: [0, [Validators.required]],
+      document_number: ["", [Validators.required]],
       birth_date: ["", [Validators.required]],
       company_id: [null, [Validators.required]],
       client_id: [0, [Validators.required]],

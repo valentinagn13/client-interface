@@ -21,11 +21,11 @@ export class ListComponent implements OnInit {
   view(id: number) {
     console.log("aqui estoy en view");
 
-    this.router.navigate(["owner/view/" + id]);
+    this.router.navigate(["owners/view/" + id]);
   }
 
   update(id: number) {
-    this.router.navigate(["owner/update/" + id]);
+    this.router.navigate(["owners/update/" + id]);
   }
 
   list(): void {
@@ -38,7 +38,7 @@ export class ListComponent implements OnInit {
   }
 
   create() {
-    this.router.navigate(["owner/create"]);
+    this.router.navigate(["owners/create"]);
   }
 
   delete(id: number) {
