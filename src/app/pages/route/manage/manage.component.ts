@@ -1,11 +1,10 @@
+import { DatePipe } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Routes } from "src/app/models/routes.model";
 import { RouteService } from "src/app/services/route.service";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import Swal from "sweetalert2";
-import { DatePipe } from "@angular/common";
-import { start } from "repl";
 
 @Component({
   selector: "app-manage",
@@ -20,17 +19,20 @@ export class ManageComponent implements OnInit {
 
   constructor(
     private activateRoute: ActivatedRoute,
-    private productsService: RouteService,
+    private routeService: RouteService,
     private router: Router,
     private theFormBuilder: FormBuilder
   ) {
     this.mode = 1;
     this.routes = {
       id: 0,
-      startingPlace: "",
-      endingPlace: "",
-      distance: 0,
-      deliveryDate: new Date(),
+      starting_place: "",
+      ending_place: "",
+      distance:0,
+      delivery_date: new Date(),
+      contract_id: 0,
+      vehicle_id: 0,
+     
     };
     this.trySend = false;
   }
@@ -41,10 +43,14 @@ export class ManageComponent implements OnInit {
     if (currentUrl.includes("view")) {
       this.mode = 1;
       this.theFormGroup.get("id").disable();
-      this.theFormGroup.get("startingPlace").disable();
-      this.theFormGroup.get("endingPlace").disable();
+      this.theFormGroup.get("starting_place").disable();
+      this.theFormGroup.get("ending_place").disable();
       this.theFormGroup.get("distance").disable();
-      this.theFormGroup.get("deliveryDate").disable();
+      this.theFormGroup.get("delivery_date").disable();
+      this.theFormGroup.get("contract_id").disable();
+      this.theFormGroup.get("vehicle_id").disable();
+
+
     } else if (currentUrl.includes("create")) {
       this.mode = 2;
       this.theFormGroup.get("id").disable();
@@ -54,47 +60,56 @@ export class ManageComponent implements OnInit {
     }
     if (this.activateRoute.snapshot.params.id) {
       this.routes.id = this.activateRoute.snapshot.params.id;
-      this.getProduct(this.routes.id);
+      this.getRoutes(this.routes.id);
     }
+   
   }
+
+  
+
 
   create() {
     console.log(JSON.stringify(this.routes));
-    this.productsService.create(this.routes).subscribe((data) => {
+    this.routeService.create(this.routes).subscribe((data) => {
       Swal.fire("Creado", " se ha creado exitosa mente", "success"); //tirulo a la alerta
       this.router.navigate(["routes/list"]);
     });
   }
 
-  update() {
-    const fechaExpiration = this.theFormGroup.get("deliveryDate")?.value;
-    const fechaExpirationDate = new Date(fechaExpiration);
-
-    //console.log(JSON.stringify(this.routes));
-    this.productsService.update(this.routes).subscribe((data) => {
-      Swal.fire("Actualizado", " se ha actualizado exitosa mente", "success"); //titulo a la alerta
-      this.router.navigate(["routes/list"]);
-    });
+ 
+  update(){
+    const fechaEntrega = this.theFormGroup.get("delivery_date")?.value;
+    const fechaEntregaDate = new Date(fechaEntrega);
+    
+    //console.log(JSON.stringify(this.products));
+    this.routeService.update(this.routes).subscribe(data=>{
+      Swal.fire("Actualizado"," se ha actualizado exitosa mente", "success")//titulo a la alerta
+      this.router.navigate(["routes/list"]); 
+    })
+    
   }
 
-  //aqui se arma la data
-  getProduct(id: number) {
-    this.productsService.view(id).subscribe((data) => {
-      const datePipe = new DatePipe("en-US");
-      this.routes = data;
-      const formattedExpirationDate = datePipe.transform(
-        data.deliveryDate,
+   //aqui se arma la data
+   getRoutes(id:number){
+    this.routeService.view(id).subscribe(data=>{
+      const datePipe = new DatePipe("en-US");  
+      
+      const formatteddeliveryDate = datePipe.transform(
+        data.delivery_date,
         "yyyy-MM-dd"
       );
+      this.routes = data; 
       console.log(JSON.stringify(this.routes));
-
+      
       this.theFormGroup.patchValue({
         id: this.routes.id,
-        startingPlace: this.routes.startingPlace,
-        endingPlace: this.routes.endingPlace,
+        starting_place: this.routes.starting_place,
+        ending_place: this.routes.ending_place,
         distance: this.routes.distance,
-        deliveryDate: formattedExpirationDate,
-
+  // Fecha formateada
+        delivery_date: formatteddeliveryDate, // Fecha formateada
+        contract_id: this.routes.contract_id,
+        vehicle_id: this.routes.vehicle_id,
       });
     });
   }
@@ -103,16 +118,19 @@ export class ManageComponent implements OnInit {
   //aqui definimos las reglas
   configFormGroup() {
     this.theFormGroup = this.theFormBuilder.group({
-      id: [this.routes.id || ""], // Siempre deshabilitado
-      startingPlace: ["", [Validators.required]],
-      endingPlace: ["", [Validators.required]],
-      distance: [0, [Validators.required]],
-      deliveryDate: ["", [Validators.required]],
+      id: [this.routes.id || "" ], // Siempre deshabilitado
+      starting_place: ["", [Validators.required, Validators.pattern('^[a-zA-Z0-9\\s]+$')]],
+      ending_place:["",[Validators.required, Validators.pattern('^[a-zA-Z0-9\\s]+$')]],
+      distance: ["",[Validators.required, Validators.pattern("^[0-9]+$")]],
+      delivery_date: ["",[Validators.required]],
+      contract_id: [0, [Validators.required, Validators.pattern("^[0-9]+$")]],
+      vehicle_id: [0, [Validators.required, Validators.pattern("^[0-9]+$")]],
     });
   }
 
   //aqui nos indica que regla molesto
   get getTheFormGroup() {
     return this.theFormGroup.controls;
-  }
+  
+}
 }

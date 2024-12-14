@@ -21,7 +21,7 @@ export class SecurityService {
    */
   login(user: User): Observable<any> {
     return this.http.post<any>(
-      `${environment.url_ms_security}/security/login1`,
+      `${environment.url_ms_security}/api/public/security/login`,
       user 
     );
   }

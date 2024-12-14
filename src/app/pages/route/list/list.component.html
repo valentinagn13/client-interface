@@ -1,49 +1,55 @@
 <div class="header bg-gradient-danger pb-8 pt-5 pt-md-8"></div>
-<!-- Page content -->
+<!-- Page Content -->
 <div class="container-fluid mt--7">
-    <!-- Table -->
     <div class="row">
         <div class="col">
             <div class="card shadow">
-                <div class="card-header border-0">
-                    <h3 class="mb-0">Rutas</h3>
+                <!-- Encabezado -->
+                <div class="card-header bg-transparent">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="mb-0">Rutas</h3>
+                        </div>
+                        <div class="col-auto">
+                            <button type="button" class="btn btn-success" (click)="create()">Crear</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Id</th>
-                                <th scope="col">Inicio</th>
-                                <th scope="col">Final</th>
-                                <th scope="col">Distancia</th>
-                                <th scope="col">Fecha</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let actual of routes">
-                                <td>{{ actual.id }}</td>
-                                <td>{{ actual.startingPlace }}</td>
-                                <td>{{ actual.endingPlace }}</td>
-                                <td>{{ actual.distance }}</td>
-                                <td>{{ actual.deliveryDate | date: 'dd/MM/yyyy' }}</td>
-
-
-                                <td>
-                                    <button type="button" class="btn btn-success" (click)="view(actual.id)">
-                                        Ver
-                                    </button>
-
-                                    <button type="button" class="btn btn-warning" (click)="update(actual.id)">
-                                        Editar
-                                    </button>
-                                    <!-- llama al metodo de list component ts -->
-                                    <button type="button" class="btn btn-danger" (click)="delete(actual.id)">
-                                        Eliminar
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <!-- Tabla -->
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table align-items-center table-flush">
+                            <thead class="thead-light">
+                                <tr>
+                            <th scope="col-1">ID</th>
+                            <th scope="col-2">Lugar de inicio</th>
+                            <th scope="col-3">Lugar de Salida</th>
+                            <th scope="col-2">Distancia</th>
+                            <th scope="col-2">Fecha de entrega</th>
+                            <th scope="col-2">Contrato Id</th>
+                            <th scope="col-2">Vehiculo Id</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let routes of routes">
+                                    <td>{{ routes.id }}</td>
+                                    <td>{{ routes.starting_place }}</td>
+                                    <td>{{ routes.ending_place }}</td>
+                                    <td>{{ routes.distance }}</td>
+                                    <td>{{ routes.delivery_date | date }}</td>
+                                    <td>{{ routes.contract_id }}</td>
+                                    <td>{{ routes.vehicle_id }}</td>
+                                    <td>
+                                        <div class="d-flex gap-2">
+                                            <button type="button" class="btn btn-primary btn-sm" (click)="view(routes.id)">Ver</button>
+                                            <button type="button" class="btn btn-warning btn-sm" (click)="update(routes.id)">Actualizar</button>
+                                            <button type="button" class="btn btn-danger btn-sm" (click)="delete(routes.id)">Eliminar</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
