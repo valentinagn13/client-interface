@@ -4,10 +4,11 @@ import { CommonModule } from '@angular/common';
 import { RouteRoutingModule } from './route-routing.module';
 import { ManageComponent } from './manage/manage.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ListComponent } from './list/list.component';
 
 
 @NgModule({
-  declarations: [ManageComponent],
+  declarations: [ManageComponent, ListComponent],
   imports: [
     CommonModule,
     RouteRoutingModule,

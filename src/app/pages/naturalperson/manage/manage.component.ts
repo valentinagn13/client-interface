@@ -10,7 +10,6 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Operation } from "src/app/models/operation.model";
 import { DatePipe } from "@angular/common";
 
-
 @Component({
   selector: "app-manage",
   templateUrl: "./manage.component.html",
@@ -28,7 +27,6 @@ export class ManageComponent implements OnInit {
     private router: Router,
     private naturalpersonService: NaturalpersonService,
     private theFormBuilder: FormBuilder
-
   ) {
     this.mode = 1;
     this.naturalperson = {
