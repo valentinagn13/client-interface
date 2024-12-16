@@ -9,6 +9,7 @@
           <h1 *ngIf="mode == 1" class="mb-0">Visualizar</h1>
           <h1 *ngIf="mode == 2" class="mb-0">Crear</h1>
           <h1 *ngIf="mode == 3" class="mb-0">Actualizar</h1>
+          <h1 *ngIf="mode == 4" class="mb-0">Crear Lote Route_id #{{batch.route_id}}</h1>
         </div>
         <form class="form" [formGroup]="theFormGroup">
         <div class="card-body">
@@ -121,6 +122,12 @@
               <button *ngIf="mode == 3" class="btn btn-success btn-block" (click)="update()">
                 Actualizar
               </button>
+              <button 
+              *ngIf="mode == 4" 
+              class="btn btn-success btn-block" 
+              (click)="createForRoute()">
+              Crear para Ruta
+            </button>
             </div>
           </div>
         </div>

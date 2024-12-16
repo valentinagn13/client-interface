@@ -61,4 +61,7 @@ export class ListComponent implements OnInit {
       }
     });
   }
+  showQuotas(id: number){
+    this.router.navigate(["quotas/filterByContract/" + id]);
+  }
 }

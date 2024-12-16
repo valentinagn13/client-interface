@@ -43,4 +43,24 @@ export class ProductService {
       Product
     );
   }
+
+  listByBatch(batchId: number): Observable<Product[]> {
+    return this.http.get<Product[]>(`${
+      environment.url_ms_business
+    }/products?batch_id=${batchId}`);
+    
+  }
+  createForBatch(batch_id: number, product: Product): Observable<Product> {
+    return this.http.post<Product>(`${environment.url_ms_business}/products/batch/${batch_id}`, product);
+  }
+
+  listByClient(client_id: number): Observable<Product[]> {
+    return this.http.get<Product[]>(`${
+      environment.url_ms_business
+    }/products?client_id=${client_id}`);
+    
+  }
+  createForClient(client_id: number, product: Product): Observable<Product> {
+    return this.http.post<Product>(`${environment.url_ms_business}/products/client/${client_id}`, product);
+  }
 }

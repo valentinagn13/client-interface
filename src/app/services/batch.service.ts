@@ -30,4 +30,14 @@ export class BatchService {
   update(batch:Batch):Observable<Batch>{
     return this.http.put<Batch>(`${environment.url_ms_business}/batches/${batch.id}`,batch);
   }
+
+  listByRoute(route_id: number): Observable<Batch[]> {
+      return this.http.get<Batch[]>(`${
+        environment.url_ms_business
+      }/batches?route_id=${route_id}`);
+      
+    }
+    createForRoute(route_id: number, batch: Batch): Observable<Batch> {
+      return this.http.post<Batch>(`${environment.url_ms_business}/batches/route/${route_id}`, batch);
+    }
 }

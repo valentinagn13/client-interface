@@ -61,4 +61,7 @@ export class ListComponent implements OnInit {
       }
     });
   }
+  showBatch(id: number){
+    this.router.navigate(["batches/filterByRoute/" + id]);
+  }
 }
