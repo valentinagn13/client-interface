@@ -10,6 +10,8 @@
           <h1 *ngIf="mode == 1" class="mb-0">Visualizar</h1>
           <h1 *ngIf="mode == 2" class="mb-0">Crear</h1>
           <h1 *ngIf="mode == 3" class="mb-0">Actualizar</h1>
+          <h1 *ngIf="mode == 4" class="mb-0">Crear producto Lote_id #{{products.batch_id}}</h1>
+          <h1 *ngIf="mode == 5" class="mb-0">Crear producto Cliente_id #{{products.client_id}}</h1>
         </div>
 
         <form class="form" [formGroup]="theFormGroup">
@@ -152,6 +154,18 @@
                 <button *ngIf="mode == 3" class="btn btn-success btn-block" (click)="update()">
                   Actualizar
                 </button>
+                <button 
+                *ngIf="mode == 4" 
+                class="btn btn-success btn-block" 
+                (click)="createForBatch()">
+                Crear para Lote
+              </button>
+              <button 
+              *ngIf="mode == 5" 
+              class="btn btn-success btn-block" 
+              (click)="createForClient()">
+              Crear para Cliente
+            </button>
               </div>
             </div>
           </div>

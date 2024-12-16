@@ -16,6 +16,7 @@ export class ManageComponent implements OnInit {
   quotas: Quota;
   theFormGroup: FormGroup;
   trySend: boolean;
+  contract_id: number
 
   constructor(
     private activateRoute: ActivatedRoute,
@@ -46,10 +47,25 @@ export class ManageComponent implements OnInit {
       this.theFormGroup.get("due_date").disable();
       this.theFormGroup.get("contract_id").disable();
       this.theFormGroup.get("status").disable();
-    } else if (currentUrl.includes("create")) {
+    } else if (currentUrl.includes("create") && !currentUrl.includes("createForContract")) {
       this.mode = 2;
       this.theFormGroup.get("id").disable();
-    } else if (currentUrl.includes("update")) {
+      this.theFormGroup.get("contract_id").enable();
+    
+  }else if(currentUrl.includes("createForContract")){
+    // Modo crear para batch
+    this.mode = 4;
+    this.theFormGroup.get("id").disable();
+    this.contract_id = this.activateRoute.snapshot.params.contract_id;
+  
+    if (this.contract_id) {
+      this.quotas.contract_id = this.contract_id;
+      this.theFormGroup.patchValue({ contract_id: this.contract_id });
+      // Deshabilitar batch_id solo en modo createForBatch
+      this.theFormGroup.get("contract_id").disable();
+    }
+  
+    }else if (currentUrl.includes("update")) {
       this.mode = 3;
       this.theFormGroup.get("id").disable();
     }
@@ -66,6 +82,18 @@ export class ManageComponent implements OnInit {
       this.router.navigate(["quotas/list"]);
     });
   }
+
+  createForContract() {
+    console.log("hola");
+    
+          this.quotas.contract_id = this.contract_id;
+          console.log(JSON.stringify(this.quotas));
+          this.quotaService.createForContract(this.contract_id, this.quotas).subscribe((data) => {
+            Swal.fire("Creado", "Se ha creado exitosamente", "success");
+            // Redirigir a la lista de productos del lote específico
+            this.router.navigate(["quotas/filterByContract", this.contract_id]);
+          });
+        }
 
   update() {
     const fechaVencimiento = this.theFormGroup.get("due_date")?.value;

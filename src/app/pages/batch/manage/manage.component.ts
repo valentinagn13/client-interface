@@ -17,6 +17,7 @@ export class ManageComponent implements OnInit {
   batch: Batch;
   theFormGroup: FormGroup;
   trySend: boolean;
+  route_id: number;
 
   constructor(
     private activateRoute: ActivatedRoute,
@@ -37,9 +38,23 @@ export class ManageComponent implements OnInit {
       this.theFormGroup.get("weight").disable();
       this.theFormGroup.get("route_id").disable();
       this.theFormGroup.get("addre_route_orders").disable();
-    } else if (currentUrl.includes("create")) {
+    } else if (currentUrl.includes("create") && !currentUrl.includes("createForRoute")) {
       this.mode = 2;
       this.theFormGroup.get("id").disable();
+      this.theFormGroup.get("route_id").enable();
+
+    }else if(currentUrl.includes("createForRoute")){
+ // Modo crear para batch
+ this.mode = 4;
+ this.theFormGroup.get("id").disable();
+ this.route_id = this.activateRoute.snapshot.params.route_id;
+ 
+ if (this.route_id) {
+   this.batch.route_id = this.route_id;
+   this.theFormGroup.patchValue({ batch_id: this.route_id });
+   // Deshabilitar batch_id solo en modo createForBatch
+   this.theFormGroup.get("route_id").disable();
+ }
     } else if (currentUrl.includes("update")) {
       this.mode = 3;
       this.theFormGroup.get("id").disable();
@@ -57,6 +72,16 @@ export class ManageComponent implements OnInit {
       this.router.navigate(["batches/list"]);
     });
   }
+  
+      createForRoute() {
+        this.batch.route_id = this.route_id;
+        console.log(JSON.stringify(this.batch));
+        this.batchService.createForRoute(this.route_id, this.batch).subscribe((data) => {
+          Swal.fire("Creado", "Se ha creado exitosamente", "success");
+          // Redirigir a la lista de productos del lote específico
+          this.router.navigate(["batches/filterByRoute", this.route_id]);
+        });
+      }
 
   update() {
     console.log(JSON.stringify(this.batch));

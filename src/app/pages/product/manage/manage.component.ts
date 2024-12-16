@@ -20,6 +20,9 @@ export class ManageComponent implements OnInit {
   products: Product;
   theFormGroup: FormGroup;
   trySend: boolean;
+  batch_id: number;
+  client_id: number;
+
 
   constructor(
     private activateRoute: ActivatedRoute,
@@ -51,11 +54,43 @@ export class ManageComponent implements OnInit {
       this.theFormGroup.get("expiration_date").disable();
       this.theFormGroup.get("client_id").disable();
       this.theFormGroup.get("batch_id").disable();
-
-    } else if (currentUrl.includes("create")) {
+    } else if (currentUrl.includes("create") && !currentUrl.includes("createForBatch") && !currentUrl.includes("createForClient")) {
+      // Modo crear normal
       this.mode = 2;
       this.theFormGroup.get("id").disable();
-    } else if (currentUrl.includes("update")) {
+      // Habilitar batch_id para creación normal
+      this.theFormGroup.get("batch_id").enable();
+      this.theFormGroup.get("client_id").enable();
+
+    } else if (currentUrl.includes("createForBatch")) {
+      // Modo crear para batch
+      this.mode = 4;
+      this.theFormGroup.get("id").disable();
+      this.batch_id = this.activateRoute.snapshot.params.batch_id;
+      
+      if (this.batch_id) {
+        this.products.batch_id = this.batch_id;
+        this.theFormGroup.patchValue({ batch_id: this.batch_id });
+        // Deshabilitar batch_id solo en modo createForBatch
+        this.theFormGroup.get("batch_id").disable();
+      }
+    }
+      else if(currentUrl.includes("createForClient")) {
+        // Modo crear para cliente
+        this.mode = 5;
+        this.theFormGroup.get("id").disable();
+        this.client_id = this.activateRoute.snapshot.params.client_id;
+        
+        if (this.client_id) {
+          this.products.client_id = this.client_id;
+          this.theFormGroup.patchValue({ client_id: this.client_id });
+          // Deshabilitar client_id solo en modo createForClient
+          this.theFormGroup.get("client_id").disable();
+        }
+      }
+
+     else if (currentUrl.includes("update")) {
+      // Código existente para modo actualización
       this.mode = 3;
       this.theFormGroup.get("id").disable();
     }
@@ -63,21 +98,36 @@ export class ManageComponent implements OnInit {
       this.products.id = this.activateRoute.snapshot.params.id;
       this.getProduct(this.products.id);
     }
-   
   }
 
   
+    create() {
+      console.log(JSON.stringify(this.products));
+      this.productsService.create(this.products).subscribe((data) => {
+        Swal.fire("Creado", " se ha creado exitosa mente", "success"); //tirulo a la alerta
+        this.router.navigate(["products/list"]);
+      });
+    }
+  
 
-
-  create() {
-    console.log(JSON.stringify(this.products));
-    this.productsService.create(this.products).subscribe((data) => {
-      Swal.fire("Creado", " se ha creado exitosa mente", "success"); //tirulo a la alerta
-      this.router.navigate(["products/list"]);
-    });
-  }
-
- 
+    createForBatch() {
+      this.products.batch_id = this.batch_id;
+      console.log(JSON.stringify(this.products));
+      this.productsService.createForBatch(this.batch_id, this.products).subscribe((data) => {
+        Swal.fire("Creado", "Se ha creado exitosamente", "success");
+        // Redirigir a la lista de productos del lote específico
+        this.router.navigate(["products/filterByBatch", this.batch_id]);
+      });
+    }
+    createForClient() {
+      this.products.client_id = this.client_id;
+      console.log(JSON.stringify(this.products));
+      this.productsService.createForClient(this.client_id, this.products).subscribe((data) => {
+        Swal.fire("Creado", "Se ha creado exitosamente", "success");
+        // Redirigir a la lista de productos del lote específico
+        this.router.navigate(["products/filterByClient", this.client_id]);
+      });
+    }
   update(){
     const fechaExpiration = this.theFormGroup.get("expiration_date")?.value;
     const fechaExpirationDate = new Date(fechaExpiration);
@@ -117,7 +167,7 @@ export class ManageComponent implements OnInit {
   configFormGroup() {
     this.theFormGroup = this.theFormBuilder.group({
       id: [this.products.id || "" ], // Siempre deshabilitado
-      name: ["", [Validators.required, Validators.pattern('^[a-zA-Z]+$')]],
+      name: ["", [Validators.required, Validators.pattern('^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ ]+$')]],
       description:["",[Validators.required]],
       expiration_date: ["",[Validators.required]],
       client_id: [0, [Validators.required, Validators.pattern("^[0-9]+$")]],
@@ -129,4 +179,6 @@ export class ManageComponent implements OnInit {
   get getTheFormGroup() {
     return this.theFormGroup.controls;
   }
+
+
 }
