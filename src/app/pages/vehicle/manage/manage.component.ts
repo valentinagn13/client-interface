@@ -29,6 +29,10 @@ export class ManageComponent implements OnInit {
       model: "",
       capacity: 0,
       cargo_type: "",
+      latitud_inicial: 0,
+      latitud_final: 0,
+      longitud_inicial: 0,
+      longitud_final: 0,
     };
     this.trySend = false;
   }
@@ -71,6 +75,13 @@ export class ManageComponent implements OnInit {
       this.router.navigate(["vehicles/list"]);
     });
   }
+  location() {
+    console.log(JSON.stringify(this.vehicles));
+    this.vehiclesService.update(this.vehicles).subscribe((data) => {
+      Swal.fire("Actualizado", " se ha actualizado exitosa mente", "success"); //titulo a la alerta
+      this.router.navigate(["vehicles/list"]);
+    });
+  }
 
   //aqui se arma la data
   getVehicle(id: number) {
@@ -107,7 +118,10 @@ export class ManageComponent implements OnInit {
       ],
       cargo_type: [
         0,
-        [Validators.required, Validators.pattern("^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\\s-]+$")],
+        [
+          Validators.required,
+          Validators.pattern("^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\\s-]+$"),
+        ],
       ],
     });
   }

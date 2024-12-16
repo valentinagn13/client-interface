@@ -1,32 +1,30 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Vehicle } from 'src/app/models/vehicle.model';
-import { VehicleService } from 'src/app/services/vehicle.service';
-import Swal from 'sweetalert2';
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { Vehicle } from "src/app/models/vehicle.model";
+import { VehicleService } from "src/app/services/vehicle.service";
+import Swal from "sweetalert2";
 
 @Component({
-  selector: 'app-list',
-  templateUrl: './list.component.html',
-  styleUrls: ['./list.component.css']
+  selector: "app-list",
+  templateUrl: "./list.component.html",
+  styleUrls: ["./list.component.css"],
 })
 export class ListComponent implements OnInit {
-
   vehicles: Vehicle[];
-  
-  constructor(private service: VehicleService, private router: Router) { 
-     this.vehicles = [];
+
+  constructor(private service: VehicleService, private router: Router) {
+    this.vehicles = [];
   }
 
-  //este es el primero que se llama igual que contructor pero cuando hay cambios en los componentes 
-  
+  //este es el primero que se llama igual que contructor pero cuando hay cambios en los componentes
+
   ngOnInit(): void {
     this.list();
   }
-  
 
   view(id: number) {
     console.log("aqui estoy en view");
-    
+
     this.router.navigate(["vehicles/view/" + id]);
   }
 
@@ -37,13 +35,16 @@ export class ListComponent implements OnInit {
   list(): void {
     this.service.list().subscribe((data) => {
       console.log(data);
-      
-      this.vehicles = data
-      //console.log(JSON.stringify(data["data"]));
+
+      this.vehicles = data;
     });
   }
+  location(id: number) {
+    console.log("HOLA DESDE LOCATION");
+    this.router.navigate(["vehicles/location/" + id]);
+  }
 
-  create(){
+  create() {
     this.router.navigate(["vehicles/create"]);
   }
 
@@ -60,16 +61,11 @@ export class ListComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.service.delete(id).subscribe((data) => {
-          Swal.fire(
-            "Eliminado!",
-            "El Vehiculo ha sido eliminado.",
-            "success"
-          );
-          
+          Swal.fire("Eliminado!", "El Vehiculo ha sido eliminado.", "success");
+
           this.ngOnInit();
         });
       }
     });
   }
-
 }
