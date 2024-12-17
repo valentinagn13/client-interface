@@ -85,6 +85,11 @@
                 />
               </div>
             </div>
+            <re-captcha
+              [siteKey]="'6LfZi50qAAAAAIeXM68l5FJGFkAhxq5YMhdisKHy'"
+              (resolved)="onCaptchaResolved($event)"
+            >
+            </re-captcha>
             <div
               class="custom-control custom-control-alternative custom-checkbox"
             >
