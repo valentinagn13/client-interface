@@ -17,6 +17,10 @@ export class ChatService {
     return this.http.get<Chat[]>(this.urlBase);
   }
 
+  getChatByUsers(to: string, from: string): Observable<Chat> {
+    return this.http.get<Chat>(`${this.urlBase}/${to}/${from}`);
+  }
+
   view(id: string): Observable<Chat> {
     return this.http.get<Chat>(`${this.urlBase}/${id}`);
   }
@@ -33,4 +37,3 @@ export class ChatService {
     return this.http.delete<Chat>(`${this.urlBase}/${id}`);
   }
 }
-

@@ -24,7 +24,7 @@ import Swal from "sweetalert2";
 export class ChatpComponent implements OnInit, AfterViewChecked {
   @ViewChild("scrollMe") private myScrollContainer: ElementRef;
   theUser: User;
-  email: string;
+  from_email: string;
   chat_id: number;
   messages: MessageP[] = [];
   messagesDB: any;
@@ -38,7 +38,7 @@ export class ChatpComponent implements OnInit, AfterViewChecked {
     private theSecurityService: SecurityService,
     private activatedRoute: ActivatedRoute,
     private chatService: ChatService,
-    private messageService: MessagesService
+    private messageService: MessagesService,
   ) {}
 
   getSecurityService() {
@@ -46,31 +46,30 @@ export class ChatpComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit() {
-    this.email = this.activatedRoute.snapshot.params.email;
+    this.from_email = this.activatedRoute.snapshot.params.email;
+
+    this.theSecurityService
+      .getUser()
+      .subscribe((user: User) => (this.theUser = user));
+
     this.chatService
-      .create({
-        to: this.email,
-        from: this.theSecurityService.getUser().subscribe((user) => user.email),
-      })
+      .getChatByUsers(this.theUser.email, this.from_email)
       .subscribe((chat: Chat) => {
-        this.chat_id = chat.id;
-        this.messageService
-          .getMessagesByChat(this.chat_id.toString())
-          .subscribe((data) => {
-            this.messagesDB = data;
-            console.log("mensajes db", this.messagesDB);
-            this.messagesDB.forEach((msg: MessageP) => {
-              this.messages.push(msg);
+        console.log("chat", chat);
+        if (chat) {
+          this.chat_id = chat.id;
+          this.syncMessages();
+        } else {
+          this.chatService
+            .create({
+              to: this.from_email,
+              from: this.theUser.email,
+            })
+            .subscribe((chat: Chat) => {
+              this.chat_id = chat.id;
+              this.syncMessages();
             });
-            this.scrollToBottom();
-          });
-        this.messageSubscription = this.webSocketService
-          .onMessage()
-          .subscribe((msg: MessageP) => {
-            msg.chat_id = this.chat_id;
-            this.messages.push(msg);
-            this.scrollToBottom();
-          });
+        }
       });
 
     this.userSubscription = this.theSecurityService
@@ -85,13 +84,31 @@ export class ChatpComponent implements OnInit, AfterViewChecked {
     this.scrollToBottom();
   }
 
+  syncMessages() {
+    this.messageService
+      .getMessagesByChat(this.chat_id.toString())
+      .subscribe((data) => {
+        this.messagesDB = data;
+        this.messagesDB.forEach((msg: MessageP) => {
+          this.messages.push(msg);
+        });
+        this.scrollToBottom();
+      });
+    this.messageSubscription = this.webSocketService
+      .onMessage()
+      .subscribe((msg: MessageP) => {
+        msg.chat_id = this.chat_id;
+        this.messages.push(msg);
+        this.scrollToBottom();
+      });
+  }
+
   sendMessage() {
     if (this.newMessage.trim()) {
       const message: MessageP = {
         content: this.newMessage,
-        user_id: this.theUser._id,
-        timestamp: new Date().toLocaleTimeString(),
         chat_id: this.chat_id,
+        user_email: this.theUser.email,
       };
       this.webSocketService.sendMessage(message);
       this.newMessage = "";
@@ -118,7 +135,7 @@ export class ChatpComponent implements OnInit, AfterViewChecked {
             Swal.fire(
               "Eliminado!",
               "Los mensajes han sido eliminados.",
-              "success"
+              "success",
             );
           });
       }

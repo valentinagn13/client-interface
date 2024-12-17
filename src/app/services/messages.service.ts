@@ -11,7 +11,7 @@ export class MessagesService {
   baseUrl: string;
 
   constructor(private http: HttpClient) {
-    this.baseUrl = `${environment.url_ms_business}/messages`;
+    this.baseUrl = `${environment.url_ms_business}/message`;
   }
 
   getMessages(): Observable<Message[]> {

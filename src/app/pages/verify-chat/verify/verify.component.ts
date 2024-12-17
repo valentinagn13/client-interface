@@ -19,7 +19,7 @@ export class VerifyComponent implements OnInit {
     private router: Router,
     private theFormBuilder: FormBuilder,
     private userService: UserService,
-    private securityService: SecurityService
+    private securityService: SecurityService,
   ) {
     this.trySend = false;
   }
@@ -51,7 +51,7 @@ export class VerifyComponent implements OnInit {
         console.log(response);
         if (response) {
           if (this.securityService.existSession()) {
-            this.router.navigate(["chatsp/" + this.email]);
+            this.router.navigate(["chatsp", this.email]);
           } else {
             Swal.fire("Alert", "Por favor inicie sesión", "error");
             this.router.navigate(["/login"]);
