@@ -1,4 +1,5 @@
 import { Routes } from "@angular/router";
+import { verify } from "crypto";
 import { DashboardComponent } from "src/app/pages/dashboard/dashboard.component";
 import { IconsComponent } from "src/app/pages/icons/icons.component";
 import { MapsComponent } from "src/app/pages/maps/maps.component";
@@ -279,4 +280,28 @@ export const AdminLayoutRoutes: Routes = [
       },
     ],
   },
+  {
+    path: "chat",
+    children: [
+      {
+        path: "",
+        loadChildren: () =>
+          import("src/app/pages/chats/chats.module").then((m) => m.ChatsModule),
+      },
+    ],
+  },
+  {
+    path: "verify-chat",
+    loadChildren: () =>
+      import("../../pages/verify-chat/verify-chat.module").then(
+        (m) => m.VerifyChatModule
+      ),
+  },
+  {
+    path:"chatsp",
+    loadChildren: () =>
+      import("../../pages/chat-prueba/chat-prueba.module").then(
+        (m) => m.ChatPruebaModule
+      ),
+  }
 ];

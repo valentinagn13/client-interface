@@ -1,0 +1,136 @@
+<!-- <div class="header bg-gradient-danger pb-8 pt-5 pt-md-8"></div>
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header bg-transparent">
+          <h3 *ngIf="mode == 1" class="mb-0">Visualizar</h3>
+          <h3 *ngIf="mode == 2" class="mb-0">Actualizar</h3>
+          <h3 *ngIf="mode == 3" class="mb-0">Crear</h3>
+        </div>
+        <div class="card-body">
+          <form class="form" [formGroup]="theFormGroup">
+            <div class="container d-grid gap-3">
+              <div class="row mb-2" *ngIf="mode != 3">
+                <div class="col-4">Id:</div>
+                <div class="col-8">
+                  {{ message.id }}
+                </div>
+              </div>
+              <div class="row mb-1">
+                <div class="col-4">Chat id</div>
+                <div class="col-8">
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="chat_id"
+                    [(ngModel)]="message.chat_id"
+                    disabled
+                  />
+                </div>
+              </div>
+              <div class="row mb-1">
+                <div class="col-4">Customers</div>
+                <div class="col-8">
+                  <select
+                    class="form-control"
+                    [(ngModel)]="message.user_id"
+                    formControlName="user_id"
+                  >
+                    <option
+                      *ngFor="let customer of customers"
+                      [selected]="customer.id == message.user_id"
+                      [value]="customer.id"
+                      [disabled]="mode == 2"
+                    >
+                      Nombre: {{ customer.name }} - Documento:
+                      {{ customer.document }}
+                    </option>
+                  </select>
+                  <div>
+                    <div
+                      *ngIf="
+                        getTheFormGroup.user_id.errors &&
+                        (getTheFormGroup.user_id.dirty ||
+                          getTheFormGroup.user_id.touched ||
+                          trySend)
+                      "
+                    >
+                      <strong
+                        *ngIf="getTheFormGroup.user_id.errors.required"
+                        class="msnError"
+                      >
+                        Cliente es requerido</strong
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-1">
+                <div class="col-4">Contenido</div>
+                <div class="col-8">
+                  <textarea
+                    rows="5"
+                    cols="30"
+                    class="form-control"
+                    formControlName="content"
+                    [(ngModel)]="message.content"
+                  ></textarea>
+                  <div>
+                    <div
+                      *ngIf="
+                        getTheFormGroup.content.errors &&
+                        (getTheFormGroup.content.dirty ||
+                          getTheFormGroup.content.touched ||
+                          trySend)
+                      "
+                    >
+                      <strong
+                        *ngIf="getTheFormGroup.content.errors.required"
+                        class="msnError"
+                      >
+                        Contenido es requerido</strong
+                      >
+                      <strong
+                        *ngIf="getTheFormGroup.content.errors.minlength"
+                        class="msnError"
+                        >Inválido</strong
+                      >
+                      <strong
+                        *ngIf="getTheFormGroup.content.errors.maxlength"
+                        class="msnError"
+                      >
+                        Invalido
+                      </strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-1">
+                <div class="col-4"></div>
+                <div class="col-8">
+                  <div class="d-flex align-items-center justify-content-center">
+                    <button
+                      *ngIf="mode == 2"
+                      class="btn btn-primary btn-block"
+                      (click)="update()"
+                    >
+                      Actualizar
+                    </button>
+                    <button
+                      *ngIf="mode == 3"
+                      class="btn btn-primary btn-block"
+                      (click)="create()"
+                    >
+                      Crear
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->

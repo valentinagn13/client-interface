@@ -1,0 +1,64 @@
+.pqr-section {
+    padding: 20px 0;
+    height: 90vh;
+}
+
+.section-title {
+    margin-top: 20px;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #b87400;
+}
+
+.section-description {
+    font-size: 1.25rem;
+    margin-bottom: 30px;
+    color: #555;
+}
+
+.pqr-form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.pqr-form .form-group {
+    margin-bottom: 20px;
+}
+
+.pqr-form .form-control {
+    border-radius: 0;
+    border: 1px solid #ced4da;
+}
+
+.pqr-form .form-control:focus {
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.pqr-form button {
+    background-color: #D2B48C;
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 0;
+}
+
+.pqr-form button:hover {
+    background-color: #7A5A3B;
+}
+
+.container-fluid {
+    width: 100%;
+    padding-right: 0;
+    padding-left: 0;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.btn-primary {
+    color: #fff;
+    border-color: #b87400;
+    background-color: #b87400;
+    box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08);
+}
