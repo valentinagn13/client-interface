@@ -232,10 +232,20 @@
                   type="button"
                   class="btn btn-success btn-block"
                   (click)="create()"
+                  [disabled]="loading"
                 >
-                  Realizar Pago
+                  <span *ngIf="!loading">Realizar Pago</span>
+                  <span *ngIf="loading">Procesando...</span>
                 </button>
               </div>
+            </div>
+
+            <!-- Spinner de carga -->
+            <div *ngIf="loading" class="text-center mt-3">
+              <div class="spinner-border text-primary" role="status">
+                <span class="sr-only">Cargando...</span>
+              </div>
+              <p>Procesando pago, por favor espere...</p>
             </div>
           </div>
         </form>
