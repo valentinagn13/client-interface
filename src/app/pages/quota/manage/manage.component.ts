@@ -30,7 +30,7 @@ export class ManageComponent implements OnInit {
       interest_rate: 0,
       due_date: new Date(),
       contract_id: 0,
-      status: false
+      status: false,
     };
     this.trySend = false;
   }
@@ -52,6 +52,8 @@ export class ManageComponent implements OnInit {
     } else if (currentUrl.includes("update")) {
       this.mode = 3;
       this.theFormGroup.get("id").disable();
+      // PARA QUE NO SE PUEDA CAMBIAR EL STATUS DE UNA QUOTA
+      this.theFormGroup.get("status").disable();
     }
     if (this.activateRoute.snapshot.params.id) {
       this.quotas.id = this.activateRoute.snapshot.params.id;
@@ -77,24 +79,30 @@ export class ManageComponent implements OnInit {
       this.router.navigate(["quotas/list"]);
     });
   }
-
+  payment() {
+    console.log(JSON.stringify(this.quotas));
+    this.quotaService.update(this.quotas).subscribe((data) => {
+      Swal.fire("PAGO", " se ha PAGADO exitosa mente", "success"); //titulo a la alerta
+      this.router.navigate(["quotas/list"]);
+    });
+  }
   //aqui se arma la data
   getQuota(id: number) {
     this.quotaService.view(id).subscribe((data) => {
       this.quotas = data;
-      
+
       // Format due_date if it's a string or Date
-      const formattedDueDate = this.quotas.due_date 
-        ? new Date(this.quotas.due_date).toISOString().split('T')[0] 
-        : '';
-  
+      const formattedDueDate = this.quotas.due_date
+        ? new Date(this.quotas.due_date).toISOString().split("T")[0]
+        : "";
+
       this.theFormGroup.patchValue({
         id: this.quotas.id,
         amount: this.quotas.amount,
         interest_rate: this.quotas.interest_rate,
         due_date: formattedDueDate,
         contract_id: this.quotas.contract_id,
-        status: this.quotas.status
+        status: this.quotas.status,
       });
     });
   }
@@ -105,32 +113,29 @@ export class ManageComponent implements OnInit {
     this.theFormGroup = this.theFormBuilder.group({
       id: [this.quotas.id || 0],
       amount: [
-        this.quotas.amount || 0, 
+        this.quotas.amount || 0,
         [
           Validators.required,
           Validators.min(0),
           Validators.max(500000000),
-          Validators.pattern("^[0-9]+$")
-        ]
+          Validators.pattern("^[0-9]+$"),
+        ],
       ],
       interest_rate: [
-        this.quotas.interest_rate || 0, 
+        this.quotas.interest_rate || 0,
         [
           Validators.required,
           Validators.min(0),
           Validators.max(100),
-          Validators.pattern("^[0-9]+$")
-        ]
+          Validators.pattern("^[0-9]+$"),
+        ],
       ],
-      due_date: [this.quotas.due_date || '', Validators.required],
+      due_date: [this.quotas.due_date || "", Validators.required],
       status: [this.quotas.status || false, Validators.required],
       contract_id: [
-        this.quotas.contract_id || 0, 
-        [
-          Validators.required,
-          Validators.pattern("^[0-9]+$")
-        ]
-      ]
+        this.quotas.contract_id || 0,
+        [Validators.required, Validators.pattern("^[0-9]+$")],
+      ],
     });
   }
 

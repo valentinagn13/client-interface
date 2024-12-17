@@ -62,6 +62,14 @@
                       >
                         Eliminar
                       </button>
+                      <button
+                        type="button"
+                        class="btn btn-danger btn-sm"
+                        (click)="payment(quo.id)"
+                        [disabled]="quo.status === 1 || quo.status === true"
+                      >
+                        Pagar quota
+                      </button>
                     </div>
                   </td>
                 </tr>

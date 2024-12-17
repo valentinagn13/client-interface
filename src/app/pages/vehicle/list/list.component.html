@@ -25,6 +25,8 @@
                 <th scope="col-3">Modelo</th>
                 <th scope="col-2">Capacidad</th>
                 <th scope="col-2">Tipo carga</th>
+                <th scope="col-2">Ubicación inicial</th>
+                <th scope="col-2">Ubicación final</th>
               </tr>
             </thead>
             <tbody>
@@ -34,6 +36,11 @@
                 <td>{{ veh.model }}</td>
                 <td>{{ veh.capacity }}</td>
                 <td>{{ veh.cargo_type }}</td>
+                <td>
+                  {{ veh.latitud_inicial + " , " + veh.longitud_inicial }}
+                </td>
+                <td>{{ veh.latitud_final + " , " + veh.longitud_final }}</td>
+
                 <td>
                   <button
                     type="button"
