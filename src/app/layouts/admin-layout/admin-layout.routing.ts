@@ -4,7 +4,6 @@ import { IconsComponent } from "src/app/pages/icons/icons.component";
 import { MapsComponent } from "src/app/pages/maps/maps.component";
 import { TablesComponent } from "src/app/pages/tables/tables.component";
 import { UserProfileComponent } from "src/app/pages/user-profile/user-profile.component";
-
 export const AdminLayoutRoutes: Routes = [
   {
     path: "addreRouteOrders",
@@ -13,7 +12,7 @@ export const AdminLayoutRoutes: Routes = [
         path: "",
         loadChildren: () =>
           import("src/app/pages/addrerouteorder/addrerouteorder.module").then(
-            (m) => m.AddrerouteorderModule
+            (m) => m.AddrerouteorderModule,
           ),
       },
     ],
@@ -25,7 +24,7 @@ export const AdminLayoutRoutes: Routes = [
         path: "",
         loadChildren: () =>
           import("src/app/pages/addresses/addresses.module").then(
-            (m) => m.AddressesModule
+            (m) => m.AddressesModule,
           ),
       },
     ],
@@ -37,7 +36,7 @@ export const AdminLayoutRoutes: Routes = [
         path: "",
         loadChildren: () =>
           import("src/app/pages/administrator/administrator.module").then(
-            (m) => m.AdministratorModule
+            (m) => m.AdministratorModule,
           ),
       },
     ],
@@ -59,7 +58,7 @@ export const AdminLayoutRoutes: Routes = [
         path: "",
         loadChildren: () =>
           import("src/app/pages/client/client.module").then(
-            (m) => m.ClientModule
+            (m) => m.ClientModule,
           ),
       },
     ],
@@ -71,7 +70,7 @@ export const AdminLayoutRoutes: Routes = [
         path: "",
         loadChildren: () =>
           import("src/app/pages/contract/contract.module").then(
-            (m) => m.ContractModule
+            (m) => m.ContractModule,
           ),
       },
     ],
@@ -84,7 +83,7 @@ export const AdminLayoutRoutes: Routes = [
         path: "",
         loadChildren: () =>
           import("src/app/pages/departments/departments.module").then(
-            (m) => m.DepartmentsModule
+            (m) => m.DepartmentsModule,
           ),
       },
     ],
@@ -108,7 +107,7 @@ export const AdminLayoutRoutes: Routes = [
         path: "",
         loadChildren: () =>
           import("src/app/pages/driver/driver.module").then(
-            (m) => m.DriverModule
+            (m) => m.DriverModule,
           ),
       },
     ],
@@ -120,7 +119,7 @@ export const AdminLayoutRoutes: Routes = [
         path: "",
         loadChildren: () =>
           import("src/app/pages/expense/expense.module").then(
-            (m) => m.ExpenseModule
+            (m) => m.ExpenseModule,
           ),
       },
     ],
@@ -133,7 +132,7 @@ export const AdminLayoutRoutes: Routes = [
         path: "",
         loadChildren: () =>
           import("src/app/pages/insurance/insurance.module").then(
-            (m) => m.InsuranceModule
+            (m) => m.InsuranceModule,
           ),
       },
     ],
@@ -145,7 +144,7 @@ export const AdminLayoutRoutes: Routes = [
         path: "",
         loadChildren: () =>
           import("src/app/pages/invoice/invoice.module").then(
-            (m) => m.InvoiceModule
+            (m) => m.InvoiceModule,
           ),
       },
     ],
@@ -158,7 +157,7 @@ export const AdminLayoutRoutes: Routes = [
         path: "",
         loadChildren: () =>
           import("src/app/pages/municipalities/municipalities.module").then(
-            (m) => m.MunicipalitiesModule
+            (m) => m.MunicipalitiesModule,
           ),
       },
     ],
@@ -170,7 +169,7 @@ export const AdminLayoutRoutes: Routes = [
         path: "",
         loadChildren: () =>
           import("src/app/pages/operation/operation.module").then(
-            (m) => m.OperationModule
+            (m) => m.OperationModule,
           ),
       },
     ],
@@ -192,7 +191,7 @@ export const AdminLayoutRoutes: Routes = [
         path: "",
         loadChildren: () =>
           import("src/app/pages/naturalperson/naturalperson.module").then(
-            (m) => m.NaturalpersonModule
+            (m) => m.NaturalpersonModule,
           ),
       },
     ],
@@ -204,7 +203,7 @@ export const AdminLayoutRoutes: Routes = [
         path: "",
         loadChildren: () =>
           import("src/app/pages/product/product.module").then(
-            (m) => m.ProductModule
+            (m) => m.ProductModule,
           ),
       },
     ],
@@ -236,7 +235,7 @@ export const AdminLayoutRoutes: Routes = [
         path: "",
         loadChildren: () =>
           import("src/app/pages/service/service.module").then(
-            (m) => m.ServiceModule
+            (m) => m.ServiceModule,
           ),
       },
     ],
@@ -250,7 +249,7 @@ export const AdminLayoutRoutes: Routes = [
         path: "",
         loadChildren: () =>
           import("src/app/pages/vehicledriver/vehicledriver.module").then(
-            (m) => m.VehicledriverModule
+            (m) => m.VehicledriverModule,
           ),
       },
     ],
@@ -262,7 +261,7 @@ export const AdminLayoutRoutes: Routes = [
         path: "",
         loadChildren: () =>
           import("src/app/pages/vehicleowner/vehicleowner.module").then(
-            (m) => m.VehicleownerModule
+            (m) => m.VehicleownerModule,
           ),
       },
     ],
@@ -274,9 +273,33 @@ export const AdminLayoutRoutes: Routes = [
         path: "",
         loadChildren: () =>
           import("src/app/pages/vehicle/vehicle.module").then(
-            (m) => m.VehicleModule
+            (m) => m.VehicleModule,
           ),
       },
     ],
+  },
+  {
+    path: "chat",
+    children: [
+      {
+        path: "",
+        loadChildren: () =>
+          import("src/app/pages/chats/chats.module").then((m) => m.ChatsModule),
+      },
+    ],
+  },
+  {
+    path: "chatsp/:email",
+    loadChildren: () =>
+      import("src/app/pages/chat-prueba/chat-prueba.module").then(
+        (m) => m.ChatPruebaModule,
+      ),
+  },
+  {
+    path: "verify-chat",
+    loadChildren: () =>
+      import("../../pages/verify-chat/verify-chat.module").then(
+        (m) => m.VerifyChatModule,
+      ),
   },
 ];
