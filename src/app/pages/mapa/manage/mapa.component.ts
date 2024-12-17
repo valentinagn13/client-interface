@@ -107,7 +107,6 @@ export class MapaComponent implements OnInit {
     this.movingMarker = L.marker(this.coordInicial).addTo(this.map);
     this.movingMarker.bindPopup("Haciendo la ruta").openPopup();
   }
-
   private moverMarcadorProgresivamente(
     coordInicial: [number, number],
     coordFinal: [number, number],
