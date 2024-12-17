@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import Swal from "sweetalert2";
 
 //Importaciones de la clase
@@ -14,13 +14,31 @@ import { BatchService } from 'src/app/services/batch.service';
 export class ListComponent implements OnInit {
 
   batches: Batch[];
+  route_id:number
 
-  constructor(private service:BatchService, private router:Router) {
+  constructor(private service:BatchService, private router:Router,  private activateRoute: ActivatedRoute) {
     this.batches = [];
   }
 
   ngOnInit(): void {
-    this.list();
+    const currentUrl = this.activateRoute.snapshot.url.join('/');
+    
+    // Reiniciar batch_id y client_id
+    this.route_id = null;
+   
+  
+    // Verificar si estamos filtrando por batch
+    if (currentUrl.includes('filterByRoute')) {
+      this.route_id = +this.activateRoute.snapshot.params['id'];
+      console.log("route_id:", this.route_id);
+      this.filterByRoute();
+    
+      
+
+    } else{
+      this.list();
+
+    }
   }
 
   view(id: number) {
@@ -61,4 +79,23 @@ export class ListComponent implements OnInit {
       }
     });
   }
+  showProducts(id: number){
+    this.router.navigate(["products/filterByBatch/" + id]);
+  }
+
+  
+  //Funcion para filtrar por rutas
+  filterByRoute(){
+    this.service.listByRoute(this.route_id).subscribe((data) => {
+      this.batches = data;
+      console.log(this.batches);
+    });
+  }
+  //funcion para crear un producto segun un lote
+
+  createForRoute() {
+    this.router.navigate(["batches/createForRoute", this.route_id]);
+    console.log("aqui estoy en createForRoute", this.route_id);
+  }
+
 }

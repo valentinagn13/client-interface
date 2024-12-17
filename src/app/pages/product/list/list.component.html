@@ -10,12 +10,22 @@
             <div class="col-3">
             </div>
           </div>
-          <h3 class="mb=0">Productos</h3>
+          <h3 class="mb-0" *ngIf="batch_id && !client_id">
+            Productos del Lote #{{ batch_id }}
+          </h3>
+          <h3 class="mb-0" *ngIf="client_id && !batch_id">
+            Productos del Cliente #{{ client_id }}
+          </h3>
+          <h3 class="mb-0" *ngIf="!batch_id && !client_id">
+            Productos
+          </h3>
         </div>
         <div class="col-6">
         </div>
         <div class="col-3">
-          <button type="button" class="btn btn-success" (click)="create()">Crear</button>
+          <button *ngIf="!batch_id && !client_id" type="button" class="btn btn-success" (click)="create()">Crear</button>
+          <button *ngIf="batch_id && !client_id" type="button" class="btn btn-success" (click)="createForBatch()">Crear producto para Lote</button>
+          <button *ngIf="client_id && !batch_id" type="button" class="btn btn-success" (click)="createForClient()">Crear producto para Cliente</button>
         </div>
         <div class="card-body">
           <table class="table">
@@ -27,7 +37,6 @@
                 <th scope="col-4">Fecha vencimiento</th>
                 <th scope="col-5">Cliente</th>
                 <th scope="col-6">Lote</th>
-
               </tr>
             </thead>
             <tbody>
@@ -42,7 +51,6 @@
                   <button type="button" class="btn btn-primary" (click)="view(pd.id)">Ver</button>
                   <button type="button" class="btn btn-warning" (click)="update(pd.id)">Actualizar</button>
                   <button type="button" class="btn btn-danger" (click)="delete(pd.id)">Eliminar</button>
-
                 </td>
               </tr>
             </tbody>

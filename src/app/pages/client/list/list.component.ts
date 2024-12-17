@@ -64,4 +64,8 @@ export class ListComponent implements OnInit {
       }
     });
   }
+
+  showProducts(id: number){
+    this.router.navigate(["products/filterByClient/" + id]);
+  }
 }

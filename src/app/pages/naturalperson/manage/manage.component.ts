@@ -62,16 +62,7 @@ export class ManageComponent implements OnInit {
       this.getPerson(this.naturalperson.id);
     }
   }
-
   create() {
-    if (this.theFormGroup.invalid) {
-      Swal.fire(
-        "Error",
-        "Formulario inválido. Por favor, verifica los campos.",
-        "error"
-      );
-      return;
-    }
     console.log(JSON.stringify(this.naturalperson));
     this.naturalpersonService.create(this.naturalperson).subscribe((data) => {
       Swal.fire("Creado", " se ha creado exitosa mente", "success"); //tirulo a la alerta

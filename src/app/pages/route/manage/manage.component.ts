@@ -1,3 +1,4 @@
+import { DatePipe } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -11,96 +12,125 @@ import Swal from "sweetalert2";
   styleUrls: ["./manage.component.css"],
 })
 export class ManageComponent implements OnInit {
-  route: Routes;
-  //mode=1 --> viw  , mode=2--> create ,  mode =3 update
-  mode: number;
-
+  mode: number; // 1->View, 2->Create, 3->Update
+  routes: Routes;
   theFormGroup: FormGroup;
   trySend: boolean;
+
   constructor(
+    private activateRoute: ActivatedRoute,
     private routeService: RouteService,
-    private activateRoute: ActivatedRoute, //analizar la url para saber que quiere hacer el user: crear visualizar
-    private router: Router, //como me muevo yo en la pagina,gestiona los archivos de .routing para poder navegar : MOVERSE DE UNA COMPONENTE A OTRA
-    private theFormBuilder: FormBuilder //* PARA ESTABLECER LAS REGLAS
+    private router: Router,
+    private theFormBuilder: FormBuilder
   ) {
-    this.route = { id: 0, startingPlace: "", endingPlace: "", distance: 0, deliveryDate: new Date() };
     this.mode = 1;
+    this.routes = {
+      id: 0,
+      starting_place: "",
+      ending_place: "",
+      distance:0,
+      delivery_date: new Date(),
+      contract_id: 0,
+      vehicle_id: 0,
+     
+    };
     this.trySend = false;
-   
   }
-  // TOMAR LA FOTO DE LA URL PARTIRLA POR CADA / UNA LISTA CON TODA LA RUTA
+
   ngOnInit(): void {
-    this.configFormGroup();; //* CREAR AL POLICIA
+    this.configFormGroup();
     const currentUrl = this.activateRoute.snapshot.url.join("/");
     if (currentUrl.includes("view")) {
-      //LA LISTA INCLUYE LA PALABRA VIW. sI? ES POR QUE QUIERE VISUALIZAR . no? ENTONCES...
       this.mode = 1;
+      this.theFormGroup.get("id").disable();
+      this.theFormGroup.get("starting_place").disable();
+      this.theFormGroup.get("ending_place").disable();
+      this.theFormGroup.get("distance").disable();
+      this.theFormGroup.get("delivery_date").disable();
+      this.theFormGroup.get("contract_id").disable();
+      this.theFormGroup.get("vehicle_id").disable();
+
+
     } else if (currentUrl.includes("create")) {
       this.mode = 2;
+      this.theFormGroup.get("id").disable();
     } else if (currentUrl.includes("update")) {
       this.mode = 3;
+      this.theFormGroup.get("id").disable();
     }
     if (this.activateRoute.snapshot.params.id) {
-      //SI LA RUTA VIENE UN ID, SI VIENE ES EL ID DE UN TEATRO
-      this.route.id = this.activateRoute.snapshot.params.id;
-      this.getRoute(this.route.id); //PARA QUE TRIGA LA FUNCION DE LISTAR SOLO UN TEATRO CON ESE ID
+      this.routes.id = this.activateRoute.snapshot.params.id;
+      this.getRoutes(this.routes.id);
     }
-  } //! lo del correo -importar validators
-  configFormGroup() {
-    //* UNION ENTRE LA POLICIA Y CONGRESO
-    this.theFormGroup = this.theFormBuilder.group({
-      // primer elemento del vector, valor por defecto
-      // lista, serán las reglas
-      id:[this.route.id || 0],
-      startingPlace: ["", [Validators.required, Validators.minLength(2)]],
-      capacity: [
-        0,
-        [Validators.required, Validators.min(1), Validators.max(100)], //* 0 PRIMER ELEMENTO EN EL VECTOR VALOR POR DEFECTO QUE PUEDE TENER LA CAPACIDAD
-        //* LUEGO LASS REGLAS QUE SE LE VAN A APLICAR
-      ],
-      location: ["", [Validators.required, Validators.minLength(2)]],
-    });
+   
   }
-  get getTheFormGroup() {
-    //* para que devulva una variable
-    return this.theFormGroup.controls; //DEVUELVE LOS CONTROLES
-  }
-  getRoute(id: number) {
-    this.routeService.view(id).subscribe((data) => {
-      this.route = data;
-    });
-  }
+
+  
+
+
   create() {
-    if (this.theFormGroup.invalid) {
-      if (this.theFormGroup.invalid) {
-        Swal.fire("malo ", "error");
-        return;
-      }
-      this.trySend = true;
-      Swal.fire(
-        "Error en el formulario",
-        "Ingrese correctamente los datos solicitados"
-      );
-      return;
-    }
-    console.log(JSON.stringify(this.route));
-    this.routeService.create(this.route).subscribe((data) => {
-      Swal.fire("Creado", "Se ha creado exitosamente", "success");
+    console.log(JSON.stringify(this.routes));
+    this.routeService.create(this.routes).subscribe((data) => {
+      Swal.fire("Creado", " se ha creado exitosa mente", "success"); //tirulo a la alerta
       this.router.navigate(["routes/list"]);
     });
   }
-  update() {
-    if (this.theFormGroup.invalid) {
-      this.trySend = true;
-      Swal.fire(
-        "Error en el formulario",
-        "Ingrese correctamente los datos solicitados"
+
+ 
+  update(){
+    const fechaEntrega = this.theFormGroup.get("delivery_date")?.value;
+    const fechaEntregaDate = new Date(fechaEntrega);
+    
+    //console.log(JSON.stringify(this.products));
+    this.routeService.update(this.routes).subscribe(data=>{
+      Swal.fire("Actualizado"," se ha actualizado exitosa mente", "success")//titulo a la alerta
+      this.router.navigate(["routes/list"]); 
+    })
+    
+  }
+
+   //aqui se arma la data
+   getRoutes(id:number){
+    this.routeService.view(id).subscribe(data=>{
+      const datePipe = new DatePipe("en-US");  
+      
+      const formatteddeliveryDate = datePipe.transform(
+        data.delivery_date,
+        "yyyy-MM-dd"
       );
-      return;
-    }
-    this.routeService.update(this.route).subscribe((data) => {
-      Swal.fire("Creado", "Se ha actualizado exitosamente", "success");
-      this.router.navigate(["routes/list"]);
+      this.routes = data; 
+      console.log(JSON.stringify(this.routes));
+      
+      this.theFormGroup.patchValue({
+        id: this.routes.id,
+        starting_place: this.routes.starting_place,
+        ending_place: this.routes.ending_place,
+        distance: this.routes.distance,
+  // Fecha formateada
+        delivery_date: formatteddeliveryDate, // Fecha formateada
+        contract_id: this.routes.contract_id,
+        vehicle_id: this.routes.vehicle_id,
+      });
     });
   }
+
+  //OJO-----------------------------
+  //aqui definimos las reglas
+  configFormGroup() {
+    this.theFormGroup = this.theFormBuilder.group({
+      id: [this.routes.id || "" ], // Siempre deshabilitado
+      starting_place: ["", [Validators.required, Validators.pattern('^[a-zA-Z0-9\\s]+$')]],
+      ending_place:["",[Validators.required, Validators.pattern('^[a-zA-Z0-9\\s]+$')]],
+      distance: ["",[Validators.required, Validators.pattern("^[0-9]+$")]],
+      delivery_date: ["",[Validators.required]],
+      contract_id: [0, [Validators.required, Validators.pattern("^[0-9]+$")]],
+      vehicle_id: [0, [Validators.required, Validators.pattern("^[0-9]+$")]],
+    });
+  }
+
+  //aqui nos indica que regla molesto
+  get getTheFormGroup() {
+    return this.theFormGroup.controls;
+  
+}
 }

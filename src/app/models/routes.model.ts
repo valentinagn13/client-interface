@@ -1,8 +1,10 @@
 export class Routes {
     id?: number; //EL ? PARA INDICAR QUE EL CAMPO NO ES OBLIGATORIO
-    startingPlace: string;
-    endingPlace: string;
+    starting_place: string;
+    ending_place: string;
     distance: number;
-    deliveryDate: Date;
+    delivery_date: Date;
+    contract_id: number;
+    vehicle_id: number;
 
 }

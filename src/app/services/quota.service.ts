@@ -39,4 +39,13 @@ export class QuotaService {
   update(Quota: Quota): Observable<Quota> {
     return this.http.put<Quota>(`${environment.url_ms_business}/quotas/${Quota.id}`, Quota);
   }
+  listByContract(contract_id: number): Observable<Quota[]> {
+        return this.http.get<Quota[]>(`${
+          environment.url_ms_business
+        }/quotas?contract_id=${contract_id}`);
+        
+      }
+      createForContract(contract_id: number, quota: Quota): Observable<Quota> {
+        return this.http.post<Quota>(`${environment.url_ms_business}/quotas/contract/${contract_id}`, quota);
+      }
 }

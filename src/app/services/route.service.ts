@@ -25,7 +25,7 @@ export class RouteService {
     );
   }
   create(route: Routes): Observable<Routes> {
-    delete route.id; //para borrar el id
+    delete route.id;
     return this.http.post<Routes>(
       `${environment.url_ms_business}/routes`,
       route
@@ -34,7 +34,7 @@ export class RouteService {
   update(route: Routes): Observable<Routes> {
     return this.http.put<Routes>(
       `${environment.url_ms_business}/routes/${route.id}`,
-      route //hay que anexarle un body
+      route
     );
   }
 }

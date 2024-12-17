@@ -1,75 +1,71 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Routes } from 'src/app/models/routes.model';
-import { RouteService } from 'src/app/services/route.service';
-import Swal from 'sweetalert2';
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { Routes } from "src/app/models/routes.model";
+import { RouteService } from "src/app/services/route.service";
+import Swal from "sweetalert2";
 
 @Component({
-  selector: 'app-list',
-  templateUrl: './list.component.html',
-  styleUrls: ['./list.component.css']
+  selector: "app-list",
+  templateUrl: "./list.component.html",
+  styleUrls: ["./list.component.css"],
 })
 export class ListComponent implements OnInit {
-  public routes: Routes[] = [];
 
-  constructor(private routesService: RouteService, private router: Router) {
-    console.log("Saludos desde el constructor");
+  
+  
+  routes: Routes[];
+  constructor(private routeService: RouteService, private router: Router) {
+    this.routes = [];
   }
 
   ngOnInit(): void {
-    console.log("Saludos desde ngOnInit");
     this.list();
   }
-
-  list() {
-    this.routesService.list().subscribe((data: any[]) => {
-      this.routes = data.map(route => ({
-        id: route.id,
-        startingPlace: route.starting_place,
-        endingPlace: route.ending_place,
-        distance: route.distance,
-        deliveryDate: route.delivery_date,
-      }));
-    });
-  }
-
-  delete(id: number) {
-    Swal.fire({
-      title: "Eliminación",
-      text: "¿Está seguro que quiere eliminar este registro?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Sí, eliminar",
-      cancelButtonText: "No, cancelar",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.routesService.delete(id).subscribe({
-          next: () => {
-            this.ngOnInit(); // Actualiza la tabla
-            Swal.fire({
-              title: "Eliminado",
-              text: "Se ha eliminado correctamente",
-              icon: "success",
-            });
-          },
-          error: (err) => {
-            console.error("Error eliminando la ruta:", err);
-            Swal.fire({
-              title: "Error",
-              text: "No se pudo eliminar el registro. Intente nuevamente.",
-              icon: "error",
-            });
-          },
-        });
-      }
-    });
-  }
-
   view(id: number) {
+    console.log("aqui estoy en view");
+
     this.router.navigate(["routes/view/" + id]);
   }
 
   update(id: number) {
     this.router.navigate(["routes/update/" + id]);
+  }
+
+  list(): void {
+    this.routeService.list().subscribe((data) => {
+      this.routes = data;
+      console.log(data);
+
+      //console.log(JSON.stringify(data["data"]));
+
+    });
+  }
+
+  create() {
+    this.router.navigate(["routes/create"]);
+  }
+
+  delete(id: number) {
+    Swal.fire({
+      title: "Eliminar Ruta?",
+      text: "¿Estas seguro de eliminar la Ruta?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, eliminar!",
+      cancelButtonText: "No, Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.routeService.delete(id).subscribe((data) => {
+          Swal.fire("Eliminada!", "La Ruta ha sido eliminada.", "success");
+
+          this.ngOnInit();
+        });
+      }
+    });
+  }
+  showBatch(id: number){
+    this.router.navigate(["batches/filterByRoute/" + id]);
   }
 }
