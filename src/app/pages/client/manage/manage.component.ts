@@ -63,6 +63,14 @@ export class ManageComponent implements OnInit {
   }
 
   create() {
+    if (this.theFormGroup.invalid) {
+      this.trySend = true;
+      Swal.fire(
+        "Error en el formulario",
+        "Ingrese correctamente los datos solicitados"
+      );
+      return;
+    }
     console.log(JSON.stringify(this.client));
     this.clientService.create(this.client).subscribe((data) => {
       Swal.fire("Creado", " se ha creado exitosa mente", "success"); // tirulo a la alerta
@@ -71,6 +79,14 @@ export class ManageComponent implements OnInit {
   }
 
   update() {
+    if (this.theFormGroup.invalid) {
+      this.trySend = true;
+      Swal.fire(
+        "Error en el formulario",
+        "Ingrese correctamente los datos solicitados"
+      );
+      return;
+    }
     console.log(JSON.stringify(this.client));
     this.clientService.update(this.client).subscribe((data) => {
       Swal.fire("Actualizado", " se ha actualizado exitosa mente", "success"); // titulo a la alerta
@@ -99,7 +115,7 @@ export class ManageComponent implements OnInit {
       // primer elemento del vector, valor por defecto
       // lista, serán las reglas
       id: [this.client.id || ""],
-      id_type: ["", [Validators.required, Validators.pattern('^[a-zA-Z]+$')]], // Solo letras
+      id_type: ["", [Validators.required, Validators.pattern("^[a-zA-Z]+$")]], // Solo letras
       id_number: ["", [Validators.required, Validators.pattern("^[0-9]+$")]], // Solo números
       phone_number: [0, [Validators.required, Validators.pattern("^[0-9]+$")]], // Solo números
       order_count: [0, [Validators.required, Validators.pattern("^[0-9]+$")]], // Solo números

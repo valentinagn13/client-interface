@@ -2,11 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Product } from "src/app/models/product.model";
 import { ProductService } from "src/app/services/product.service";
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import Swal from "sweetalert2";
 import { DatePipe } from "@angular/common";
 
@@ -23,7 +19,6 @@ export class ManageComponent implements OnInit {
   batch_id: number;
   client_id: number;
 
-
   constructor(
     private activateRoute: ActivatedRoute,
     private productsService: ProductService,
@@ -38,7 +33,6 @@ export class ManageComponent implements OnInit {
       expiration_date: new Date(),
       client_id: 0,
       batch_id: 0,
-     
     };
     this.trySend = false;
   }
@@ -54,42 +48,42 @@ export class ManageComponent implements OnInit {
       this.theFormGroup.get("expiration_date").disable();
       this.theFormGroup.get("client_id").disable();
       this.theFormGroup.get("batch_id").disable();
-    } else if (currentUrl.includes("create") && !currentUrl.includes("createForBatch") && !currentUrl.includes("createForClient")) {
+    } else if (
+      currentUrl.includes("create") &&
+      !currentUrl.includes("createForBatch") &&
+      !currentUrl.includes("createForClient")
+    ) {
       // Modo crear normal
       this.mode = 2;
       this.theFormGroup.get("id").disable();
       // Habilitar batch_id para creación normal
       this.theFormGroup.get("batch_id").enable();
       this.theFormGroup.get("client_id").enable();
-
     } else if (currentUrl.includes("createForBatch")) {
       // Modo crear para batch
       this.mode = 4;
       this.theFormGroup.get("id").disable();
       this.batch_id = this.activateRoute.snapshot.params.batch_id;
-      
+
       if (this.batch_id) {
         this.products.batch_id = this.batch_id;
         this.theFormGroup.patchValue({ batch_id: this.batch_id });
         // Deshabilitar batch_id solo en modo createForBatch
         this.theFormGroup.get("batch_id").disable();
       }
-    }
-      else if(currentUrl.includes("createForClient")) {
-        // Modo crear para cliente
-        this.mode = 5;
-        this.theFormGroup.get("id").disable();
-        this.client_id = this.activateRoute.snapshot.params.client_id;
-        
-        if (this.client_id) {
-          this.products.client_id = this.client_id;
-          this.theFormGroup.patchValue({ client_id: this.client_id });
-          // Deshabilitar client_id solo en modo createForClient
-          this.theFormGroup.get("client_id").disable();
-        }
-      }
+    } else if (currentUrl.includes("createForClient")) {
+      // Modo crear para cliente
+      this.mode = 5;
+      this.theFormGroup.get("id").disable();
+      this.client_id = this.activateRoute.snapshot.params.client_id;
 
-     else if (currentUrl.includes("update")) {
+      if (this.client_id) {
+        this.products.client_id = this.client_id;
+        this.theFormGroup.patchValue({ client_id: this.client_id });
+        // Deshabilitar client_id solo en modo createForClient
+        this.theFormGroup.get("client_id").disable();
+      }
+    } else if (currentUrl.includes("update")) {
       // Código existente para modo actualización
       this.mode = 3;
       this.theFormGroup.get("id").disable();
@@ -100,57 +94,74 @@ export class ManageComponent implements OnInit {
     }
   }
 
-  
-    create() {
-      console.log(JSON.stringify(this.products));
-      this.productsService.create(this.products).subscribe((data) => {
-        Swal.fire("Creado", " se ha creado exitosa mente", "success"); //tirulo a la alerta
-        this.router.navigate(["products/list"]);
-      });
+  create() {
+    if (this.theFormGroup.invalid) {
+      this.trySend = true;
+      Swal.fire(
+        "Error en el formulario",
+        "Ingrese correctamente los datos solicitados"
+      );
+      return;
     }
-  
+    console.log(JSON.stringify(this.products));
+    this.productsService.create(this.products).subscribe((data) => {
+      Swal.fire("Creado", " se ha creado exitosa mente", "success"); //tirulo a la alerta
+      this.router.navigate(["products/list"]);
+    });
+  }
 
-    createForBatch() {
-      this.products.batch_id = this.batch_id;
-      console.log(JSON.stringify(this.products));
-      this.productsService.createForBatch(this.batch_id, this.products).subscribe((data) => {
+  createForBatch() {
+    this.products.batch_id = this.batch_id;
+    console.log(JSON.stringify(this.products));
+    this.productsService
+      .createForBatch(this.batch_id, this.products)
+      .subscribe((data) => {
         Swal.fire("Creado", "Se ha creado exitosamente", "success");
         // Redirigir a la lista de productos del lote específico
         this.router.navigate(["products/filterByBatch", this.batch_id]);
       });
-    }
-    createForClient() {
-      this.products.client_id = this.client_id;
-      console.log(JSON.stringify(this.products));
-      this.productsService.createForClient(this.client_id, this.products).subscribe((data) => {
+  }
+  createForClient() {
+    this.products.client_id = this.client_id;
+    console.log(JSON.stringify(this.products));
+    this.productsService
+      .createForClient(this.client_id, this.products)
+      .subscribe((data) => {
         Swal.fire("Creado", "Se ha creado exitosamente", "success");
         // Redirigir a la lista de productos del cliente específico
         this.router.navigate(["products/filterByClient", this.client_id]);
       });
+  }
+  update() {
+    if (this.theFormGroup.invalid) {
+      this.trySend = true;
+      Swal.fire(
+        "Error en el formulario",
+        "Ingrese correctamente los datos solicitados"
+      );
+      return;
     }
-  update(){
     const fechaExpiration = this.theFormGroup.get("expiration_date")?.value;
     const fechaExpirationDate = new Date(fechaExpiration);
 
     //console.log(JSON.stringify(this.products));
-    this.productsService.update(this.products).subscribe(data=>{
-      Swal.fire("Actualizado"," se ha actualizado exitosa mente", "success")//titulo a la alerta
-      this.router.navigate(["products/list"]); 
-    })
-    
+    this.productsService.update(this.products).subscribe((data) => {
+      Swal.fire("Actualizado", " se ha actualizado exitosa mente", "success"); //titulo a la alerta
+      this.router.navigate(["products/list"]);
+    });
   }
 
-   //aqui se arma la data
-   getProduct(id:number){
-    this.productsService.view(id).subscribe(data=>{
-      const datePipe = new DatePipe("en-US");  
-      this.products = data; 
+  //aqui se arma la data
+  getProduct(id: number) {
+    this.productsService.view(id).subscribe((data) => {
+      const datePipe = new DatePipe("en-US");
+      this.products = data;
       const formattedExpirationDate = datePipe.transform(
         data.expiration_date,
         "yyyy-MM-dd"
       );
       console.log(JSON.stringify(this.products));
-      
+
       this.theFormGroup.patchValue({
         id: this.products.id,
         name: this.products.name,
@@ -166,10 +177,16 @@ export class ManageComponent implements OnInit {
   //aqui definimos las reglas
   configFormGroup() {
     this.theFormGroup = this.theFormBuilder.group({
-      id: [this.products.id || "" ], // Siempre deshabilitado
-      name: ["", [Validators.required, Validators.pattern('^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ ]+$')]],
-      description:["",[Validators.required]],
-      expiration_date: ["",[Validators.required]],
+      id: [this.products.id || ""], // Siempre deshabilitado
+      name: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern("^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ ]+$"),
+        ],
+      ],
+      description: ["", [Validators.required]],
+      expiration_date: ["", [Validators.required]],
       client_id: [0, [Validators.required, Validators.pattern("^[0-9]+$")]],
       batch_id: [0, [Validators.required, Validators.pattern("^[0-9]+$")]],
     });
@@ -179,6 +196,4 @@ export class ManageComponent implements OnInit {
   get getTheFormGroup() {
     return this.theFormGroup.controls;
   }
-
-
 }

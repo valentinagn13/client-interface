@@ -72,6 +72,14 @@ export class ManageComponent implements OnInit {
   //   });
   // }
   create() {
+    if (this.theFormGroup.invalid) {
+      this.trySend = true;
+      Swal.fire(
+        "Error en el formulario",
+        "Ingrese correctamente los datos solicitados"
+      );
+      return;
+    }
     if (this.theFormGroup.valid) {
       this.vehiclesService.create(this.theFormGroup.value).subscribe((data) => {
         Swal.fire("Creado", "Se ha creado exitosamente", "success");
@@ -81,6 +89,14 @@ export class ManageComponent implements OnInit {
   }
 
   update() {
+    if (this.theFormGroup.invalid) {
+      this.trySend = true;
+      Swal.fire(
+        "Error en el formulario",
+        "Ingrese correctamente los datos solicitados"
+      );
+      return;
+    }
     console.log(JSON.stringify(this.vehicles));
     this.vehiclesService.update(this.vehicles).subscribe((data) => {
       Swal.fire("Actualizado", " se ha actualizado exitosa mente", "success"); //titulo a la alerta
