@@ -25,7 +25,7 @@ export class ManageComponent implements OnInit {
     private theFormBuilder: FormBuilder
   ) {
     this.mode = 1;
-    this.AddreRouteOrder = { id: 0, address_id: 0, route_id: 0 };
+    this.AddreRouteOrder = { id: 0, address_id: 0, route_id: 0, order_by: 0 };
     this.trySend = false;
   }
 
@@ -36,6 +36,7 @@ export class ManageComponent implements OnInit {
       this.theFormGroup.get("id").disable();
       this.theFormGroup.get("address_id").disable();
       this.theFormGroup.get("route_id").disable();
+      this.theFormGroup.get("order_by").disable();
       this.mode = 1;
     } else if (currentUrl.includes("create") && !currentUrl.includes("createForRoute") && !currentUrl.includes("createForAddress")) {
       this.mode = 2;
@@ -120,6 +121,7 @@ export class ManageComponent implements OnInit {
         id: this.AddreRouteOrder.id,
         address_id: this.AddreRouteOrder.address_id,
         route_id: this.AddreRouteOrder.route_id,
+        order_by: this.AddreRouteOrder.order_by
       });
     });
   }
@@ -141,6 +143,13 @@ export class ManageComponent implements OnInit {
           Validators.pattern("^[0-9]+$")
         ]
       ],
+      order_by: [
+        this.AddreRouteOrder.order_by || 0, 
+        [
+          Validators.required,
+          Validators.pattern("^[0-9]+$")
+        ]
+      ]
     });
   }
 

@@ -8,13 +8,11 @@
           <div class="row">
             <div class="col-3"></div>
           </div>
-          <h3 class="mb=0">Vehículos</h3>
+          <h3 class="mb-0">Vehículos</h3>
         </div>
         <div class="col-6"></div>
         <div class="col-3">
-          <button type="button" class="btn btn-success" (click)="create()">
-            Crear
-          </button>
+          <button type="button" class="btn btn-success" (click)="create()">Crear</button>
         </div>
         <div class="card-body">
           <table class="table">
@@ -36,68 +34,19 @@
                 <td>{{ veh.model }}</td>
                 <td>{{ veh.capacity }}</td>
                 <td>{{ veh.cargo_type }}</td>
-                <td>
-
-                  <div class="d-flex flex-wrap justify-content-between">
-                    <button
-                      type="button"
-                      class="btn btn-primary btn-sm mb-2"
-                      (click)="view(veh.id)"
-                    >
-                      Ver
-                    </button>
-                    <button
-                      type="button"
-                      class="btn btn-warning btn-sm mb-2"
-                      (click)="update(veh.id)"
-                    >
-                      Actualizar
-                    </button>
-                    <button
-                      type="button"
-                      class="btn btn-danger btn-sm mb-2"
-                      (click)="delete(veh.id)"
-                    >
-                      Eliminar
-                    </button>
-                    <button
-                      type="button"
-                      class="btn btn-aqua btn-sm mb-2"
-                      (click)="location(veh.id)"
-                    >
-                      Ubicación
-                    </button>
-                    <button
-                      type="button"
-                      class="btn btn-info btn-sm mb-2"
-                      (click)="showOperations(veh.id)"
-                    >
-                      Operaciones
-                    </button>
-                    <button
-                      type="button"
-                      class="btn btn-info btn-sm mb-2"
-                      (click)="showVehicleOwners(veh.id)"
-                    >
-                      Vehiculo Dueño
-                    </button>
-                    <button
-                  {{ veh.latitud_inicial + " , " + veh.longitud_inicial }}
-                </td>
+                <td>{{ veh.latitud_inicial + " , " + veh.longitud_inicial }}</td>
                 <td>{{ veh.latitud_final + " , " + veh.longitud_final }}</td>
-
                 <td>
-                  <button
-
-                    type="button"
-                    class="btn btn-info btn-sm mb-2"
-                    (click)="showVehicleDriver(veh.id)"
-                  >
-                    Vehiculo Conductor
-                  </button>
-                  <button type="button" class="btn btn-info btn-sm" (click)="showRoute(veh.id)"> Rutas</button>
-
-                  <button type="button" class="btn btn-info btn-sm" (click)="showInsurance(veh.id)"> Seguros</button>
+                  <div class="d-flex flex-wrap justify-content-between">
+                    <button type="button" class="btn btn-primary btn-sm mb-2" (click)="view(veh.id)">Ver</button>
+                    <button type="button" class="btn btn-warning btn-sm mb-2" (click)="update(veh.id)">Actualizar</button>
+                    <button type="button" class="btn btn-danger btn-sm mb-2" (click)="delete(veh.id)">Eliminar</button>
+                    <button type="button" class="btn btn-aqua btn-sm mb-2" (click)="location(veh.id)">Ubicación</button>
+                    <button type="button" class="btn btn-info btn-sm mb-2" (click)="showOperations(veh.id)">Operaciones</button>
+                    <button type="button" class="btn btn-info btn-sm mb-2" (click)="showVehicleOwners(veh.id)">Vehículo Dueño</button>
+                    <button type="button" class="btn btn-info btn-sm mb-2" (click)="showVehicleDriver(veh.id)">Vehículo Conductor</button>
+                    <button type="button" class="btn btn-info btn-sm mb-2" (click)="showRoute(veh.id)">Rutas</button>
+                    <button type="button" class="btn btn-info btn-sm mb-2" (click)="showInsurance(veh.id)">Seguros</button>
                   </div>
                 </td>
               </tr>

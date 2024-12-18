@@ -47,6 +47,10 @@ export class ManageComponent implements OnInit {
       this.theFormGroup.get("model").disable();
       this.theFormGroup.get("capacity").disable();
       this.theFormGroup.get("cargo_type").disable();
+      this.theFormGroup.get("latitud_inicial").disable();
+      this.theFormGroup.get("latitud_final").disable();
+      this.theFormGroup.get("longitud_inicial").disable();
+      this.theFormGroup.get("longitud_final").disable();
     } else if (currentUrl.includes("create")) {
       this.mode = 2;
       this.theFormGroup.get("id").disable();
@@ -59,13 +63,21 @@ export class ManageComponent implements OnInit {
       this.getVehicle(this.vehicles.id);
     }
   }
-
+/* 
   create() {
     console.log(JSON.stringify(this.vehicles));
     this.vehiclesService.create(this.vehicles).subscribe((data) => {
       Swal.fire("Creado", " se ha creado exitosa mente", "success"); //tirulo a la alerta
       this.router.navigate(["vehicles/list"]);
     });
+  } */
+  create() {
+    if (this.theFormGroup.valid) {
+      this.vehiclesService.create(this.theFormGroup.value).subscribe((data) => {
+        Swal.fire("Creado", "Se ha creado exitosamente", "success");
+        this.router.navigate(["vehicles/list"]);
+      });
+    }
   }
 
   update() {
@@ -83,13 +95,24 @@ export class ManageComponent implements OnInit {
     });
   }
 
-  //aqui se arma la data
-  getVehicle(id: number) {
-    this.vehiclesService.view(id).subscribe((data) => {
-      this.vehicles = data;
-      console.log(JSON.stringify(this.vehicles));
-    });
-  }
+    //aqui se arma la data
+    getVehicle(id: number) {
+      this.vehiclesService.view(id).subscribe((data) => {
+        this.vehicles = data;
+        console.log(JSON.stringify(this.vehicles));
+        this.theFormGroup.patchValue({
+          // id: this.vehicles.id,
+          license_plate: this.vehicles.license_plate,
+          model: this.vehicles.model,
+          capacity: this.vehicles.capacity,
+  
+          latitud_inicial: this.vehicles.latitud_inicial,
+          latitud_final: this.vehicles.latitud_final,
+          longitud_inicial: this.vehicles.longitud_inicial,
+          longitud_final: this.vehicles.longitud_final,
+        });
+      });
+    }
 
   configFormGroup() {
     this.theFormGroup = this.theFormBuilder.group({
@@ -123,6 +146,10 @@ export class ManageComponent implements OnInit {
           Validators.pattern("^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\\s-]+$"),
         ],
       ],
+      latitud_inicial: [this.vehicles.latitud_inicial, Validators.required],
+      latitud_final: [this.vehicles.latitud_final, Validators.required],
+      longitud_inicial: [this.vehicles.longitud_inicial, Validators.required],
+      longitud_final: [this.vehicles.longitud_final, Validators.required],
     });
   }
 

@@ -111,20 +111,45 @@ export class ManageComponent implements OnInit {
       return this.theFormGroup.controls
     }
 
-    municipios(){
+    municipios() {
       this.municipioslista = [
-        {
-          id: 1,
-          name: 'Leticia'
-        },
-        {
-          id: 2,
-          name: 'El Encanto'
-        }
+        { id: 1, name: 'Bogotá' },
+        { id: 2, name: 'Medellín' },
+        { id: 3, name: 'Cali' },
+        { id: 4, name: 'Barranquilla' },
+        { id: 5, name: 'Cartagena' },
+        { id: 6, name: 'Cúcuta' },
+        { id: 7, name: 'Bucaramanga' },
+        { id: 8, name: 'Pereira' },
+        { id: 9, name: 'Santa Marta' },
+        { id: 10, name: 'Ibagué' },
+        { id: 11, name: 'Manizales' },
+        { id: 12, name: 'Villavicencio' },
+        { id: 13, name: 'Neiva' },
+        { id: 14, name: 'Armenia' },
+        { id: 15, name: 'Pasto' },
+        { id: 16, name: 'Montería' },
+        { id: 17, name: 'Valledupar' },
+        { id: 18, name: 'Sincelejo' },
+        { id: 19, name: 'Popayán' },
+        { id: 20, name: 'Tunja' },
+        { id: 21, name: 'Florencia' },
+        { id: 22, name: 'Quibdó' },
+        { id: 23, name: 'Riohacha' },
+        { id: 24, name: 'San Andrés' },
+        { id: 25, name: 'Leticia' },
+        { id: 26, name: 'Mocoa' },
+        { id: 27, name: 'San José del Guaviare' },
+        { id: 28, name: 'Puerto Carreño' },
+        { id: 29, name: 'Inírida' },
+        { id: 30, name: 'Mitú' },
+        { id: 31, name: 'Arauca' },
+        { id: 32, name: 'Yopal' },
+        { id: 33, name: 'Buenaventura' },
+        { id: 34, name: 'Tumaco' },
+        { id: 35, name: 'Turbo' }
       ];
-      
     }
-
     onSelectChange() {
       this.selectedMunicipioId = this.theFormGroup.get('municipality_id')?.value;
     }

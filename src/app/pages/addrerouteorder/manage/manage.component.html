@@ -66,7 +66,27 @@
                                             </div>  
                             </div>
                         </div>                        
-                        <br>                  
+                        <br>   
+                        <div class="row">
+                            <div class="col-4">
+                                <label>Orden Ruta</label>
+                            </div>
+                            <div class="col-8">
+                                <input type="number" class="form-control" [(ngModel)]="AddreRouteOrder.order_by" formControlName="order_by">
+                                <div *ngIf="
+                                getTheFormGroup.order_by.errors &&
+                                (getTheFormGroup.order_by.dirty ||
+                                  getTheFormGroup.order_by.touched ||
+                                  trySend)
+                              ">
+                              <!-- si el form group location tine un error de requerido colocamos un mensaje de requerido -->
+                                                <strong *ngIf="getTheFormGroup.order_by.errors.required"
+                                                    class="msnError text-danger">Requerido</strong>
+                                                    <strong *ngIf="getTheFormGroup.order_by.errors.pattern" class="msnError text-success">El valor debe ser un valor numérico</strong>
+                                            </div>  
+                            </div>
+                        </div>                        
+                        <br>               
                         <div class="row">
                             <div class="col-4"></div>
                             <div class="col-8">
