@@ -17,8 +17,8 @@ export class ManageComponent implements OnInit {
   operations: Operation;
   theFormGroup: FormGroup;
   trySend: boolean;
-  municipality_id:number
-  vehicle_id:number
+  municipality_id: number;
+  vehicle_id: number;
 
   constructor(
     private activateRoute: ActivatedRoute,
@@ -47,41 +47,41 @@ export class ManageComponent implements OnInit {
       this.theFormGroup.get("end_date").disable();
       this.theFormGroup.get("municipality_id").disable();
       this.theFormGroup.get("vehicle_id").disable();
-    } else if (currentUrl.includes("create") && !currentUrl.includes("createForMunicipality") && !currentUrl.includes("createForVehicle")) {
+    } else if (
+      currentUrl.includes("create") &&
+      !currentUrl.includes("createForMunicipality") &&
+      !currentUrl.includes("createForVehicle")
+    ) {
       this.mode = 2;
       this.theFormGroup.get("id").disable();
       this.theFormGroup.get("municipality_id").enable();
       this.theFormGroup.get("vehicle_id").enable();
-
     } else if (currentUrl.includes("createForMunicipality")) {
       // Modo crear para Municipio
       this.mode = 4;
       this.theFormGroup.get("id").disable();
       this.municipality_id = this.activateRoute.snapshot.params.municipality_id;
-      
+
       if (this.municipality_id) {
         this.operations.municipality_id = this.municipality_id;
         this.theFormGroup.patchValue({ municipality_id: this.municipality_id });
         // Deshabilitar municipality_id solo en modo createForMunicipality
         this.theFormGroup.get("municipality_id").disable();
       }
-    }
-      else if(currentUrl.includes("createForVehicle")) {
-        // Modo crear para Vehiculo
-        this.mode = 5;
-        this.theFormGroup.get("id").disable();
-        this.vehicle_id = this.activateRoute.snapshot.params.vehicle_id;
-        console.log("vehicle_id:", this.vehicle_id);
-        
-        if (this.vehicle_id) {
-          this.operations.vehicle_id = this.vehicle_id;
-          this.theFormGroup.patchValue({ vehicle_id: this.vehicle_id });
-          // Deshabilitar vehicle_id solo en modo createForVehicle
-          this.theFormGroup.get("vehicle_id").disable();
-        }
-      }
+    } else if (currentUrl.includes("createForVehicle")) {
+      // Modo crear para Vehiculo
+      this.mode = 5;
+      this.theFormGroup.get("id").disable();
+      this.vehicle_id = this.activateRoute.snapshot.params.vehicle_id;
+      console.log("vehicle_id:", this.vehicle_id);
 
-     else if (currentUrl.includes("update")) {
+      if (this.vehicle_id) {
+        this.operations.vehicle_id = this.vehicle_id;
+        this.theFormGroup.patchValue({ vehicle_id: this.vehicle_id });
+        // Deshabilitar vehicle_id solo en modo createForVehicle
+        this.theFormGroup.get("vehicle_id").disable();
+      }
+    } else if (currentUrl.includes("update")) {
       this.mode = 3;
       this.theFormGroup.get("id").disable();
     }
@@ -92,6 +92,14 @@ export class ManageComponent implements OnInit {
   }
 
   create() {
+    if (this.theFormGroup.invalid) {
+      this.trySend = true;
+      Swal.fire(
+        "Error en el formulario",
+        "Ingrese correctamente los datos solicitados"
+      );
+      return;
+    }
     console.log(JSON.stringify(this.operations));
     this.operationsService.create(this.operations).subscribe((data) => {
       Swal.fire("Creado", " se ha creado exitosa mente", "success"); //tirulo a la alerta
@@ -100,25 +108,40 @@ export class ManageComponent implements OnInit {
   }
 
   createForMunicipality() {
-        this.operations.municipality_id = this.municipality_id;
-        console.log(JSON.stringify(this.operations));
-        this.operationsService.createForMunicipality(this.municipality_id, this.operations).subscribe((data) => {
-          Swal.fire("Creado", "Se ha creado exitosamente", "success");
-          // Redirigir a la lista de operaciones del municipio específico
-          this.router.navigate(["operations/filterByMunicipality", this.municipality_id]);
-        });
-      }
-      createForVehicle() {
-        this.operations.vehicle_id = this.vehicle_id;
-        console.log(JSON.stringify(this.operations));
-        this.operationsService.createForVehicle(this.vehicle_id, this.operations).subscribe((data) => {
-          Swal.fire("Creado", "Se ha creado exitosamente", "success");
-          // Redirigir a la lista de operaciones del vehiculo específico
-          this.router.navigate(["operations/filterByVehicle", this.vehicle_id]);
-        });
-      }
+    this.operations.municipality_id = this.municipality_id;
+    console.log(JSON.stringify(this.operations));
+    this.operationsService
+      .createForMunicipality(this.municipality_id, this.operations)
+      .subscribe((data) => {
+        Swal.fire("Creado", "Se ha creado exitosamente", "success");
+        // Redirigir a la lista de operaciones del municipio específico
+        this.router.navigate([
+          "operations/filterByMunicipality",
+          this.municipality_id,
+        ]);
+      });
+  }
+  createForVehicle() {
+    this.operations.vehicle_id = this.vehicle_id;
+    console.log(JSON.stringify(this.operations));
+    this.operationsService
+      .createForVehicle(this.vehicle_id, this.operations)
+      .subscribe((data) => {
+        Swal.fire("Creado", "Se ha creado exitosamente", "success");
+        // Redirigir a la lista de operaciones del vehiculo específico
+        this.router.navigate(["operations/filterByVehicle", this.vehicle_id]);
+      });
+  }
 
   update() {
+    if (this.theFormGroup.invalid) {
+      this.trySend = true;
+      Swal.fire(
+        "Error en el formulario",
+        "Ingrese correctamente los datos solicitados"
+      );
+      return;
+    }
     const fechaInicio = this.theFormGroup.get("start_date")?.value;
     const fechafin = this.theFormGroup.get("end_date")?.value;
     const fechainicioDate = new Date(fechaInicio);
@@ -156,10 +179,7 @@ export class ManageComponent implements OnInit {
         data.start_date,
         "yyyy-MM-dd"
       );
-      const formattedEndDate = datePipe.transform(
-        data.end_date,
-        "yyyy-MM-dd"
-      );
+      const formattedEndDate = datePipe.transform(data.end_date, "yyyy-MM-dd");
       this.operations = data;
       this.theFormGroup.patchValue({
         id: this.operations.id,

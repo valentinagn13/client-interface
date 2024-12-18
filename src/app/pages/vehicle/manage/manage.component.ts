@@ -63,16 +63,18 @@ export class ManageComponent implements OnInit {
       this.getVehicle(this.vehicles.id);
     }
   }
-/* 
+
   create() {
-    console.log(JSON.stringify(this.vehicles));
-    this.vehiclesService.create(this.vehicles).subscribe((data) => {
-      Swal.fire("Creado", " se ha creado exitosa mente", "success"); //tirulo a la alerta
-      this.router.navigate(["vehicles/list"]);
-    });
-  } */
-  create() {
-    if (this.theFormGroup.valid) {
+    if (this.theFormGroup.invalid) {
+      this.trySend = true;
+      Swal.fire(
+        "Error en el formulario",
+        "Ingrese correctamente los datos solicitados"
+      );
+      return;
+    }
+
+    else if (this.theFormGroup.valid) {
       this.vehiclesService.create(this.theFormGroup.value).subscribe((data) => {
         Swal.fire("Creado", "Se ha creado exitosamente", "success");
         this.router.navigate(["vehicles/list"]);
@@ -81,6 +83,14 @@ export class ManageComponent implements OnInit {
   }
 
   update() {
+    if (this.theFormGroup.invalid) {
+      this.trySend = true;
+      Swal.fire(
+        "Error en el formulario",
+        "Ingrese correctamente los datos solicitados"
+      );
+      return;
+    }
     console.log(JSON.stringify(this.vehicles));
     this.vehiclesService.update(this.vehicles).subscribe((data) => {
       Swal.fire("Actualizado", " se ha actualizado exitosa mente", "success"); //titulo a la alerta
@@ -95,24 +105,26 @@ export class ManageComponent implements OnInit {
     });
   }
 
-    //aqui se arma la data
-    getVehicle(id: number) {
-      this.vehiclesService.view(id).subscribe((data) => {
-        this.vehicles = data;
-        console.log(JSON.stringify(this.vehicles));
-        this.theFormGroup.patchValue({
-          // id: this.vehicles.id,
-          license_plate: this.vehicles.license_plate,
-          model: this.vehicles.model,
-          capacity: this.vehicles.capacity,
-  
-          latitud_inicial: this.vehicles.latitud_inicial,
-          latitud_final: this.vehicles.latitud_final,
-          longitud_inicial: this.vehicles.longitud_inicial,
-          longitud_final: this.vehicles.longitud_final,
-        });
+
+  //aqui se arma la data
+  getVehicle(id: number) {
+    this.vehiclesService.view(id).subscribe((data) => {
+      this.vehicles = data;
+      console.log(JSON.stringify(this.vehicles));
+      this.theFormGroup.patchValue({
+        // id: this.vehicles.id,
+        license_plate: this.vehicles.license_plate,
+        model: this.vehicles.model,
+        capacity: this.vehicles.capacity,
+
+        latitud_inicial: this.vehicles.latitud_inicial,
+        latitud_final: this.vehicles.latitud_final,
+        longitud_inicial: this.vehicles.longitud_inicial,
+        longitud_final: this.vehicles.longitud_final,
       });
-    }
+    });
+  }
+
 
   configFormGroup() {
     this.theFormGroup = this.theFormBuilder.group({

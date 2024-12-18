@@ -50,6 +50,14 @@ export class ManageComponent implements OnInit {
   }
 
   create() {
+    if (this.theFormGroup.invalid) {
+      this.trySend = true;
+      Swal.fire(
+        "Error en el formulario",
+        "Ingrese correctamente los datos solicitados"
+      );
+      return;
+    }
     console.log(JSON.stringify(this.owners));
     this.vehiclesService.create(this.owners).subscribe((data) => {
       Swal.fire("Creado", " se ha creado exitosa mente", "success"); //tirulo a la alerta
@@ -58,6 +66,14 @@ export class ManageComponent implements OnInit {
   }
 
   update() {
+    if (this.theFormGroup.invalid) {
+      this.trySend = true;
+      Swal.fire(
+        "Error en el formulario",
+        "Ingrese correctamente los datos solicitados"
+      );
+      return;
+    }
     console.log(JSON.stringify(this.owners));
     this.vehiclesService.update(this.owners).subscribe((data) => {
       Swal.fire("Actualizado", " se ha actualizado exitosa mente", "success"); //titulo a la alerta
@@ -75,7 +91,7 @@ export class ManageComponent implements OnInit {
     });
   }
 
-    //OJO-----------------------------
+  //OJO-----------------------------
   //aqui definimos las reglas
   configFormGroup() {
     this.theFormGroup = this.theFormBuilder.group({
@@ -84,10 +100,7 @@ export class ManageComponent implements OnInit {
       id: [this.owners.id || ""],
       user_id: ["", [Validators.required]],
       phone_number: [0, [Validators.required, Validators.max(9999999999)]],
-      driver_id: [
-        0,
-        [Validators.required, Validators.pattern("^[0-9]+$")],
-      ]
+      driver_id: [0, [Validators.required, Validators.pattern("^[0-9]+$")]],
     });
   }
 
