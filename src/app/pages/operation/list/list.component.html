@@ -1,52 +1,96 @@
-<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
-</div>
-  <!-- page content -->
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8"></div>
+<!-- page content -->
 <div class="container-fluid mt--7">
-<div class="row">
+  <div class="row">
     <div class="col">
-        <div class="card shadow">
-            <div class="card-header bg-transparent">
-                <div class="row">
-                    <div class="col-3">
-                    </div>
-                </div>
-                <h3 class="mb=0">Operaciones</h3>
-            </div>
-            <div class="col-6">
-            </div>
-            <div class="col-3">
-                <button type="button" class="btn btn-success" (click) ="create()">Crear</button>
-            </div>
-            <div class="card-body">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col-1">ID</th>
-                            <th scope="col-2">Fecha inicial</th>
-                            <th scope="col-3">Fecha final</th>
-                            <th scope="col-2">Municipio_Id</th>
-                            <th scope="col-2">Vehiculo_id</th>
-                            
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let ope of operations">
-                            <td>{{ ope.id }}</td>
-                            <td>{{ ope.start_date | date}}</td>
-                            <td>{{ ope.end_date | date}}</td>
-                            <td>{{ ope.municipality_id }}</td>
-                            <td>{{ ope.vehicle_id }}</td>
-                            <td>
-                                <button type="button" class="btn btn-primary" (click)="view(ope.id)">Ver</button>
-                                <button type="button" class="btn btn-warning" (click)="update(ope.id)">Actualizar</button>
-                                <button type="button" class="btn btn-danger" (click)="delete(ope.id)">Eliminar</button>
-
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+      <div class="card shadow">
+        <div class="card-header bg-transparent">
+          <div class="row">
+            <div class="col-3"></div>
+          </div>
+          <h3 class="mb-0" *ngIf="municipality_id && !vehicle_id">
+            Operacion del Municipio_Id #{{ municipality_id }}
+          </h3>
+          <h3 class="mb-0" *ngIf="!municipality_id && vehicle_id">
+            Operaciones del Vehiculo_id #{{ vehicle_id }}
+          </h3>
+          <h3 class="mb-0" *ngIf="!municipality_id && !vehicle_id">
+            Operaciones
+          </h3>
         </div>
+        <div class="col-6"></div>
+        <div class="col-3">
+          <button
+            *ngIf="!municipality_id && !vehicle_id"
+            type="button"
+            class="btn btn-success"
+            (click)="create()"
+          >
+            Crear
+          </button>
+          <button
+            *ngIf="municipality_id && !vehicle_id"
+            type="button"
+            class="btn btn-success"
+            (click)="createForMunicipality()"
+          >
+            Crear Operacion para Municipio
+          </button>
+          <button
+            *ngIf="vehicle_id && !municipality_id"
+            type="button"
+            class="btn btn-success"
+            (click)="createForVehicle()"
+          >
+            Crear Operacion para Vehiculo
+          </button>
+        </div>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col-1">ID</th>
+                <th scope="col-2">Fecha inicial</th>
+                <th scope="col-3">Fecha final</th>
+                <th scope="col-2">Municipio_Id</th>
+                <th scope="col-2">Vehiculo_id</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let ope of operations">
+                <td>{{ ope.id }}</td>
+                <td>{{ ope.start_date | date }}</td>
+                <td>{{ ope.end_date | date }}</td>
+                <td>{{ ope.municipality_id }}</td>
+                <td>{{ ope.vehicle_id }}</td>
+                <td>
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    (click)="view(ope.id)"
+                  >
+                    Ver
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-warning"
+                    (click)="update(ope.id)"
+                  >
+                    Actualizar
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-danger"
+                    (click)="delete(ope.id)"
+                  >
+                    Eliminar
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
-</div>  
+  </div>
 </div>

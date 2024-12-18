@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { Vehicledriver } from "src/app/models/vehicledriver.model";
 import { VehicledriverService } from "src/app/services/vehicledriver.service";
 import Swal from "sweetalert2";
@@ -11,15 +11,42 @@ import Swal from "sweetalert2";
 })
 export class ListComponent implements OnInit {
   vehicledriver: Vehicledriver[];
-
-  constructor(private service: VehicledriverService, private router: Router) {
+  driver_id:number
+  vehicle_id:number
+  constructor(private service: VehicledriverService, private router: Router, private activateRoute: ActivatedRoute) {
     this.vehicledriver = [];
   }
 
   //este es el primero que se llama igual que contructor pero cuando hay cambios en los componentes
 
   ngOnInit(): void {
-    this.list();
+    const currentUrl = this.activateRoute.snapshot.url.join('/');
+    
+    // Reiniciar municipality_id y vehicle_id
+    this.driver_id = null;
+    this.vehicle_id = null;
+  
+    // Verificar si estamos filtrando por municipio
+    if (currentUrl.includes('filterByDriver')) {
+      this.driver_id = +this.activateRoute.snapshot.params['id'];
+      console.log("driver_id:", this.driver_id);
+      this.filterByDriver();
+      console.log("vehicle_id:", this.vehicle_id);
+      
+
+    } 
+    // Verificar si estamos filtrando por vehiculo
+    else if (currentUrl.includes('filterByVehicle')) {
+      this.vehicle_id = +this.activateRoute.snapshot.params['id'];
+      console.log("vehicle_id:", this.vehicle_id);
+      this.filterByVehicle();
+      console.log("driver_id:", this.driver_id);
+      
+    } 
+    // Si no hay filtro específico, listar todos las operaciones
+    else {
+      this.list();
+    }
   }
 
   view(id: number) {
@@ -66,5 +93,33 @@ export class ListComponent implements OnInit {
         });
       }
     });
+  }
+  
+  //Funcion para filtrar por municipio
+  filterByDriver(){
+    this.service.listByDriver(this.driver_id).subscribe((data) => {
+      this.vehicledriver = data;
+      console.log(this.vehicledriver);
+    });
+  }
+  //funcion para crear una operacion segun un municipio
+
+  createForDriver() {
+    this.router.navigate(["vehicleDriver/createForDriver", this.driver_id]);
+    console.log("aqui estoy en createForOwner", this.driver_id);
+  }
+
+  //Funcion para filtrar por vehiculo
+  filterByVehicle(){
+    this.service.listByVehicle(this.vehicle_id).subscribe((data) => {
+      this.vehicledriver = data;
+      console.log(this.vehicledriver);
+    });
+  }
+
+  //funcion para crear una operacion segun un vehiculo
+  createForVehicle() {
+    this.router.navigate(["vehicleDriver/createForVehicle", this.vehicle_id]);
+    console.log("aqui estoy en createForVehicle", this.vehicle_id);
   }
 }

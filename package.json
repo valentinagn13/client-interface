@@ -34,6 +34,7 @@
     "ng-recaptcha": "^8.0.0",
     "ngx-clipboard": "15.0.1",
     "ngx-pagination": "^6.0.3",
+    "ngx-socket-io": "^4.8.1",
     "ngx-toastr": "14.2.2",
     "nouislider": "15.5.1",
     "rxjs": "~7.5.0",

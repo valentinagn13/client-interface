@@ -61,4 +61,8 @@ export class ListComponent implements OnInit {
       }
     });
   }
+
+  showExpense(id: number) {
+    this.router.navigate(["expense/filterByService/" + id]);
+  }
 }

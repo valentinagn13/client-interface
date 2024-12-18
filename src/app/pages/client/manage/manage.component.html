@@ -28,7 +28,7 @@
                 <label>Tipo de ID:</label>
               </div>
               <div class="col-8">
-                <input type="text" class="form-control" [(ngModel)]="client.id_type" formControlName="id_type">
+                <input type="text" class="form-control" [(ngModel)]="client.id_type" formControlName="id_type" placeholder="Ingrese el Tipo de ID">
                 <div
                   *ngIf="
                     getTheFormGroup.id_type.errors &&
@@ -54,7 +54,7 @@
                 <label>Número de ID:</label>
               </div>
               <div class="col-8">
-                <input type="text" class="form-control" [(ngModel)]="client.id_number" formControlName="id_number">
+                <input type="text" class="form-control" [(ngModel)]="client.id_number" formControlName="id_number" placeholder="Ingrese el Numero del ID">
                 <div
                   *ngIf="
                     getTheFormGroup.id_number.errors &&
@@ -80,7 +80,7 @@
                 <label>Número de Teléfono:</label>
               </div>
               <div class="col-8">
-                <input type="text" class="form-control" [(ngModel)]="client.phone_number" formControlName="phone_number">
+                <input type="text" class="form-control" [(ngModel)]="client.phone_number" formControlName="phone_number" placeholder="Ingrese el Número de Teléfono">
                 <div
                   *ngIf="
                     getTheFormGroup.phone_number.errors &&
@@ -132,7 +132,7 @@
                 <label>ID de Usuario:</label>
               </div>
               <div class="col-8">
-                <input type="text" class="form-control" [(ngModel)]="client.user_id" formControlName="user_id">
+                <input type="text" class="form-control" [(ngModel)]="client.user_id" formControlName="user_id" placeholder="Ingrese el ID de Usuario">
                 <div
                   *ngIf="
                     getTheFormGroup.user_id.errors &&

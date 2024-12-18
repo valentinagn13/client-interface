@@ -15,11 +15,15 @@ export class ManageComponent implements OnInit {
   vehicledriver: Vehicledriver;
   theFormGroup: FormGroup; //! EL POLICIA QUIEN HACE CUMPIR LAS REGLAS
   trySend: boolean;
+  driver_id:number
+  vehicle_id:number
+  
   constructor(
     private activateRoute: ActivatedRoute,
     private vehiclesService: VehicledriverService,
     private router: Router,
     private theFormBuilder: FormBuilder //* PARA ESTABLECER LAS REGLAS
+  
   ) {
     this.mode = 1;
     this.trySend = false;
@@ -37,8 +41,35 @@ export class ManageComponent implements OnInit {
       this.theFormGroup.get("vehicle_id").disable();
       this.theFormGroup.get("driver_id").disable();
       this.mode = 1;
-    } else if (currentUrl.includes("create")) {
+    } else if (currentUrl.includes("create") && !currentUrl.includes("createForDriver") && !currentUrl.includes("createForVehicle")) {
       this.mode = 2;
+      this.theFormGroup.get("driver_id").enable();
+      this.theFormGroup.get("vehicle_id").enable();
+   
+    } else if (currentUrl.includes("createForDriver")) {
+      // Modo crear para Municipio
+      this.mode = 4;
+      this.driver_id = this.activateRoute.snapshot.params.driver_id;
+      
+      if (this.driver_id) {
+        this.vehicledriver.driver_id = this.driver_id;
+        this.theFormGroup.patchValue({ driver_id: this.driver_id });
+        // Deshabilitar municipality_id solo en modo createForMunicipality
+        this.theFormGroup.get("driver_id").disable();
+      }
+    }
+      else if(currentUrl.includes("createForVehicle")) {
+        // Modo crear para Vehiculo
+        this.mode = 5;
+        this.vehicle_id = this.activateRoute.snapshot.params.vehicle_id;
+        console.log("vehicle_id:", this.vehicle_id);
+        
+        if (this.vehicle_id) {
+          this.vehicledriver.vehicle_id = this.vehicle_id;
+          this.theFormGroup.patchValue({ vehicle_id: this.vehicle_id });
+          // Deshabilitar vehicle_id solo en modo createForVehicle
+          this.theFormGroup.get("vehicle_id").disable();
+        }
     } else if (currentUrl.includes("update")) {
       this.mode = 3;
     }
@@ -74,6 +105,24 @@ export class ManageComponent implements OnInit {
     });
   }
 
+  createForDriver() {
+          this.vehicledriver.driver_id = this.driver_id;
+          console.log(JSON.stringify(this.vehicledriver));
+          this.vehiclesService.createForDriver(this.driver_id, this.vehicledriver).subscribe((data) => {
+            Swal.fire("Creado", "Se ha creado exitosamente", "success");
+            // Redirigir a la lista de dueños vehiculos del conductor específico
+            this.router.navigate(["vehicleDriver/filterByDriver", this.driver_id]);
+          });
+        }
+        createForVehicle() {
+          this.vehicledriver.vehicle_id = this.vehicle_id;
+          console.log(JSON.stringify(this.vehicledriver));
+          this.vehiclesService.createForVehicle(this.vehicle_id, this.vehicledriver).subscribe((data) => {
+            Swal.fire("Creado", "Se ha creado exitosamente", "success");
+            // Redirigir a la lista de operaciones del vehiculo específico
+            this.router.navigate(["vehicleDriver/filterByVehicle", this.vehicle_id]);
+          });
+        }
   update() {
     if (this.theFormGroup.invalid) {
       this.trySend = true;

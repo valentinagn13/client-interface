@@ -8,12 +8,41 @@
         <div class="card-header bg-transparent">
           <div class="row align-items-center">
             <div class="col">
-              <h3 class="mb-0">Dueño del Vehiculo</h3>
+              <h3 class="mb-0" *ngIf="owner_id && !vehicle_id">
+                Dueño del Vehiculo-Dueño_Id #{{ owner_id }}
+              </h3>
+              <h3 class="mb-0" *ngIf="!owner_id && vehicle_id">
+                Dueño del Vehiculo-Vehiculo_id #{{ vehicle_id }}
+              </h3>
+              <h3 class="mb-0" *ngIf="!owner_id && !vehicle_id">
+                Dueño del Vehiculo
+              </h3>
             </div>
             <div class="col-auto">
-              <button type="button" class="btn btn-success" (click)="create()">
-                Crear
-              </button>
+              <button
+              *ngIf="!owner_id && !vehicle_id"
+              type="button"
+              class="btn btn-success"
+              (click)="create()"
+            >
+              Crear
+            </button>
+            <button
+              *ngIf="owner_id && !vehicle_id"
+              type="button"
+              class="btn btn-success"
+              (click)="createForOwner()"
+            >
+              Crear Dueño del Vehiculo para Dueño
+            </button>
+            <button
+              *ngIf="vehicle_id && !owner_id"
+              type="button"
+              class="btn btn-success"
+              (click)="createForVehicle()"
+            >
+              Crear Dueño del Vehiculo para Vehiculo
+            </button>
             </div>
           </div>
         </div>

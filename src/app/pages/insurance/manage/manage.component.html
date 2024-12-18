@@ -9,6 +9,7 @@
                     <h1 *ngIf="mode == 1" class="mb-0">Visualizar</h1>
                     <h1 *ngIf="mode == 2" class="mb-0">Crear</h1>
                     <h1 *ngIf="mode == 3" class="mb-0">Actualizar</h1>
+                    <h1 *ngIf="mode == 4" class="mb-0">Crear Seguro vehiculo_id #{{insurances.vehicle_id}}</h1>
                 </div>
                 <form class="form" [formGroup]="theFormGroup">
                     <div class="card-body">
@@ -67,7 +68,7 @@
                             </div>
                             <div class="col-8">
                                 <input type="text" class="form-control" [(ngModel)]="insurances.insurance_type" 
-                                formControlName="insurance_type"> 
+                                formControlName="insurance_type" placeholder="Ingrese el Tipo de Seguro"> 
                                 <div *ngIf="
                                 getTheFormGroup.insurance_type.errors &&
                                 (getTheFormGroup.insurance_type.dirty ||
@@ -88,7 +89,7 @@
                                 <label>Compania de Seguros</label>
                             </div>
                             <div class="col-8">
-                                <input type="text" class="form-control" [(ngModel)]="insurances.insurance_company" formControlName="insurance_company">
+                                <input type="text"class="form-control" [(ngModel)]="insurances.insurance_company" formControlName="insurance_company" placeholder="Ingrese la Compañia de Seguros">
                                 <div *ngIf="
                             getTheFormGroup.insurance_company.errors &&
                             (getTheFormGroup.insurance_company.dirty ||
@@ -135,6 +136,12 @@
                                 <button *ngIf="mode == 3" class="btn btn-success btn-block" (click)="update()">
                                     Actualizar
                                 </button>
+                                <button 
+                                *ngIf="mode == 4" 
+                                class="btn btn-success btn-block" 
+                                (click)="createForVehicle()">
+                                Crear para Vehiculo
+                              </button>
                             </div>
                         </div>
                     </div>

@@ -8,12 +8,52 @@
           <div class="row">
             <div class="col-3"></div>
           </div>
-          <h3 class="mb=0">Gastos</h3>
+          <h3 class="mb-0" *ngIf="driver_id && !service_id && !owner_id">
+            Gastos del Conductor_Id #{{ driver_id }}
+          </h3>
+          <h3 class="mb-0" *ngIf="!driver_id && service_id && !owner_id">
+            Gastos del servicio_id #{{ service_id }}
+          </h3>
+          <h3 class="mb-0" *ngIf="!driver_id && !service_id && !owner_id">
+            Gatos
+          </h3>
+          <h3 class="mb-0" *ngIf="!driver_id && !service_id && owner_id">
+            Gastos del Dueño_Id #{{ owner_id }}
+          </h3>
         </div>
         <div class="col-6"></div>
         <div class="col-3">
-          <button type="button" class="btn btn-success" (click)="create()">
+          <button
+            *ngIf="!driver_id && !service_id && !owner_id"
+            type="button"
+            class="btn btn-success"
+            (click)="create()"
+          >
             Crear
+          </button>
+          <button
+            *ngIf="driver_id && !service_id && !owner_id"
+            type="button"
+            class="btn btn-success"
+            (click)="createForDriver()"
+          >
+            Crear Gasto para Conductor
+          </button>
+          <button
+            *ngIf="service_id && !driver_id && !owner_id"
+            type="button"
+            class="btn btn-success"
+            (click)="createForService()"
+          >
+            Crear Gasto para Servicio
+          </button>
+          <button
+            *ngIf="!driver_id && !service_id && owner_id"
+            type="button"
+            class="btn btn-success"
+            (click)="createForOwner()"
+          >
+            Crear Gasto para Dueño
           </button>
         </div>
         <div class="card-body">

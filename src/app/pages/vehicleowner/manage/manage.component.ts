@@ -16,7 +16,8 @@ export class ManageComponent implements OnInit {
   vehicleOwners: Vehicleowner;
   theFormGroup: FormGroup;
   trySend: boolean;
-
+  owner_id:number
+  vehicle_id:number
   constructor(
     private activateRoute: ActivatedRoute,
     private vehicleOwnerService: VehicleownerService,
@@ -44,9 +45,40 @@ export class ManageComponent implements OnInit {
       this.theFormGroup.get("owner_id").disable();
       this.theFormGroup.get("vehicle_id").disable();
       this.mode = 1;
-    } else if (currentUrl.includes("create")) {
+    } else if (currentUrl.includes("create") && !currentUrl.includes("createForOwner") && !currentUrl.includes("createForVehicle") ) {
       this.mode = 2;
       this.theFormGroup.get("id").disable();
+      this.theFormGroup.get("owner_id").enable();
+      this.theFormGroup.get("vehicle_id").enable();
+
+      
+    } else if (currentUrl.includes("createForOwner")) {
+      // Modo crear para Municipio
+      this.mode = 4;
+      this.theFormGroup.get("id").disable();
+      this.owner_id = this.activateRoute.snapshot.params.owner_id;
+      
+      if (this.owner_id) {
+        this.vehicleOwners.owner_id = this.owner_id;
+        this.theFormGroup.patchValue({ owner_id: this.owner_id });
+        // Deshabilitar municipality_id solo en modo createForMunicipality
+        this.theFormGroup.get("owner_id").disable();
+      }
+    }
+      else if(currentUrl.includes("createForVehicle")) {
+        // Modo crear para Vehiculo
+        this.mode = 5;
+        this.theFormGroup.get("id").disable();
+        this.vehicle_id = this.activateRoute.snapshot.params.vehicle_id;
+        console.log("vehicle_id:", this.vehicle_id);
+        
+        if (this.vehicle_id) {
+          this.vehicleOwners.vehicle_id = this.vehicle_id;
+          this.theFormGroup.patchValue({ vehicle_id: this.vehicle_id });
+          // Deshabilitar vehicle_id solo en modo createForVehicle
+          this.theFormGroup.get("vehicle_id").disable();
+        }
+      
     } else if (currentUrl.includes("update")) {
       this.mode = 3;
       this.theFormGroup.get("id").disable();
@@ -64,6 +96,26 @@ export class ManageComponent implements OnInit {
       this.router.navigate(["vehicleOwners/list"]);
     });
   }
+
+  
+    createForOwner() {
+          this.vehicleOwners.owner_id = this.owner_id;
+          console.log(JSON.stringify(this.vehicleOwners));
+          this.vehicleOwnerService.createForOwner(this.owner_id, this.vehicleOwners).subscribe((data) => {
+            Swal.fire("Creado", "Se ha creado exitosamente", "success");
+            // Redirigir a la lista de dueños vehiculos del conductor específico
+            this.router.navigate(["vehicleOwners/filterByOwner", this.owner_id]);
+          });
+        }
+        createForVehicle() {
+          this.vehicleOwners.vehicle_id = this.vehicle_id;
+          console.log(JSON.stringify(this.vehicleOwners));
+          this.vehicleOwnerService.createForVehicle(this.vehicle_id, this.vehicleOwners).subscribe((data) => {
+            Swal.fire("Creado", "Se ha creado exitosamente", "success");
+            // Redirigir a la lista de operaciones del vehiculo específico
+            this.router.navigate(["vehicleOwners/filterByVehicle", this.vehicle_id]);
+          });
+        }
 
   update() {
     const fechaVencimiento = this.theFormGroup.get("due_date")?.value;

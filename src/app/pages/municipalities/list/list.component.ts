@@ -66,4 +66,8 @@ export class ListComponent implements OnInit {
       }
     });
   }
+
+  showOperations(id: number){
+    this.router.navigate(["operations/filterByMunicipality/" + id]);
+  }
 }

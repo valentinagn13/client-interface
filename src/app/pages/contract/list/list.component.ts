@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import Swal from "sweetalert2";
 
 //Importaciones de la clase
@@ -14,13 +14,31 @@ import { ContractService } from 'src/app/services/contract.service';
 export class ListComponent implements OnInit {
 
   contracts: Contract[];
+  client_id:number;
 
-  constructor(private service:ContractService, private router: Router) {
+  constructor(private service:ContractService, private router: Router,  private activateRoute: ActivatedRoute) {
     this.contracts = [];
   }
 
   ngOnInit(): void {
-    this.list();
+    const currentUrl = this.activateRoute.snapshot.url.join('/');
+    
+    // Reiniciar batch_id y client_id
+    this.client_id = null;
+   
+  
+    // Verificar si estamos filtrando por batch
+    if (currentUrl.includes('filterByClient')) {
+      this.client_id = +this.activateRoute.snapshot.params['id'];
+      console.log("client_id:", this.client_id);
+      this.filterByClient();
+    
+      
+
+    } else{
+      this.list();
+
+    }
   }
 
   view(id: number) {
@@ -64,4 +82,22 @@ export class ListComponent implements OnInit {
   showQuotas(id: number){
     this.router.navigate(["quotas/filterByContract/" + id]);
   }
+
+  showRoute(id: number){
+    this.router.navigate(["routes/filterByContract/" + id]);
+  }
+
+ //Funcion para filtrar por rutas
+ filterByClient(){
+  this.service.listByClient(this.client_id).subscribe((data) => {
+    this.contracts = data;
+    console.log(this.contracts);
+  });
+}
+//funcion para crear un producto segun un lote
+
+createForClient() {
+  this.router.navigate(["contracts/createForClient", this.client_id]);
+  console.log("aqui estoy en createForRoute", this.client_id);
+}
 }

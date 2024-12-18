@@ -37,5 +37,13 @@ export class InsuranceService {
   update(Insurance: Insurance): Observable<Insurance> {
     return this.http.put<Insurance>(`${environment.url_ms_business}/insurances/${Insurance.id}`, Insurance);
   }
- 
+  listByVehicle(vehicle_id: number): Observable<Insurance[]> {
+     return this.http.get<Insurance[]>(`${
+       environment.url_ms_business
+     }/insurances?vehicle_id=${vehicle_id}`);
+     
+   }
+   createForVehicle(vehicle_id: number, insurance: Insurance): Observable<Insurance> {
+     return this.http.post<Insurance>(`${environment.url_ms_business}/insurances/vehicle/${vehicle_id}`, insurance);
+   }
 }

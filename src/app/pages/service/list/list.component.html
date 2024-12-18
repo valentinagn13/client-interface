@@ -28,34 +28,41 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let dri of service">
-                <td>{{ dri.id }}</td>
-                <td>{{ dri.name }}</td>
-                <td>{{ dri.address }}</td>
-                <td>{{ dri.description }}</td>
-                <td>{{ dri.date | date }}</td>
+              <tr *ngFor="let ser of service">
+                <td>{{ ser.id }}</td>
+                <td>{{ ser.name }}</td>
+                <td>{{ ser.address }}</td>
+                <td>{{ ser.description }}</td>
+                <td>{{ ser.date | date }}</td>
                 <td>
                   <button
                     type="button"
                     class="btn btn-primary"
-                    (click)="view(dri.id)"
+                    (click)="view(ser.id)"
                   >
                     Ver
                   </button>
                   <button
                     type="button"
                     class="btn btn-warning"
-                    (click)="update(dri.id)"
+                    (click)="update(ser.id)"
                   >
                     Actualizar
                   </button>
                   <button
                     type="button"
                     class="btn btn-danger"
-                    (click)="delete(dri.id)"
+                    (click)="delete(ser.id)"
                   >
                     Eliminar
                   </button>
+                  <button
+                  type="button"
+                  class="btn btn-info"
+                  (click)="showExpense(ser.id)"
+                >
+                 Gastos
+                </button>
                 </td>
               </tr>
             </tbody>

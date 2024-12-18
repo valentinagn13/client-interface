@@ -68,4 +68,23 @@ export class ListComponent implements OnInit {
       }
     });
   }
+
+  showOperations(id: number) {
+    this.router.navigate(["operations/filterByVehicle/" + id]);
+  }
+  showVehicleOwners(id: number) {
+    this.router.navigate(["vehicleOwners/filterByVehicle/" + id]);
+  }
+
+  showVehicleDriver(id: number) {
+    this.router.navigate(["vehicleDriver/filterByVehicle/" + id]);
+  }
+
+  showRoute(id: number) {
+    this.router.navigate(["routes/filterByVehicle/" + id]);
+  }
+  
+  showInsurance(id: number) {
+    this.router.navigate(["insurances/filterByVehicle/" + id]);
+  }
 }

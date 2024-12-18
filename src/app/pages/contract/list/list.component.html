@@ -8,10 +8,13 @@
         <div class="card-header bg-transparent">
           <div class="row align-items-center">
             <div class="col">
-              <h3 class="mb-0">Contrato</h3>
+              <h3 class="mb=0" *ngIf="!client_id">Lotes</h3>
+              <h3 class="mb=0" *ngIf="client_id">Contratos del cliente #{{client_id}}</h3>
+    
             </div>
             <div class="col-auto">
-              <button type="button" class="btn btn-success" (click)="create()">Crear</button>
+              <button *ngIf="!client_id" type="button" class="btn btn-success" (click)="create()">Crear</button>
+              <button *ngIf="client_id" type="button" class="btn btn-success" (click)="createForClient()">Crear Contrato para cliente</button>
             </div>
           </div>
         </div>
@@ -40,7 +43,9 @@
                       <button type="button" class="btn btn-primary btn-sm" (click)="view(con.id)">Ver</button>
                       <button type="button" class="btn btn-warning btn-sm" (click)="update(con.id)">Actualizar</button>
                       <button type="button" class="btn btn-danger btn-sm" (click)="delete(con.id)">Eliminar</button>
-                      <button type="button" class="btn btn-info btn-sm" (click)="showQuotas(con.id)"> Quotas</button>
+                      <button type="button" class="btn btn-info btn-sm" (click)="showQuotas(con.id)"> Cuotas</button>
+
+                      <button type="button" class="btn btn-info btn-sm" (click)="showRoute(con.id)"> Rutas</button>
                     </div>
                   </td>
                 </tr>

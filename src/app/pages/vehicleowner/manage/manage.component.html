@@ -9,6 +9,8 @@
                     <h1 *ngIf="mode == 1" class="mb-0">Visualizar</h1>
                     <h1 *ngIf="mode == 2" class="mb-0">Crear</h1>
                     <h1 *ngIf="mode == 3" class="mb-0">Actualizar</h1>
+                    <h1 *ngIf="mode == 4" class="mb-0">Crear Dueño Vehiculo Dueño_id #{{vehicleOwners.owner_id}}</h1>
+          <h1 *ngIf="mode == 5" class="mb-0">Crear Dueño Vehiculo vehiculo_id #{{vehicleOwners.vehicle_id}}</h1>
                 </div>
                 <form class="form" [formGroup]="theFormGroup">
                     <div class="card-body">
@@ -55,7 +57,8 @@
                                          [(ngModel)]="vehicleOwners.ownership_percentage"
                                          formControlName="ownership_percentage"
                                          [min]="0" 
-                                         [max]="100">
+                                         [max]="100"
+                                         placeholder="Porcentaje de Comisión">
                                   
                                   <!-- Botones en forma de flecha -->
                                   <div class="input-group-append d-flex flex-column">
@@ -139,6 +142,18 @@
                                 <button *ngIf="mode == 3" class="btn btn-success btn-block" (click)="update()">
                                     Actualizar
                                 </button>
+                                <button 
+                *ngIf="mode == 4" 
+                class="btn btn-success btn-block" 
+                (click)="createForOwner()">
+                Crear para Dueño
+              </button>
+              <button 
+              *ngIf="mode == 5" 
+              class="btn btn-success btn-block" 
+              (click)="createForVehicle()">
+              Crear para Vehículo
+            </button>
                             </div>
                         </div>
                     </div>     

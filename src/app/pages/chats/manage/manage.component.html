@@ -1,0 +1,93 @@
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8"></div>
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header bg-transparent">
+          <h3 *ngIf="mode == 1" class="mb-0">Visualizar</h3>
+          <h3 *ngIf="mode == 2" class="mb-0">Crear</h3>
+          <h3 *ngIf="mode == 3" class="mb-0">Actualizar</h3>
+        </div>
+        <div class="card-body">
+          <form class="form" [formGroup]="theFormGroup">
+            <div class="container d-grid gap-3">
+              <div class="row mb-2" *ngIf="mode != 2">
+                <div class="col-4">Id:</div>
+                <div class="col-8">
+                  {{ chat.id }}
+                </div>
+              </div>
+              <div class="row mb-1" *ngIf="mode!=1">
+                <div class="col-4">Servicio ejecutado id</div>
+                <div class="col-8">
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="service_execution_id"
+                    [(ngModel)]="chat.service_execution_id"
+                    disabled
+                  />
+                </div>
+                <div class="col-8" *ngIf="mode==1">
+                  {{chat.service_execution_id}}
+                </div>
+              </div>
+              <div class="row mb-1" *ngIf="mode == 1">
+                <div class="col-4">Código</div>
+                <div class="col-8">
+                  {{chat.code_chat}}
+                </div>
+              </div>
+              
+              <div class="row mb-1" *ngIf="mode!=1">
+                <div class="col-4">Estado</div>
+                <div class="col-8">
+                  <select
+                    class="form-control"
+                    formControlName="status"
+                    [(ngModel)]="chat.status"
+                  >
+                    <option value="1">Activo</option>
+                    <option value="0">Inactivo</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row mb-1">
+                <div class="col-4"></div>
+                <div class="col-8">
+                  <div class="d-flex align-items-center justify-content-center">
+                    <button
+                      *ngIf="mode == 2"
+                      class="btn btn-primary btn-block"
+                      (click)="create()"
+                    >
+                      Crear
+                    </button>
+                    <button
+                      *ngIf="mode == 3"
+                      class="btn btn-primary btn-block"
+                      (click)="update()"
+                    >
+                      Actualizar
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="mode == 1" class="mt-2">
+                <div class="d-flex align-items-center justify-content-center">
+                  <button
+                    type="button"
+                    class="btn btn-info"
+                    (click)="messages()"
+                  >
+                    Mensajes
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

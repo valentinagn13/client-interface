@@ -37,4 +37,24 @@ export class RouteService {
       route
     );
   }
+
+  listByContract(contract_id: number): Observable<Routes[]> {
+    return this.http.get<Routes[]>(`${
+      environment.url_ms_business
+    }/routes?contract_id=${contract_id}`);
+    
+  }
+  createForMunicipality(contract_id: number, operation: Routes): Observable<Routes> {
+    return this.http.post<Routes>(`${environment.url_ms_business}/routes/contract/${contract_id}`, operation);
+  }
+
+  listByVehicle(vehicle_id: number): Observable<Routes[]> {
+    return this.http.get<Routes[]>(`${
+      environment.url_ms_business
+    }/routes?vehicle_id=${vehicle_id}`);
+    
+  }
+  createForVehicle(vehicle_id: number, operation: Routes): Observable<Routes> {
+    return this.http.post<Routes>(`${environment.url_ms_business}/routes/vehicle/${vehicle_id}`, operation);
+  }
 }
