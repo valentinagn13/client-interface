@@ -1,5 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DistributionCenter } from "src/app/models/distribution-center.model";
 import { DistributionCenterService } from "src/app/services/distribution-center.service";
@@ -11,8 +10,7 @@ import Swal from "sweetalert2";
   styleUrls: ["./manage.component.css"],
 })
 export class ManageComponent implements OnInit {
-  mode: number; //1->View, 2->Create, 3->Update
-  theFormGroup: FormGroup;
+  mode: number; // 1->View, 2->Create, 3->Update
   trySend: boolean;
 
   distributionCenter: DistributionCenter;
@@ -20,8 +18,7 @@ export class ManageComponent implements OnInit {
   constructor(
     private activateRoute: ActivatedRoute,
     private distributionCenterService: DistributionCenterService,
-    private router: Router,
-    private theFormBuilder: FormBuilder
+    private router: Router
   ) {
     this.mode = 1;
     this.distributionCenter = {
@@ -40,12 +37,6 @@ export class ManageComponent implements OnInit {
     const currentUrl = this.activateRoute.snapshot.url.join("/");
     if (currentUrl.includes("view")) {
       this.mode = 1;
-      this.theFormGroup.get("name").disable();
-      this.theFormGroup.get("phone").disable();
-      this.theFormGroup.get("email").disable();
-      this.theFormGroup.get("capacity").disable();
-      this.theFormGroup.get("municipality_id").disable();
-      this.theFormGroup.get("address_id").disable();
     } else if (currentUrl.includes("create")) {
       this.mode = 2;
     } else if (currentUrl.includes("update")) {
@@ -58,8 +49,8 @@ export class ManageComponent implements OnInit {
   }
 
   create() {
-    //aqui se crea la data
-    if (this.theFormGroup.invalid) {
+    // Validar manualmente los campos
+    if (!this.distributionCenter.name || !this.distributionCenter.address_id || !this.distributionCenter.municipality_id) {
       this.trySend = true;
       Swal.fire(
         "Error en el formulario",
@@ -67,17 +58,19 @@ export class ManageComponent implements OnInit {
       );
       return;
     }
+
     console.log(JSON.stringify(this.distributionCenter));
     this.distributionCenterService
       .create(this.distributionCenter)
       .subscribe((data) => {
-        Swal.fire("Creado", " se ha creado exitosa mente", "success"); //tirulo a la alerta
+        Swal.fire("Creado", "Se ha creado exitosamente", "success");
         this.router.navigate(["distributionCenters/list"]);
       });
   }
 
   update() {
-    if (this.theFormGroup.invalid) {
+    // Validar manualmente los campos
+    if (!this.distributionCenter.name || !this.distributionCenter.address_id || !this.distributionCenter.municipality_id) {
       this.trySend = true;
       Swal.fire(
         "Error en el formulario",
@@ -85,40 +78,21 @@ export class ManageComponent implements OnInit {
       );
       return;
     }
+
     console.log(JSON.stringify(this.distributionCenter));
     this.distributionCenterService
       .update(this.distributionCenter)
       .subscribe((data) => {
-        Swal.fire("Actualizado", " se ha actualizado exitosa mente", "success"); //titulo a la alerta
+        Swal.fire("Actualizado", "Se ha actualizado exitosamente", "success");
         this.router.navigate(["distributionCenters/list"]);
       });
   }
 
-  //aqui se arma la data
+  // Obtener datos del centro de distribución
   getdistributionCenter(id: number) {
     this.distributionCenterService.view(id).subscribe((data) => {
       this.distributionCenter = data;
       console.log(JSON.stringify(this.distributionCenter));
     });
-  }
-  configFormGroup() {
-    this.theFormGroup = this.theFormBuilder.group({
-      // primer elemento del vector, valor por defecto
-      // lista, serán las reglas
-      id: [this.distributionCenter.id || ""],
-      // VALIDAR EL USUARIO
-      name: ["", [Validators.required]],
-      phone: ["", [Validators.required]],
-      email: ["", [Validators.required]],
-      address_id: [0, [Validators.required]],
-
-      municipality_id: [0, [Validators.required]],
-      capacity: [0, [Validators.required]],
-
-      // idProjector:[null,[Validators.required]],
-    });
-  }
-  get getTheFormGroup() {
-    return this.theFormGroup.controls;
   }
 }

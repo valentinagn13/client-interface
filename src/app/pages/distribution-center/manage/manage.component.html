@@ -10,88 +10,84 @@
                     <h1 *ngIf="mode == 2" class="mb-0">Crear</h1>
                     <h1 *ngIf="mode == 3" class="mb-0">Actualizar</h1>
                 </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-4">
-                                <label>id:</label>
-                            </div>
-                            <div class="col-8">
-                                <input type="text" class="form-control" disabled [(ngModel)]="distributionCenter.id"  > 
-                            </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-4">
+                            <label>id:</label>
                         </div>
-
-                        <br />
-                        <div class="row">
-                            <div class="col-4">
-                                <label>Nombre</label>
-                            </div>
-                            <div class="col-8">
-                                <input type="text" class="form-control" [(ngModel)]="distributionCenter.name" [disabled] = "mode == 1" placeholder="Nombre del centro de distribución"> 
-                            </div>
-                        </div>
-                        <br />
-                        <div class="row">
-                            <div class="col-4">
-                                <label>Telefono</label>
-                            </div>
-                            <div class="col-8">
-                                <input type="text" class="form-control" [(ngModel)]="distributionCenter.phone" [disabled] = "mode == 1" placeholder="Ingrese el Telefono"> 
-                            </div>
-                        </div>
-                        <br />
-                        <div class="row">
-                            <div class="col-4">
-                                <label>Email:</label>
-                            </div>
-                            <div class="col-8">
-                                <input type="text" class="form-control" [(ngModel)]="distributionCenter.email" [disabled] = "mode == 1" placeholder="Correo electronico">  
-                            </div>
-                        </div>
-
-                        <br />
-                        <div class="row">
-                            <div class="col-4">
-                                <label>Capacidad</label>
-                            </div>
-                            <div class="col-8">
-                                <input type="text" class="form-control" [(ngModel)]="distributionCenter.capacity" [disabled] = "mode == 1" placeholder="Capacidad del centro de distribución">
-                            </div>
-                        </div>
-                        <br />
-                        <div class="row">
-                            <div class="col-4">
-                                <label>Municipio_Id</label>
-                            </div>
-                            <div class="col-8">
-                                <input type="text" class="form-control" [(ngModel)]="distributionCenter.municipality_id" [disabled] = "mode == 1"> 
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row">
-                            <div class="col-4">
-                                <label>Dirección_Id</label>
-                            </div>
-                            <div class="col-8">
-                                <input type="text" class="form-control" [(ngModel)]="distributionCenter.address_id" [disabled] = "mode == 1"> 
-
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row">
-                            <div class="col-4"></div>
-                            <div class="col-8">
-                                <!-- <button *ngIf="mode == 1" class="btn btn-success btn-block" (click)="view()">
-                                    Visualizar
-                                </button> -->
-                                <button *ngIf="mode == 2" class="btn btn-success btn-block" (click)="create()">
-                                    Crear
-                                </button>
-                                <button *ngIf="mode == 3" class="btn btn-success btn-block" (click)="update()">
-                                    Actualizar
-                                </button>
-                            </div>
+                        <div class="col-8">
+                            <input type="text" class="form-control" disabled [(ngModel)]="distributionCenter.id"> 
                         </div>
                     </div>
+
+                    <br />
+                    <div class="row">
+                        <div class="col-4">
+                            <label>Nombre</label>
+                        </div>
+                        <div class="col-8">
+                            <input type="text" class="form-control" [(ngModel)]="distributionCenter.name" [disabled]="mode == 1" placeholder="Nombre del centro de distribución"> 
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-4">
+                            <label>Telefono</label>
+                        </div>
+                        <div class="col-8">
+                            <input type="text" class="form-control" [(ngModel)]="distributionCenter.phone" [disabled]="mode == 1" placeholder="Ingrese el Telefono"> 
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-4">
+                            <label>Email:</label>
+                        </div>
+                        <div class="col-8">
+                            <input type="text" class="form-control" [(ngModel)]="distributionCenter.email" [disabled]="mode == 1" placeholder="Correo electronico">  
+                        </div>
+                    </div>
+
+                    <br />
+                    <div class="row">
+                        <div class="col-4">
+                            <label>Capacidad</label>
+                        </div>
+                        <div class="col-8">
+                            <input type="text" class="form-control" [(ngModel)]="distributionCenter.capacity" [disabled]="mode == 1" placeholder="Capacidad del centro de distribución">
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-4">
+                            <label>Municipio_Id</label>
+                        </div>
+                        <div class="col-8">
+                            <input type="text" class="form-control" [(ngModel)]="distributionCenter.municipality_id" [disabled]="mode == 1"> 
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-4">
+                            <label>Dirección_Id</label>
+                        </div>
+                        <div class="col-8">
+                            <input type="text" class="form-control" [(ngModel)]="distributionCenter.address_id" [disabled]="mode == 1"> 
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-4"></div>
+                        <div class="col-8">
+                            <button *ngIf="mode == 2" class="btn btn-success btn-block" (click)="create()">
+                                Crear
+                            </button>
+                            <button *ngIf="mode == 3" class="btn btn-success btn-block" (click)="update()">
+                                Actualizar
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
