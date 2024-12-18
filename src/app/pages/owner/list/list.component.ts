@@ -61,4 +61,11 @@ export class ListComponent implements OnInit {
       }
     });
   }
+  showVehicleOwners(id: number) {
+    this.router.navigate(["vehicleOwners/filterByOwner/" + id]);
+  }
+
+  showExpense(id: number) {
+    this.router.navigate(["expense/filterByOwner/" + id]);
+  }
 }

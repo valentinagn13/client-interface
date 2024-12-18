@@ -40,4 +40,14 @@ export class ContractService {
       contract
     );
   }
+  listByClient(client_id: number): Observable<Contract[]> {
+        return this.http.get<Contract[]>(`${
+          environment.url_ms_business
+        }/contracts?client_id=${client_id}`);
+        
+      }
+      createForClient(client_id: number, contract: Contract): Observable<Contract> {
+        return this.http.post<Contract>(`${environment.url_ms_business}/contracts/client/${client_id}`, contract);
+      }
+
 }

@@ -124,7 +124,7 @@ export class ManageComponent implements OnInit {
       console.log(JSON.stringify(this.products));
       this.productsService.createForClient(this.client_id, this.products).subscribe((data) => {
         Swal.fire("Creado", "Se ha creado exitosamente", "success");
-        // Redirigir a la lista de productos del lote específico
+        // Redirigir a la lista de productos del cliente específico
         this.router.navigate(["products/filterByClient", this.client_id]);
       });
     }

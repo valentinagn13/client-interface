@@ -34,7 +34,8 @@
                 <label>Nombre</label>
               </div>
               <div class="col-8">
-                <input type="text" class="form-control" formControlName="name" [(ngModel)]="products.name">
+                <input type="text" class="form-control" formControlName="name" [(ngModel)]="products.name"
+                placeholder="Nombre del producto">
                 <div *ngIf="
                     getTheFormGroup.name.errors &&
                     (getTheFormGroup.name.dirty ||
@@ -59,7 +60,8 @@
               </div>
               <div class="col-8">
                 <input type="text" class="form-control" formControlName="description"
-                  [(ngModel)]="products.description">
+                  [(ngModel)]="products.description"
+                  placeholder="Ingrese una descripcion del producto">
                 <div *ngIf="
                     getTheFormGroup.description.errors &&
                     (getTheFormGroup.description.dirty ||

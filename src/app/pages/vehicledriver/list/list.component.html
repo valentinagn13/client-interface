@@ -10,12 +10,43 @@
                     <div class="col-3">
                     </div>
                 </div>
-                <h3 class="mb=0">Vehiculo Conductor</h3>
+                <h3 class="mb-0" *ngIf="driver_id && !vehicle_id">
+                    Conductor del Vehiculo-Conductor_id #{{ driver_id }}
+                  </h3>
+                  <h3 class="mb-0" *ngIf="!driver_id && vehicle_id">
+                    Conductor del Vehiculo-Vehiculo_id #{{ vehicle_id }}
+                  </h3>
+                  <h3 class="mb-0" *ngIf="!driver_id && !vehicle_id">
+                    Conductor del Vehiculo
+                  </h3>
             </div>
             <div class="col-6">
             </div>
             <div class="col-3">
-                <button type="button" class="btn btn-success" (click) ="create()">Crear</button>
+                <button
+                *ngIf="!driver_id && !vehicle_id"
+                type="button"
+                class="btn btn-success"
+                (click)="create()"
+              >
+                Crear
+              </button>
+              <button
+                *ngIf="driver_id && !vehicle_id"
+                type="button"
+                class="btn btn-success"
+                (click)="createForDriver()"
+              >
+                Crear Conductor del Vehiculo para Dueño
+              </button>
+              <button
+                *ngIf="vehicle_id && !driver_id"
+                type="button"
+                class="btn btn-success"
+                (click)="createForVehicle()"
+              >
+                Crear Conductor del Vehiculo para Vehiculo
+              </button>
             </div>
             <div class="card-body">
                 <table class="table">

@@ -9,6 +9,8 @@
           <h1 *ngIf="mode == 1" class="mb-0">Visualizar</h1>
           <h1 *ngIf="mode == 2" class="mb-0">Crear</h1>
           <h1 *ngIf="mode == 3" class="mb-0">Actualizar</h1>
+          <h1 *ngIf="mode == 4" class="mb-0">Crear Conductor Vehiculo Conductor_id #{{vehicledriver.driver_id}}</h1>
+          <h1 *ngIf="mode == 5" class="mb-0">Crear Conductor Vehiculo vehiculo_id #{{vehicledriver.vehicle_id}}</h1>
         </div>
         <form class="form" [formGroup]="theFormGroup">
           <div class="card-body">
@@ -111,6 +113,18 @@
                 >
                   Actualizar
                 </button>
+                <button 
+                *ngIf="mode == 4" 
+                class="btn btn-success btn-block" 
+                (click)="createForDriver()">
+                Crear para Conductor
+              </button>
+              <button 
+              *ngIf="mode == 5" 
+              class="btn btn-success btn-block" 
+              (click)="createForVehicle()">
+              Crear para Vehículo
+            </button>
               </div>
             </div>
           </div>

@@ -33,6 +33,7 @@
                   [(ngModel)]="service.name"
                   [disabled]="mode == 1"
                   formControlName="name"
+                  placeholder="Ingrese el nombre del servicio"
                 />
                 <div
                   *ngIf="
@@ -62,6 +63,7 @@
                   [(ngModel)]="service.address"
                   [disabled]="mode == 1"
                   formControlName="address"
+                  placeholder="Ingrese la dirección del servicio"
                 />
                 <div
                   *ngIf="
@@ -91,6 +93,7 @@
                   [(ngModel)]="service.description"
                   [disabled]="mode == 1"
                   formControlName="description"
+                  placeholder="Ingrese la descripción del servicio"
                 />
                 <div
                   *ngIf="
@@ -138,6 +141,19 @@
               </div>
             </div>
             <br />
+            <div class="row">
+              <div class="col-4">
+                <label for="idAdministrator">Administrator</label>
+              </div>
+              <div class="col-8">
+                <select id="administrator" class="form-control" formControlName="administrator" [(ngModel)]="service.administrator.id">
+                  <option *ngFor="let option of administrator" [value]="option.id">hola: {{option.user.name}} id-{{option.id}}</option>
+                </select>
+              </div>
+            </div>
+
+
+
             <div class="row">
               <div class="col-4"></div>
               <div class="col-8">

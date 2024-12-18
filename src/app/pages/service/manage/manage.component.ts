@@ -2,7 +2,10 @@ import { DatePipe } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
+import { log } from "node:console";
+import { Administrator } from "src/app/models/administrator.model";
 import { Service } from "src/app/models/service.model";
+import { AdministratorService } from "src/app/services/administrator.service";
 import { ServiceService } from "src/app/services/service.service";
 import Swal from "sweetalert2";
 
@@ -17,13 +20,16 @@ export class ManageComponent implements OnInit {
   mode: number;
   theFormGroup: FormGroup;
   trySend: boolean;
+  administrator:Administrator[]
 
   constructor(
     private serviceService: ServiceService,
     private activateRoute: ActivatedRoute, //analizar la url para saber que quiere hacer el user: crear visualizar
     private router: Router, //como me muevo yo en la pagina,gestiona los archivos de .routing para poder navegar : MOVERSE DE UNA COMPONENTE A OTRA
-    private theFormBuilder: FormBuilder //* PARA ESTABLECER LAS REGLAS
+    private theFormBuilder: FormBuilder, //* PARA ESTABLECER LAS REGLAS
+    private administratorService: AdministratorService
   ) {
+    this.administrator= []
     this.mode = 1;
     this.trySend = false;
     this.configFormGroup(); //* CREAR AL POLICIA
@@ -34,10 +40,22 @@ export class ManageComponent implements OnInit {
       address: "",
       description: "",
       date: new Date(),
+      administrator:{
+        id: null
+      }
     };
   }
 
+  AdministratorList(){
+    this.administratorService.list().subscribe((data)=>{
+      this.administrator= data;
+      console.log(this.administrator);
+      
+    })
+  }
   ngOnInit(): void {
+    this.AdministratorList()
+    this.configFormGroup
     const currentUrl = this.activateRoute.snapshot.url.join("/");
     if (currentUrl.includes("view")) {
       this.mode = 1;
@@ -62,6 +80,7 @@ export class ManageComponent implements OnInit {
       address: ["", [Validators.required]],
       description: ["", [Validators.required]],
       date: ["", [Validators.required]],
+      administrator: [null, [Validators.required]],
     });
   }
   get getTheFormGroup() {
@@ -107,6 +126,11 @@ export class ManageComponent implements OnInit {
       const datePipe = new DatePipe("en-US");
       const formattedtDate = datePipe.transform(data.date, "yyyy-MM-dd");
       this.service = data;
+      if(this.service.administrator==null){
+        this.service.administrator={
+          id:null
+        }
+      }
       console.log(JSON.stringify(this.service));
       console.log(this.service);
       this.theFormGroup.patchValue({
@@ -114,6 +138,7 @@ export class ManageComponent implements OnInit {
         address: this.service.address,
         description: this.service.description,
         date: formattedtDate,
+        idAdministrator: this.service.administrator.id
       });
       console.log(JSON.stringify(this.service));
       console.log(this.service);

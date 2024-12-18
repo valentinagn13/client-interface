@@ -28,7 +28,8 @@
                                 <label>Monto</label>
                             </div>
                             <div class="col-8">
-                                <input type="number" class="form-control" [(ngModel)]="quotas.amount" formControlName="amount"> 
+                                <input type="number" class="form-control" [(ngModel)]="quotas.amount" formControlName="amount"
+                                placeholder="Ingrese el monto de la cuota"> 
 
                                 <div *ngIf="
                                 getTheFormGroup.amount.errors &&
@@ -53,7 +54,8 @@
                             </div>
                             <div class="col-8">
                                 <input type="number" class="form-control" [(ngModel)]="quotas.interest_rate"
-                                formControlName="interest_rate"> 
+                                formControlName="interest_rate"
+                                placeholder="Ingrese el interes de la cuota"> 
                                 <div *ngIf="
                                 getTheFormGroup.interest_rate.errors &&
                                 (getTheFormGroup.interest_rate.dirty ||

@@ -39,4 +39,23 @@ export class VehicleownerService {
    update(Vehicleowner: Vehicleowner): Observable<Vehicleowner> {
      return this.http.put<Vehicleowner>(`${environment.url_ms_business}/vehicleOwners/${Vehicleowner.id}`, Vehicleowner);
    }
+     listByOwner(owner_id: number): Observable<Vehicleowner[]> {
+         return this.http.get<Vehicleowner[]>(`${
+           environment.url_ms_business
+         }/vehicleOwners?owner_id=${owner_id}`);
+         
+       }
+       createForOwner(owner_id: number, operation: Vehicleowner): Observable<Vehicleowner> {
+         return this.http.post<Vehicleowner>(`${environment.url_ms_business}/vehicleOwners/owner/${owner_id}`, operation);
+       }
+     
+       listByVehicle(vehicle_id: number): Observable<Vehicleowner[]> {
+         return this.http.get<Vehicleowner[]>(`${
+           environment.url_ms_business
+         }/vehicleOwners?vehicle_id=${vehicle_id}`);
+         
+       }
+       createForVehicle(vehicle_id: number, vehicleOwners: Vehicleowner): Observable<Vehicleowner> {
+         return this.http.post<Vehicleowner>(`${environment.url_ms_business}/vehicleOwners/vehicle/${vehicle_id}`, vehicleOwners);
+       }
 }

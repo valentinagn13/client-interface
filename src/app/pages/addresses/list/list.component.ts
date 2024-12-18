@@ -68,5 +68,8 @@ export class ListComponent implements OnInit {
       }
     });
   }
+  showAddreRouteOrderd(id: number) {
+    this.router.navigate(["addreRouteOrders/filterByAddress/" + id]);
+  }
 
 }

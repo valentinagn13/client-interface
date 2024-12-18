@@ -61,4 +61,13 @@ export class ListComponent implements OnInit {
       }
     });
   }
+  showVehicleDriver(id: number) {
+    console.log("HOLA DESDE VEHICLEDRIVER");
+    this.router.navigate(["vehicleDriver/filterByDriver/" + id]);
+  }
+
+  showExpense(id: number) {
+    this.router.navigate(["expense/filterByDriver/" + id]);
+  }
+
 }

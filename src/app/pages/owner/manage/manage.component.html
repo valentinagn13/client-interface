@@ -28,7 +28,8 @@
                                 <label>Usuario_Id</label>
                             </div>
                             <div class="col-8">
-                                <input type="text" class="form-control" [(ngModel)]="owners.user_id" formControlName="user_id">
+                                <input type="text" class="form-control" [(ngModel)]="owners.user_id" formControlName="user_id"
+                                placeholder="Ingrese el Usuario_Id">
                                 
                                 <div *ngIf="
                                 getTheFormGroup.user_id.errors &&
@@ -49,7 +50,8 @@
                             </div>
                             <div class="col-8">
                                 <input type="number" class="form-control" [(ngModel)]="owners.phone_number" 
-                                formControlName="phone_number"> 
+                                formControlName="phone_number"
+                                placeholder="Ingrese el Telefono"> 
                                 <div *ngIf="
                                 getTheFormGroup.phone_number.errors &&
                                 (getTheFormGroup.phone_number.dirty ||

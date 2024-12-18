@@ -38,4 +38,24 @@ export class AddrerouteorderService {
    update(Addrerouteorder: Addrerouteorder): Observable<Addrerouteorder> {
      return this.http.put<Addrerouteorder>(`${environment.url_ms_business}/addreRouteOrders/${Addrerouteorder.id}`, Addrerouteorder);
    }
+
+   listByRoute(route_id: number): Observable<Addrerouteorder[]> {
+         return this.http.get<Addrerouteorder[]>(`${
+           environment.url_ms_business
+         }/addreRouteOrders?route_id=${route_id}`);
+         
+       }
+       createForRoute(route_id: number, addreRouteOrders: Addrerouteorder): Observable<Addrerouteorder> {
+         return this.http.post<Addrerouteorder>(`${environment.url_ms_business}/addreRouteOrders/route/${route_id}`, addreRouteOrders);
+       }
+     
+       listByAddress(address_id: number): Observable<Addrerouteorder[]> {
+         return this.http.get<Addrerouteorder[]>(`${
+           environment.url_ms_business
+         }/addreRouteOrders?address_id=${address_id}`);
+         
+       }
+       createForAddress(address_id: number, addreRouteOrders: Addrerouteorder): Observable<Addrerouteorder> {
+         return this.http.post<Addrerouteorder>(`${environment.url_ms_business}/addreRouteOrders/address/${address_id}`, addreRouteOrders);
+       }
 }
