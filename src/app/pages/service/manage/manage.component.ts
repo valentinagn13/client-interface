@@ -63,6 +63,7 @@ export class ManageComponent implements OnInit {
       this.theFormGroup.get("address").disable();
       this.theFormGroup.get("description").disable();
       this.theFormGroup.get("date").disable();
+      this.theFormGroup.get("administrator").disable();
     } else if (currentUrl.includes("create")) {
       this.mode = 2;
     } else if (currentUrl.includes("update")) {

@@ -86,7 +86,19 @@
                                             </div>  
                             </div>
                         </div>                        
-                        <br>               
+                        <br>  
+                        
+                        <div class="row">
+                            <div class="col-4">
+                              <label for="batch">Lote</label>
+                            </div>
+                            <div class="col-8">
+                              <select id="batch" class="form-control" formControlName="batch" [(ngModel)]="AddreRouteOrder.batch.id">
+                                <option *ngFor="let option of batch" [value]="option.id">peso: {{option.weight.name}} ruta_id-{{option.route_id}}</option>
+                              </select>
+                            </div>
+                          </div>
+
                         <div class="row">
                             <div class="col-4"></div>
                             <div class="col-8">

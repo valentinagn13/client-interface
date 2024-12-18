@@ -2,7 +2,9 @@ import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Addrerouteorder } from "src/app/models/addrerouteorder.model";
+import { Batch } from "src/app/models/batch.model";
 import { AddrerouteorderService } from "src/app/services/addrerouteorder.service";
+import { BatchService } from "src/app/services/batch.service";
 import Swal from "sweetalert2";
 
 @Component({
@@ -15,21 +17,38 @@ export class ManageComponent implements OnInit {
   AddreRouteOrder: Addrerouteorder;
   theFormGroup: FormGroup;
   trySend: boolean;
+  batch:Batch[]
   route_id: number;
   address_id: number;
+ 
 
   constructor(
     private activateRoute: ActivatedRoute,
     private AddreRouteOrderService: AddrerouteorderService,
     private router: Router,
-    private theFormBuilder: FormBuilder
+    private theFormBuilder: FormBuilder,
+    private batchService: BatchService  
   ) {
+    this.batch = []
     this.mode = 1;
-    this.AddreRouteOrder = { id: 0, address_id: 0, route_id: 0, order_by: 0 };
-    this.trySend = false;
+    this.AddreRouteOrder = { id: 0, address_id: 0, route_id: 0, order_by: 0,batch:{
+      id:null
+    }
+    
   }
+  this.trySend = false;
+}
+
+BatchList(){
+  this.batchService.list().subscribe((data)=>{
+    this.batch= data;
+    console.log(this.batch);
+    
+  })
+}
 
   ngOnInit(): void {
+    this.BatchList()
     this.configFormGroup();
     const currentUrl = this.activateRoute.snapshot.url.join("/");
     if (currentUrl.includes("view")) {
@@ -37,6 +56,7 @@ export class ManageComponent implements OnInit {
       this.theFormGroup.get("address_id").disable();
       this.theFormGroup.get("route_id").disable();
       this.theFormGroup.get("order_by").disable();
+      this.theFormGroup.get("batch").disable();
       this.mode = 1;
     } else if (
       currentUrl.includes("create") &&
@@ -150,11 +170,17 @@ export class ManageComponent implements OnInit {
   getAddreRouteOrder(id: number) {
     this.AddreRouteOrderService.view(id).subscribe((data) => {
       this.AddreRouteOrder = data;
+      if(this.AddreRouteOrder.batch==null){
+        this.AddreRouteOrder.batch={
+          id:null
+        }
+      }
       this.theFormGroup.patchValue({
         id: this.AddreRouteOrder.id,
         address_id: this.AddreRouteOrder.address_id,
         route_id: this.AddreRouteOrder.route_id,
-        order_by: this.AddreRouteOrder.order_by
+        order_by: this.AddreRouteOrder.order_by,
+        batch: this.AddreRouteOrder.batch.id
       });
     });
   }
@@ -176,7 +202,8 @@ export class ManageComponent implements OnInit {
           Validators.required,
           Validators.pattern("^[0-9]+$")
         ]
-      ]
+      ],
+      batch: [null, [Validators.required]],
     });
   }
 
