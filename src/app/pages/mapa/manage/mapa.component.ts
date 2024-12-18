@@ -82,14 +82,14 @@ export class MapaComponent implements OnInit {
     }).addTo(this.map);
 
     const startIcon = L.icon({
-      iconUrl: "assets/img/icons/punto-de-alfiler.png",
+      iconUrl: "assets/img/icons/alfiler.png",
       iconSize: [32, 32],
       iconAnchor: [16, 32],
       popupAnchor: [0, -32],
     });
 
     const endIcon = L.icon({
-      iconUrl: "assets/img/icons/punto-de-alfiler.png",
+      iconUrl: "assets/img/icons/alfiler.png",
       iconSize: [32, 32],
       iconAnchor: [16, 32],
       popupAnchor: [0, -32],
@@ -107,7 +107,6 @@ export class MapaComponent implements OnInit {
     this.movingMarker = L.marker(this.coordInicial).addTo(this.map);
     this.movingMarker.bindPopup("Haciendo la ruta").openPopup();
   }
-
   private moverMarcadorProgresivamente(
     coordInicial: [number, number],
     coordFinal: [number, number],

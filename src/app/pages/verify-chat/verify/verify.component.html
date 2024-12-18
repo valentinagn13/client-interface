@@ -1,0 +1,20 @@
+<div class="header bg-gradient-danger pb-4 pt-5 pt-md-6">
+  <h2 class="text-white font-bold text-center lead">Bienvenido al chat</h2>
+</div>
+<div class="pqr-section text-center">
+  <div class="container-fluid">
+    <p class="section-description">Ingresa el correo del usuario para iniciar un chat</p>
+    <form class="pqr-form" [formGroup]="theFormGroup">
+      <div class="form-group">
+        <input type="email" class="form-control" formControlName="email" placeholder="Ingresa el correo electronico">
+        <div *ngIf="getTheFormGroup.email.errors && (getTheFormGroup.email.dirty ||
+                          getTheFormGroup.email.touched || trySend)">
+          <strong *ngIf="getTheFormGroup.email.errors.required" class="msnError">
+            El correo electronico es requerido
+          </strong>
+        </div>
+      </div>
+      <button class="btn btn-primary" (click)="verify()">Enviar</button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,255 @@
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8"></div>
+
+<!-- Page content -->
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header border-0">
+          <h1 class="mb-0">Formulario de Pago</h1>
+        </div>
+        <form class="form" #paymentForm="ngForm">
+          <div class="card-body">
+            <!-- Número de Cuota -->
+            <div class="row">
+              <div class="col-4">
+                <label>ID de Cuota</label>
+              </div>
+              <div class="col-8">
+                <input
+                  type="number"
+                  class="form-control"
+                  [(ngModel)]="payment.quota_id"
+                  name="quota_id"
+                  placeholder="ID de cuota"
+                  readonly
+                />
+              </div>
+            </div>
+            <br />
+
+            <!-- Número de Tarjeta -->
+            <div class="row">
+              <div class="col-4">
+                <label>Número de Tarjeta</label>
+              </div>
+              <div class="col-8">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="payment.card_number"
+                  name="card_number"
+                  placeholder="Ingrese número de tarjeta"
+                />
+              </div>
+            </div>
+            <br />
+
+            <!-- Fecha de Expiración -->
+            <div class="row">
+              <div class="col-4">
+                <label>Fecha de Expiración</label>
+              </div>
+              <div class="col-4">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="payment.exp_month"
+                  name="exp_month"
+                  placeholder="MM"
+                />
+              </div>
+              <div class="col-4">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="payment.exp_year"
+                  name="exp_year"
+                  placeholder="YYYY"
+                />
+              </div>
+            </div>
+            <br />
+
+            <!-- CVC -->
+            <div class="row">
+              <div class="col-4">
+                <label>CVC</label>
+              </div>
+              <div class="col-8">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="payment.cvc"
+                  name="cvc"
+                  placeholder="Ingrese CVC"
+                />
+              </div>
+            </div>
+            <br />
+
+            <!-- Nombre del Titular -->
+            <div class="row">
+              <div class="col-4">
+                <label>Nombre</label>
+              </div>
+              <div class="col-8">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="payment.name"
+                  name="name"
+                  placeholder="Nombre del titular"
+                />
+              </div>
+            </div>
+            <br />
+
+            <!-- Apellido -->
+            <div class="row">
+              <div class="col-4">
+                <label>Apellido</label>
+              </div>
+              <div class="col-8">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="payment.last_name"
+                  name="last_name"
+                  placeholder="Apellido del titular"
+                />
+              </div>
+            </div>
+            <br />
+
+            <!-- Documento -->
+            <div class="row">
+              <div class="col-4">
+                <label>Número de Documento</label>
+              </div>
+              <div class="col-8">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="payment.doc_number"
+                  name="doc_number"
+                  placeholder="Ingrese número de documento"
+                />
+              </div>
+            </div>
+            <br />
+
+            <!-- Ciudad -->
+            <div class="row">
+              <div class="col-4">
+                <label>Ciudad</label>
+              </div>
+              <div class="col-8">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="payment.city"
+                  name="city"
+                  placeholder="Ingrese ciudad"
+                />
+              </div>
+            </div>
+            <br />
+
+            <!-- Dirección -->
+            <div class="row">
+              <div class="col-4">
+                <label>Dirección</label>
+              </div>
+              <div class="col-8">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="payment.address"
+                  name="address"
+                  placeholder="Ingrese dirección"
+                />
+              </div>
+            </div>
+            <br />
+
+            <!-- Teléfono -->
+            <div class="row">
+              <div class="col-4">
+                <label>Teléfono</label>
+              </div>
+              <div class="col-8">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="payment.phone"
+                  name="phone"
+                  placeholder="Ingrese número de teléfono"
+                />
+              </div>
+            </div>
+            <br />
+
+            <!-- Celular -->
+            <div class="row">
+              <div class="col-4">
+                <label>Celular</label>
+              </div>
+              <div class="col-8">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="payment.cell_phone"
+                  name="cell_phone"
+                  placeholder="Ingrese número de celular"
+                />
+              </div>
+            </div>
+            <br />
+
+            <!-- Email -->
+            <div class="row">
+              <div class="col-4">
+                <label>Email</label>
+              </div>
+              <div class="col-8">
+                <input
+                  type="email"
+                  class="form-control"
+                  [(ngModel)]="payment.email"
+                  name="email"
+                  placeholder="Ingrese su correo electrónico"
+                />
+              </div>
+            </div>
+            <br />
+
+            <!-- Botón para Enviar -->
+            <div class="row">
+              <div class="col-4"></div>
+              <div class="col-8">
+                <button
+                  type="button"
+                  class="btn btn-success btn-block"
+                  (click)="create()"
+                  [disabled]="loading"
+                >
+                  <span *ngIf="!loading">Realizar Pago</span>
+                  <span *ngIf="loading">Procesando...</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Spinner de carga -->
+            <div *ngIf="loading" class="text-center mt-3">
+              <div class="spinner-border text-primary" role="status">
+                <span class="sr-only">Cargando...</span>
+              </div>
+              <p>Procesando pago, por favor espere...</p>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

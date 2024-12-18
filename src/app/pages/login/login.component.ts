@@ -11,6 +11,9 @@ import Swal from "sweetalert2";
 })
 export class LoginComponent implements OnInit, OnDestroy {
   user: User;
+  captchaToken: string | null = null; // Token del reCAPTCHA
+  captchaResolved: boolean = false; // Indica si el reCAPTCHA fue resuelto
+
   constructor(
     // para poder saltar en paginas uso router no href
     private securityService: SecurityService,
@@ -18,7 +21,20 @@ export class LoginComponent implements OnInit, OnDestroy {
   ) {
     this.user = { email: "", password: "" };
   }
+  // Método que se ejecuta cuando se resuelve el reCAPTCHA
+  onCaptchaResolved(token: string | null) {
+    this.captchaResolved = !!token;
+    this.captchaToken = token;
+  }
   login() {
+    if (!this.captchaResolved || !this.captchaToken) {
+      Swal.fire("Error", "Por favor, completa el reCAPTCHA.", "error");
+      return;
+    }
+
+    // Agregar el token al objeto user
+    this.user.captchaToken = this.captchaToken;
+
     this.securityService.login(this.user).subscribe({
       // para la respuesta 200
       next: (data) => {

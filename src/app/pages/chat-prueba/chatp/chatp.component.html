@@ -1,0 +1,46 @@
+<div class=" bg-gradient-danger pb-8 pt-5 pt-md-8"></div>
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <section>
+          <div class="container py-5">
+            <div class="row d-flex justify-content-center">
+              <div class="col-md-10 col-lg-8 col-xl-6">
+                <div class="card" id="chat2">
+                  <div class="card-header d-flex justify-content-between align-items-center p-3 bg-primary">
+                    <h3 class="mb-0 text-white">Chat</h3>
+                  </div>
+                  <div #scrollMe class="card-body" data-mdb-perfect-scrollbar-init
+                    style="position: relative; height: 400px; overflow-y: auto;">
+                    <div *ngFor="let message of messages" class="d-flex"
+                      [ngClass]="{'justify-content-end': message.user_id === theUser._id, 'justify-content-start': message.user_id !== theUser._id}">
+                      <div style="max-width: 70%;">
+                        <p [ngClass]="{
+        'small p-2 ms-3 mb-1 rounded border border-secondary bg-body-tertiary': message.user_id !== theUser._id,
+        'small p-2 me-3 mb-1 text-white rounded border border-primary bg-primary': message.user_id === theUser._id
+      }">
+                          {{ message.content }}
+                        </p>
+                        <p class="small ms-3 mb-3 rounded-3 text-muted">{{ message.timestamp }}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-footer text-muted d-flex justify-content-start align-items-center p-3">
+                    <!-- <img  [src]="urlPhoto"
+                      alt="avatar 3" style="width: 38px; height: 40px; border-radius: 50%;"> -->
+                    <input [(ngModel)]="newMessage" type="text" class="form-control form-control-lg"
+                      id="exampleFormControlInput1" placeholder="Type message">
+                    <a class="mr-3 text-muted" (click)="deleteMessages()"><i class="fas fa-trash"></i></a>
+                    <a class="mr-3 text-muted"><i class="fas fa-smile"></i></a>
+                    <a class="ms-3" (click)="sendMessage()"><i class="fas fa-paper-plane"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>

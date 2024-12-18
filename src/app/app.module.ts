@@ -10,6 +10,7 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { AppRoutingModule } from "./app.routing";
 import { ComponentsModule } from "./components/components.module";
 import { MapaComponent } from "./pages/mapa/manage/mapa.component";
+import { PaymentComponent } from './payment/payment.component';
 
 @NgModule({
   imports: [
@@ -26,6 +27,7 @@ import { MapaComponent } from "./pages/mapa/manage/mapa.component";
     AdminLayoutComponent,
     AuthLayoutComponent,
     MapaComponent,
+    PaymentComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],
