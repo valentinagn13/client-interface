@@ -190,8 +190,8 @@
               <div class="col-8">
                 <input
                   type="number"
+                  formControlName="latitud_inicial"
                   class="form-control"
-                  [(ngModel)]="vehicles.latitud_inicial"
                 />
               </div>
             </div>
@@ -204,8 +204,8 @@
               <div class="col-8">
                 <input
                   type="number"
+                  formControlName="longitud_inicial"
                   class="form-control"
-                  [(ngModel)]="vehicles.longitud_inicial"
                 />
               </div>
             </div>
@@ -217,8 +217,8 @@
               <div class="col-8">
                 <input
                   type="number"
+                  formControlName="latitud_final"
                   class="form-control"
-                  [(ngModel)]="vehicles.latitud_final"
                 />
               </div>
             </div>
@@ -228,10 +228,15 @@
                 <label>Longitud final:</label>
               </div>
               <div class="col-8">
-                <input
+                <!-- <input
                   type="number"
                   class="form-control"
                   [(ngModel)]="vehicles.longitud_final"
+                /> -->
+                <input
+                  type="number"
+                  formControlName="longitud_final"
+                  class="form-control"
                 />
               </div>
             </div>
