@@ -46,4 +46,23 @@ export class VehicledriverService {
       VehicleDriver
     );
   }
+  listByDriver(owner_id: number): Observable<Vehicledriver[]> {
+           return this.http.get<Vehicledriver[]>(`${
+             environment.url_ms_business
+           }/vehicleDrivers?driver_id=${owner_id}`);
+           
+         }
+         createForDriver(owner_id: number, operation: Vehicledriver): Observable<Vehicledriver> {
+           return this.http.post<Vehicledriver>(`${environment.url_ms_business}/vehicleDrivers/driver/${owner_id}`, operation);
+         }
+       
+         listByVehicle(vehicle_id: number): Observable<Vehicledriver[]> {
+           return this.http.get<Vehicledriver[]>(`${
+             environment.url_ms_business
+           }/vehicleDrivers?vehicle_id=${vehicle_id}`);
+           
+         }
+         createForVehicle(vehicle_id: number, vehicleOwners: Vehicledriver): Observable<Vehicledriver> {
+           return this.http.post<Vehicledriver>(`${environment.url_ms_business}/vehicleDrivers/vehicle/${vehicle_id}`, vehicleOwners);
+         }
 }

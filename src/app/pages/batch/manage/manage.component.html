@@ -29,7 +29,8 @@
               <label>Peso:</label>
             </div>
             <div class="col-8">
-              <input type="number" class="form-control" [(ngModel)]="batch.weight" formControlName="weight" >
+              <input type="number" 
+              class="form-control" [(ngModel)]="batch.weight" formControlName="weight" placeholder="Ingrese el Peso">
               <div
               *ngIf="
                 getTheFormGroup.weight.errors &&

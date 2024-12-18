@@ -68,4 +68,7 @@ export class ListComponent implements OnInit {
   showProducts(id: number){
     this.router.navigate(["products/filterByClient/" + id]);
   }
+  showContract(id: number){
+    this.router.navigate(["contracts/filterByClient/" + id]);
+  }
 }

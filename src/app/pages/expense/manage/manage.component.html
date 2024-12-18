@@ -9,6 +9,9 @@
           <h1 *ngIf="mode == 1" class="mb-0">Visualizar</h1>
           <h1 *ngIf="mode == 2" class="mb-0">Crear</h1>
           <h1 *ngIf="mode == 3" class="mb-0">Actualizar</h1>
+          <h1 *ngIf="mode == 4" class="mb-0">Crear Gasto Conductor_Id #{{expense.driver_id}}</h1>
+          <h1 *ngIf="mode == 5" class="mb-0">Crear gasto servicio_id #{{expense.service_id}}</h1>
+          <h1 *ngIf="mode == 6" class="mb-0">Crear gasto Dueño_id #{{expense.owner_id}}</h1>
         </div>
         <form class="form" [formGroup]="theFormGroup">
           <div class="card-body">
@@ -33,6 +36,7 @@
                   [(ngModel)]="expense.amount"
                   [disabled]="mode == 1"
                   formControlName="amount"
+                  placeholder="Ingrese el monto del gasto"
                 />
                 <div
                   *ngIf="
@@ -182,6 +186,24 @@
                 >
                   Actualizar
                 </button>
+                <button 
+                *ngIf="mode == 4" 
+                class="btn btn-success btn-block" 
+                (click)="createForDriver()">
+                Crear para Conductor
+              </button>
+              <button 
+              *ngIf="mode == 5" 
+              class="btn btn-success btn-block" 
+              (click)="createForService()">
+              Crear para Servicio
+            </button>
+            <button 
+            *ngIf="mode == 6" 
+            class="btn btn-success btn-block" 
+            (click)="createForOwner()">
+            Crear para Conductor
+          </button>
               </div>
             </div>
           </div>

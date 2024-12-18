@@ -44,4 +44,35 @@ export class ExpenseService {
       Expense
     );
   }
+
+  listByDriver(driver_id: number): Observable<Expense[]> {
+        return this.http.get<Expense[]>(`${
+          environment.url_ms_business
+        }/expenses?driver_id=${driver_id}`);
+        
+      }
+      createForDriver(driver_id: number, expense: Expense): Observable<Expense> {
+        return this.http.post<Expense>(`${environment.url_ms_business}/expenses/driver/${driver_id}`, expense);
+      }
+    
+      listByService(service_id: number): Observable<Expense[]> {
+        return this.http.get<Expense[]>(`${
+          environment.url_ms_business
+        }/expenses?service_id=${service_id}`);
+        
+      }
+      createForService(service_id: number, operation: Expense): Observable<Expense> {
+        return this.http.post<Expense>(`${environment.url_ms_business}/expenses/service/${service_id}`, operation);
+      }
+
+      listByOwner(owner_id: number): Observable<Expense[]> {
+        return this.http.get<Expense[]>(`${
+          environment.url_ms_business
+        }/expenses?owner_id=${owner_id}`);
+        
+      }
+      createForOwner(owner_id: number, expense: Expense): Observable<Expense> {
+        return this.http.post<Expense>(`${environment.url_ms_business}/expenses/owner/${owner_id}`, expense);
+      }
+      
 }

@@ -16,6 +16,9 @@ export class ManageComponent implements OnInit {
   routes: Routes;
   theFormGroup: FormGroup;
   trySend: boolean;
+  contract_id:number
+  vehicle_id:number
+
 
   constructor(
     private activateRoute: ActivatedRoute,
@@ -51,9 +54,40 @@ export class ManageComponent implements OnInit {
       this.theFormGroup.get("vehicle_id").disable();
 
 
-    } else if (currentUrl.includes("create")) {
+    } else if (currentUrl.includes("create")&& !currentUrl.includes("createForContract") && !currentUrl.includes("createForVehicle")) {
       this.mode = 2;
       this.theFormGroup.get("id").disable();
+      this.theFormGroup.get("contract_id").enable();
+      this.theFormGroup.get("vehicle_id").enable();
+
+    } else if (currentUrl.includes("createForContract")) {
+      // Modo crear para Municipio
+      this.mode = 4;
+      this.theFormGroup.get("id").disable();
+      this.contract_id = this.activateRoute.snapshot.params.contract_id;
+      
+      if (this.contract_id) {
+        this.routes.contract_id = this.contract_id;
+        this.theFormGroup.patchValue({ contract_id: this.contract_id });
+        // Deshabilitar municipality_id solo en modo createForMunicipality
+        this.theFormGroup.get("contract_id").disable();
+      }
+    }
+      else if(currentUrl.includes("createForVehicle")) {
+        // Modo crear para Vehiculo
+        this.mode = 5;
+        this.theFormGroup.get("id").disable();
+        this.vehicle_id = this.activateRoute.snapshot.params.vehicle_id;
+        console.log("vehicle_id:", this.vehicle_id);
+        
+        if (this.vehicle_id) {
+          this.routes.vehicle_id = this.vehicle_id;
+          this.theFormGroup.patchValue({ vehicle_id: this.vehicle_id });
+          // Deshabilitar vehicle_id solo en modo createForVehicle
+          this.theFormGroup.get("vehicle_id").disable();
+        }
+      
+
     } else if (currentUrl.includes("update")) {
       this.mode = 3;
       this.theFormGroup.get("id").disable();
@@ -76,6 +110,26 @@ export class ManageComponent implements OnInit {
     });
   }
 
+ 
+   createForContract() {
+         this.routes.contract_id = this.contract_id;
+         console.log(JSON.stringify(this.routes));
+         this.routeService.createForMunicipality(this.contract_id, this.routes).subscribe((data) => {
+           Swal.fire("Creado", "Se ha creado exitosamente", "success");
+           // Redirigir a la lista de operaciones del municipio específico
+           this.router.navigate(["routes/filterByContract", this.contract_id]);
+         });
+       }
+
+       createForVehicle() {
+         this.routes.vehicle_id = this.vehicle_id;
+         console.log(JSON.stringify(this.routes));
+         this.routeService.createForVehicle(this.vehicle_id, this.routes).subscribe((data) => {
+           Swal.fire("Creado", "Se ha creado exitosamente", "success");
+           // Redirigir a la lista de operaciones del vehiculo específico
+           this.router.navigate(["routes/filterByVehicle", this.vehicle_id]);
+         });
+       }
  
   update(){
     const fechaEntrega = this.theFormGroup.get("delivery_date")?.value;

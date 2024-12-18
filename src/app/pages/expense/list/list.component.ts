@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Expense } from "src/app/models/expense.model";
 import { ExpenseService } from "src/app/services/expense.service";
 import Swal from "sweetalert2";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
   selector: "app-list",
@@ -11,12 +11,47 @@ import { Router } from "@angular/router";
 })
 export class ListComponent implements OnInit {
   expense: Expense[];
-  constructor(private expenseservice: ExpenseService, private router: Router) {
+  driver_id: number;
+  service_id: number;
+  owner_id: number;
+  constructor(private expenseservice: ExpenseService, private router: Router, private activateRoute: ActivatedRoute) {
     this.expense = [];
   }
 
   ngOnInit(): void {
-    this.list();
+    const currentUrl = this.activateRoute.snapshot.url.join('/');
+    
+    // Reiniciar conductor id y servicio_id
+    this.driver_id = null;
+    this.service_id = null;
+    this.owner_id = null;
+  
+    // Verificar si estamos filtrando por conductor
+    if (currentUrl.includes('filterByDriver')) {
+      this.driver_id = +this.activateRoute.snapshot.params['id'];
+      console.log("driver_id:", this.driver_id);
+      this.filterByDriver();
+      console.log("service_id:", this.driver_id);
+      
+
+    } 
+    // Verificar si estamos filtrando por Servicio
+    else if (currentUrl.includes('filterByService')) {
+      this.service_id = +this.activateRoute.snapshot.params['id'];
+      console.log("service_id:", this.service_id);
+      this.filterByService();
+      console.log("driver_id:", this.service_id);
+      
+    } else if(currentUrl.includes('filterByOwner')) {
+      this.owner_id = +this.activateRoute.snapshot.params['id'];
+      console.log("owner_id:", this.owner_id);
+      this.filterByOwner();
+
+    }
+    // Si no hay filtro específico, listar todos las operaciones
+    else {
+      this.list();
+    }
   }
   view(id: number) {
     console.log("aqui estoy en view");
@@ -60,5 +95,48 @@ export class ListComponent implements OnInit {
         });
       }
     });
+  }
+
+  
+  //Funcion para filtrar por conductores
+  filterByDriver(){
+    this.expenseservice.listByDriver(this.driver_id).subscribe((data) => {
+      this.expense = data;
+      console.log(this.expense);
+    });
+  }
+  //funcion para crear un gasto segun un conductor
+
+  createForDriver() {
+    this.router.navigate(["expense/createForDriver", this.driver_id]);
+    console.log("aqui estoy en createForDriver", this.driver_id);
+  }
+
+  //Funcion para filtrar por servicio
+  filterByService(){
+    this.expenseservice.listByService(this.service_id).subscribe((data) => {
+      this.expense = data;
+      console.log(this.expense);
+    });
+  }
+
+  //funcion para crear un gasto segun un servicio
+  createForService() {
+    this.router.navigate(["expense/createForService", this.service_id]);
+    console.log("aqui estoy en createForService", this.service_id);
+  }
+
+  //Funcion para filtrar por rutas
+  filterByOwner(){
+    this.expenseservice.listByOwner(this.owner_id).subscribe((data) => {
+      this.expense = data;
+      console.log(this.expense);
+    });
+  }
+  //funcion para crear un producto segun un lote
+
+  createForOwner() {
+    this.router.navigate(["expense/createForOwner", this.owner_id]);
+    console.log("aqui estoy en createForExpense", this.owner_id);
   }
 }

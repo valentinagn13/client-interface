@@ -24,6 +24,7 @@ export class ManageComponent implements OnInit {
   contracts: Contract;
   theFormGroup: FormGroup;
   trySend: boolean;
+  client_id: number;
 
   constructor(
     private contractService: ContractService,
@@ -50,9 +51,25 @@ export class ManageComponent implements OnInit {
       this.theFormGroup.get("start_date").disable();
       this.theFormGroup.get("end_date").disable();
       this.theFormGroup.get("client_id").disable();
-    } else if (currentUrl.includes("create")) {
+    } else if (
+      currentUrl.includes("create") &&
+      !currentUrl.includes("createForClient")
+    ) {
       this.mode = 2;
       this.theFormGroup.get("id").disable();
+      this.theFormGroup.get("client_id").enable();
+    } else if (currentUrl.includes("createForClient")) {
+      // Modo crear para batch
+      this.mode = 4;
+      this.theFormGroup.get("id").disable();
+      this.client_id = this.activateRoute.snapshot.params.client_id;
+
+      if (this.client_id) {
+        this.contracts.client_id = this.client_id;
+        this.theFormGroup.patchValue({ client_id: this.client_id });
+        // Deshabilitar batch_id solo en modo createForBatch
+        this.theFormGroup.get("client_id").disable();
+      }
     } else if (currentUrl.includes("update")) {
       this.mode = 3;
       this.theFormGroup.get("id").disable();
@@ -71,6 +88,17 @@ export class ManageComponent implements OnInit {
     });
   }
 
+    
+createForClient() {
+  this.contracts.client_id = this.client_id;
+  console.log(JSON.stringify(this.contracts));
+  this.contractService.createForClient(this.client_id, this.contracts).subscribe((data) => {
+    Swal.fire("Creado", "Se ha creado exitosamente", "success");
+    // Redirigir a la lista de productos del lote específico
+    this.router.navigate(["contracts/filterByClient", this.client_id]);
+  });
+}
+
   update() {
     const fechaInicio = this.theFormGroup.get("start_date")?.value;
     const fechafin = this.theFormGroup.get("end_date")?.value;
@@ -81,7 +109,7 @@ export class ManageComponent implements OnInit {
       alert("La fecha de inicio no puede ser mayor a la fecha de fin");
       return;
     }
-
+  
     this.contractService.update(this.contracts).subscribe((data) => {
       Swal.fire("Actualizado", "El contrato ha sido actualizado", "success");
       this.router.navigate(["contracts/list"]);
@@ -124,7 +152,7 @@ export class ManageComponent implements OnInit {
   get getTheFormGroup() {
     return this.theFormGroup.controls;
   }
-  
+
   validateStartDate(control: AbstractControl): ValidationErrors | null {
     const startDate = control.value;
 
