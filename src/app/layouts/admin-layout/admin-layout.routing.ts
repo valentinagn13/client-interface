@@ -75,7 +75,9 @@ export const AdminLayoutRoutes: Routes = [
       },
     ],
   },
-  { path: "dashboard", component: DashboardComponent },
+  { path: "dashboard",
+    title: "Dashboard",
+    component: DashboardComponent },
   {
     path: "departments",
     children: [
@@ -302,4 +304,11 @@ export const AdminLayoutRoutes: Routes = [
         (m) => m.VerifyChatModule,
       ),
   },
+  {
+    path:"user",
+    loadChildren: () =>
+      import("../../pages/users/users.module").then(
+        (m) => m.UsersModule,
+      ),
+  }
 ];
