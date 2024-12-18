@@ -13,6 +13,11 @@ export class SecurityService {
     this.verifyActualSession();
   }
 
+  githubLogin(): void {
+    // Redirige al endpoint del backend que inicia el proceso de autenticación con GitHub
+    window.location.href = `${environment.url_ms_security}/auth/github`;
+  }
+
   /**
    * Realiza la petición al backend con el correo y la contraseña
    * para verificar si existe o no en la plataforma

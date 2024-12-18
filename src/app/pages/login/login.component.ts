@@ -26,6 +26,11 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.captchaResolved = !!token;
     this.captchaToken = token;
   }
+
+  loginWithGithub() {
+    this.securityService.githubLogin();
+  }
+
   login() {
     if (!this.captchaResolved || !this.captchaToken) {
       Swal.fire("Error", "Por favor, completa el reCAPTCHA.", "error");
@@ -53,11 +58,6 @@ export class LoginComponent implements OnInit, OnDestroy {
       },
     });
   }
-  // login(){
-  //   this.securityService.login(this.user).subscribe(data=>{
-
-  //   })
-  // }
   ngOnInit() {}
   ngOnDestroy() {}
 }
