@@ -47,6 +47,10 @@ export class ManageComponent implements OnInit {
       this.theFormGroup.get("model").disable();
       this.theFormGroup.get("capacity").disable();
       this.theFormGroup.get("cargo_type").disable();
+      this.theFormGroup.get("latitud_inicial").disable();
+      this.theFormGroup.get("latitud_final").disable();
+      this.theFormGroup.get("longitud_inicial").disable();
+      this.theFormGroup.get("longitud_final").disable();
     } else if (currentUrl.includes("create")) {
       this.mode = 2;
       this.theFormGroup.get("id").disable();
@@ -60,15 +64,39 @@ export class ManageComponent implements OnInit {
     }
   }
 
+  // create() {
+  //   console.log(JSON.stringify(this.vehicles));
+  //   this.vehiclesService.create(this.vehicles).subscribe((data) => {
+  //     Swal.fire("Creado", " se ha creado exitosa mente", "success"); //tirulo a la alerta
+  //     this.router.navigate(["vehicles/list"]);
+  //   });
+  // }
   create() {
-    console.log(JSON.stringify(this.vehicles));
-    this.vehiclesService.create(this.vehicles).subscribe((data) => {
-      Swal.fire("Creado", " se ha creado exitosa mente", "success"); //tirulo a la alerta
-      this.router.navigate(["vehicles/list"]);
-    });
+    if (this.theFormGroup.invalid) {
+      this.trySend = true;
+      Swal.fire(
+        "Error en el formulario",
+        "Ingrese correctamente los datos solicitados"
+      );
+      return;
+    }
+    if (this.theFormGroup.valid) {
+      this.vehiclesService.create(this.theFormGroup.value).subscribe((data) => {
+        Swal.fire("Creado", "Se ha creado exitosamente", "success");
+        this.router.navigate(["vehicles/list"]);
+      });
+    }
   }
 
   update() {
+    if (this.theFormGroup.invalid) {
+      this.trySend = true;
+      Swal.fire(
+        "Error en el formulario",
+        "Ingrese correctamente los datos solicitados"
+      );
+      return;
+    }
     console.log(JSON.stringify(this.vehicles));
     this.vehiclesService.update(this.vehicles).subscribe((data) => {
       Swal.fire("Actualizado", " se ha actualizado exitosa mente", "success"); //titulo a la alerta
@@ -88,6 +116,17 @@ export class ManageComponent implements OnInit {
     this.vehiclesService.view(id).subscribe((data) => {
       this.vehicles = data;
       console.log(JSON.stringify(this.vehicles));
+      this.theFormGroup.patchValue({
+        // id: this.vehicles.id,
+        license_plate: this.vehicles.license_plate,
+        model: this.vehicles.model,
+        capacity: this.vehicles.capacity,
+
+        latitud_inicial: this.vehicles.latitud_inicial,
+        latitud_final: this.vehicles.latitud_final,
+        longitud_inicial: this.vehicles.longitud_inicial,
+        longitud_final: this.vehicles.longitud_final,
+      });
     });
   }
 
@@ -123,6 +162,10 @@ export class ManageComponent implements OnInit {
           Validators.pattern("^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\\s-]+$"),
         ],
       ],
+      latitud_inicial: [this.vehicles.latitud_inicial, Validators.required],
+      latitud_final: [this.vehicles.latitud_final, Validators.required],
+      longitud_inicial: [this.vehicles.longitud_inicial, Validators.required],
+      longitud_final: [this.vehicles.longitud_final, Validators.required],
     });
   }
 

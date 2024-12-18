@@ -81,6 +81,14 @@ export class ManageComponent implements OnInit {
   }
 
   create() {
+    if (this.theFormGroup.invalid) {
+      this.trySend = true;
+      Swal.fire(
+        "Error en el formulario",
+        "Ingrese correctamente los datos solicitados"
+      );
+      return;
+    }
     console.log(JSON.stringify(this.contracts));
     this.contractService.create(this.contracts).subscribe((data) => {
       Swal.fire("Creado", "El contrato ha sido creado", "success");
@@ -88,18 +96,27 @@ export class ManageComponent implements OnInit {
     });
   }
 
-    
-createForClient() {
-  this.contracts.client_id = this.client_id;
-  console.log(JSON.stringify(this.contracts));
-  this.contractService.createForClient(this.client_id, this.contracts).subscribe((data) => {
-    Swal.fire("Creado", "Se ha creado exitosamente", "success");
-    // Redirigir a la lista de productos del lote específico
-    this.router.navigate(["contracts/filterByClient", this.client_id]);
-  });
-}
+  createForClient() {
+    this.contracts.client_id = this.client_id;
+    console.log(JSON.stringify(this.contracts));
+    this.contractService
+      .createForClient(this.client_id, this.contracts)
+      .subscribe((data) => {
+        Swal.fire("Creado", "Se ha creado exitosamente", "success");
+        // Redirigir a la lista de productos del lote específico
+        this.router.navigate(["contracts/filterByClient", this.client_id]);
+      });
+  }
 
   update() {
+    if (this.theFormGroup.invalid) {
+      this.trySend = true;
+      Swal.fire(
+        "Error en el formulario",
+        "Ingrese correctamente los datos solicitados"
+      );
+      return;
+    }
     const fechaInicio = this.theFormGroup.get("start_date")?.value;
     const fechafin = this.theFormGroup.get("end_date")?.value;
     const fechainicioDate = new Date(fechaInicio);
@@ -109,7 +126,7 @@ createForClient() {
       alert("La fecha de inicio no puede ser mayor a la fecha de fin");
       return;
     }
-  
+
     this.contractService.update(this.contracts).subscribe((data) => {
       Swal.fire("Actualizado", "El contrato ha sido actualizado", "success");
       this.router.navigate(["contracts/list"]);

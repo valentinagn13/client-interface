@@ -38,23 +38,25 @@ export class ManageComponent implements OnInit {
       this.theFormGroup.get("weight").disable();
       this.theFormGroup.get("route_id").disable();
       this.theFormGroup.get("addre_route_orders").disable();
-    } else if (currentUrl.includes("create") && !currentUrl.includes("createForRoute")) {
+    } else if (
+      currentUrl.includes("create") &&
+      !currentUrl.includes("createForRoute")
+    ) {
       this.mode = 2;
       this.theFormGroup.get("id").disable();
       this.theFormGroup.get("route_id").enable();
+    } else if (currentUrl.includes("createForRoute")) {
+      // Modo crear para batch
+      this.mode = 4;
+      this.theFormGroup.get("id").disable();
+      this.route_id = this.activateRoute.snapshot.params.route_id;
 
-    }else if(currentUrl.includes("createForRoute")){
- // Modo crear para batch
- this.mode = 4;
- this.theFormGroup.get("id").disable();
- this.route_id = this.activateRoute.snapshot.params.route_id;
- 
- if (this.route_id) {
-   this.batch.route_id = this.route_id;
-   this.theFormGroup.patchValue({ batch_id: this.route_id });
-   // Deshabilitar batch_id solo en modo createForBatch
-   this.theFormGroup.get("route_id").disable();
- }
+      if (this.route_id) {
+        this.batch.route_id = this.route_id;
+        this.theFormGroup.patchValue({ batch_id: this.route_id });
+        // Deshabilitar batch_id solo en modo createForBatch
+        this.theFormGroup.get("route_id").disable();
+      }
     } else if (currentUrl.includes("update")) {
       this.mode = 3;
       this.theFormGroup.get("id").disable();
@@ -66,31 +68,48 @@ export class ManageComponent implements OnInit {
   }
 
   create() {
+    if (this.theFormGroup.invalid) {
+      this.trySend = true;
+      Swal.fire(
+        "Error en el formulario",
+        "Ingrese correctamente los datos solicitados"
+      );
+      return;
+    }
     console.log(JSON.stringify(this.batch));
     this.batchService.create(this.batch).subscribe((data) => {
       Swal.fire("Creado", " se ha creado exitosa mente", "success"); //tirulo a la alerta
       this.router.navigate(["batches/list"]);
     });
   }
-  
-      createForRoute() {
-        this.batch.route_id = this.route_id;
-        console.log(JSON.stringify(this.batch));
-        this.batchService.createForRoute(this.route_id, this.batch).subscribe((data) => {
-          Swal.fire("Creado", "Se ha creado exitosamente", "success");
-          // Redirigir a la lista de productos del lote específico
-          this.router.navigate(["batches/filterByRoute", this.route_id]);
-        });
-      }
+
+  createForRoute() {
+    this.batch.route_id = this.route_id;
+    console.log(JSON.stringify(this.batch));
+    this.batchService
+      .createForRoute(this.route_id, this.batch)
+      .subscribe((data) => {
+        Swal.fire("Creado", "Se ha creado exitosamente", "success");
+        // Redirigir a la lista de productos del lote específico
+        this.router.navigate(["batches/filterByRoute", this.route_id]);
+      });
+  }
 
   update() {
+    if (this.theFormGroup.invalid) {
+      this.trySend = true;
+      Swal.fire(
+        "Error en el formulario",
+        "Ingrese correctamente los datos solicitados"
+      );
+      return;
+    }
     console.log(JSON.stringify(this.batch));
     this.batchService.update(this.batch).subscribe((data) => {
       Swal.fire("Actualizado", " se ha actualizado exitosa mente", "success"); //titulo a la alerta
       this.router.navigate(["batches/list"]);
     });
   }
-  
 
   getBatch(id: number) {
     this.batchService.view(id).subscribe((data) => {
@@ -104,12 +123,15 @@ export class ManageComponent implements OnInit {
       // primer elemento del vector, valor por defecto
       // lista, serán las reglas
       id: [this.batch.id || ""],
-      weight: [0, [Validators.required, Validators.min(1), Validators.max(1000)]],
-      route_id: ["", [Validators.required, Validators.pattern("^[0-9]+$")], ],
+      weight: [
+        0,
+        [Validators.required, Validators.min(1), Validators.max(1000)],
+      ],
+      route_id: ["", [Validators.required, Validators.pattern("^[0-9]+$")]],
       addre_route_orders: [
         0,
         [Validators.required, Validators.pattern("^[0-9]+$")],
-      ]
+      ],
     });
   }
 
